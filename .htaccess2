@@ -1,0 +1,8 @@
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /index.php?q=$1 [L]
+php_flag log_errors on
+php_value error_log /home/u372331304/public_html/PHP_errors.log
+
+teste de conexão com o git
