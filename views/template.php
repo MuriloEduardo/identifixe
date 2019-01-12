@@ -72,6 +72,9 @@
                 <?php if(in_array("servicos_ver", $infoFunc["permissoesFuncionario"])):?>
                 <li class="submenu"><a href="<?php echo BASE_URL;?>/servicos"><span class="icon-home3"></span> Serviços</a></li>
                 <?php endif;?>
+                <?php if(in_array("produtos_ver", $infoFunc["permissoesFuncionario"])):?>
+                <li class="submenu"><a href="<?php echo BASE_URL;?>/produtos"><span class="icon-home3"></span> Produtos</a></li>
+                <?php endif;?>
             </ul>    
             <div style="clear: both"></div>
         </div>
