@@ -7,14 +7,19 @@ class Unidades extends model {
         parent::__construct(); 
     }
         
-    public function pegarListaUnidades($empresa) {
+    public function pegarLista() {
        $array = array();
+       $arrayAux = array();
        
-       $sql = "SELECT id, unidade FROM unidades WHERE id_empresa = '$empresa' AND situacao = 'ativo'";      
+       $sql = "SELECT id, unidades FROM unidades WHERE situacao = 'ativo'";      
        $sql = $this->db->query($sql);
        if($sql->rowCount()>0){
-         $array = $sql->fetchAll(); 
+         $arrayAux = $sql->fetchAll(); 
        }
+       foreach ($arrayAux as $chave => $valor){
+        $array[$chave] = array( "id" => $valor["id"], 
+                                "nome" => utf8_encode(ucwords($valor["unidades"]))); 
+        }        
        return $array; 
     }    
 }

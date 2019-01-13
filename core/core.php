@@ -50,7 +50,7 @@ class core {
             $currentAction = "index";
         }
         ////////////////////////////////////////       
-        $c = new $currentController();           
+        $c = new $currentController();
         call_user_func_array(array($c,$currentAction), $params);
         
     }    

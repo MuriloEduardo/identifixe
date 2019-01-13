@@ -22,7 +22,7 @@ class produtosController extends controller{
         $prod = new Produtos();
         
         $dados["listaColunas"] = $prod->nomeDasColunas();
-        $dados["listaProdutos"]  = $prod->pegarListaProdutos($_SESSION["idEmpresaFuncionario"]);
+        $dados["listaProdutos"]  = $prod->pegarListaProdutos();
         $this->loadTemplate("produtos",$dados);      
     } 
     
@@ -31,20 +31,17 @@ class produtosController extends controller{
         if(in_array("produtos_add",$_SESSION["permissoesFuncionario"]) == FALSE){
             header("Location: ".BASE_URL."/produtos"); 
         }
-        //echo "aqui1";exit;
+
+        $prod = new Produtos();
+
         $array = array();
         $dados['infoFunc'] = $_SESSION;
-        $prod = new Produtos();
         $listaColunas = $prod->nomeDasColunas();
-        //$dados["listaColunas"] = $prod->nomeDasColunas();
-        //print_r($dados['listaColunas']);exit;
-        //print_r($listaColunas[1]['nomecol']); exit;
         $camposAdd = Array();
 
-        if(isset($_POST[lcfirst($listaColunas[1]['nomecol'])]) || !empty($_POST[lcfirst($listaColunas[1]['nomecol'])])){
-            //echo "aqui2";exit;
-            //print_r($_POST); exit;
+        
 
+        if(isset($_POST[lcfirst($listaColunas[1]['nomecol'])]) || !empty($_POST[lcfirst($listaColunas[1]['nomecol'])])){
             for ($i = 1; $i < count($listaColunas) - 2; $i++ ){
                 if($listaColunas[$i]['nulo'] == "NO"){
                     $nomevar = lcfirst($listaColunas[$i]['nomecol']);
@@ -53,17 +50,15 @@ class produtosController extends controller{
                     }    
                 }
             }
-
-            //print_r($camposAdd);exit;    
+            
             // testar se esta salvando os campos que não são obrigatorios
-            //print_r($_POST); exit;
             if (!empty($camposAdd) && count($camposAdd) > 0 ){
                 $camposForm = Array();
                 for($j=1; $j <= count($_POST); $j++){
                     $camposForm[$j] = $_POST[lcfirst($listaColunas[$j]['nomecol'])];
                 }
-                //print_r($camposForm); exit;
-                //$prod->adicionar($camposAdd,$listaColunas);
+                // print_r($camposForm);exit;
+
                 $prod->adicionar($camposForm,$listaColunas);
                 header("Location: ".BASE_URL."/produtos");
             }else{
