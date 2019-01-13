@@ -18,7 +18,7 @@ class Funcionarios extends model {
     public function fazerLogin($email,$senha){
         $array = array();
         If(!empty($senha) && !empty($email)){
-           
+
            $sql = "SELECT * FROM funcionarios WHERE email='$email' AND senha = '$senha' AND situacao = 'ativo'";
 //           echo $sql; exit;
            $sql = $this->db->query($sql);

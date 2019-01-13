@@ -16,14 +16,27 @@ class Produtos extends model {
        if($sql->rowCount()>0){
          $sql = $sql->fetchAll(); 
          foreach ($sql as $chave => $valor){
-            $array[$chave] = array("nomecol" => utf8_encode(ucwords($valor["Field"])), "tipo" => $valor["Type"], "nulo" => $valor["Null"]);        
+            $array[$chave] = array( "nomecol" => utf8_encode(ucwords($valor["Field"])), 
+                                    "tipo" => $valor["Type"], 
+                                    "nulo" => $valor["Null"], 
+                                    "relacional" => array() );        
          }
        }
-      // print_r($array);exit;
+       for($i=0; $i < count($array); $i++){
+           $model = '';
+           $lista = array();
+           if($array[$i]['tipo'] == 'mediumtext'){
+               
+              $model =  ucfirst($array[$i]['nomecol'])."s";
+              $a = new $model();
+              $lista = $a->pegarLista();
+              $array[$i]['relacional'] = $lista;
+           }
+       }
        return $array;
     }
     
-    public function pegarListaProdutos($empresa) {
+    public function pegarListaProdutos() {
        $array = array();
        
        $sql = "SELECT * FROM produtos WHERE situacao = 'ativo' ORDER BY id DESC";      
@@ -47,7 +60,7 @@ class Produtos extends model {
     }
 
     public function adicionar($camposAdd,$dadosTabela){
-        //print_r($camposAdd); exit;
+        // print_r($camposAdd); exit;
         //echo "aqui4";exit;
         if(count($camposAdd) > 0 && !empty($dadosTabela)){
             $p = new Permissoes();
@@ -77,16 +90,17 @@ class Produtos extends model {
                     //tratamento da variavel se for data
                     $dtaux = explode("/",addslashes($camposAdd[$i]));
                     $campos[$i] = $dtaux[2]."-".$dtaux[1]."-".$dtaux[0];
+                }else{
+
+                    $campos[$i] = trim(addslashes($camposAdd[$i]));
                 }
 
                 $sql = $sql."$nomecoluna, ";
                 $sqlA = $sqlA."'".$campos[$i]."', ";
 
             }   
-            //echo $campos[7]; exit;
-            //print_r($campos); exit;    
+            
             $sql = $sql."alteracoes, situacao) VALUES ".$sqlA. "'$alteracoes', 'ativo')";
-            //echo $sql;exit;
             $this->db->query($sql);
 
         }

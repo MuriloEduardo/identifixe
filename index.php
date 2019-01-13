@@ -1,8 +1,8 @@
 <?php
 session_start();
 require_once 'config.php';
-define("BASE_URL", "http://localhost/mmotos");
-define("NOME_EMPRESA", "Maurício Motos");
+define("BASE_URL", "http://localhost/identifixe");
+define("NOME_EMPRESA", "Identifixe");
 
 //ini_set('display_errors',1);
 //ini_set('display_startup_erros',1);
