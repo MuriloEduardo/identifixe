@@ -18,13 +18,27 @@
                         <?php endif;?> 
                         >
                         
-                        <option value="" selected ></option>    
+                        <option value="" selected > Selecione <?php echo ucfirst($listaColunas[$i]['nomecol']);?></option>    
                     <?php for($j = 0; $j < count($listaColunas[$i]['relacional']); $j++):?>
                         <option value="<?php echo $listaColunas[$i]['relacional'][$j]['nome'];?>" ><?php echo $listaColunas[$i]['relacional'][$j]['nome'];?></option>
                     <?php endfor;?>     
                 </select>
             </div>
-        </div>    
+        </div>
+        <?php elseif($listaColunas[$i]['tipo'] == 'text'):?>
+            <div class="form_linha">
+                <div class="form_itemLinha">
+                    <label for="<?php echo 'itxt'.($i);?>"><?php echo ucwords(str_replace("_", " ", $listaColunas[$i]['nomecol']));?></label>
+                    <textarea
+                        name="<?php echo lcfirst($listaColunas[$i]['nomecol']);?>" 
+                        id="<?php echo 'itxt'.($i);?>"
+                        <?php if($listaColunas[$i]['nulo'] == "NO"):?>
+                            required                  
+                        <?php endif;?>
+                    >
+                    </textarea>
+                </div>
+            </div>    
         <?php else:?>
             <div class="form_linha">
                 <div class="form_itemLinha">

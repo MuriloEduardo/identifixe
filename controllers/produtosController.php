@@ -23,6 +23,7 @@ class produtosController extends controller{
         
         $dados["listaColunas"] = $prod->nomeDasColunas();
         $dados["listaProdutos"]  = $prod->pegarListaProdutos();
+        //print_r($dados); exit;
         $this->loadTemplate("produtos",$dados);      
     } 
     
@@ -76,68 +77,60 @@ class produtosController extends controller{
             header("Location: ".BASE_URL."/produtos"); 
         }
 
-        //echo "aqui1";exit;
-        // $array = array();
-        // $dados['infoFunc'] = $_SESSION;
-        // $prod = new Produtos();
-        // $listaColunas = $prod->nomeDasColunas();
-        // //$dados["listaColunas"] = $prod->nomeDasColunas();
-        // //print_r($dados['listaColunas']);exit;
-        // //print_r($listaColunas[1]['nomecol']); exit;
-        // $camposAdd = Array();
+        $prod = new Produtos();
 
-        // if(isset($_POST[lcfirst($listaColunas[1]['nomecol'])]) || !empty($_POST[lcfirst($listaColunas[1]['nomecol'])])){
-        //     //echo "aqui2";exit;
-        //     //print_r($_POST); exit;
-
-        //     for ($i = 1; $i < count($listaColunas) - 2; $i++ ){
-        //         if($listaColunas[$i]['nulo'] == "NO"){
-        //             $nomevar = lcfirst($listaColunas[$i]['nomecol']);
-        //             if(isset($_POST[lcfirst($listaColunas[$i]['nomecol'])]) || !empty($_POST[lcfirst($listaColunas[$i]['nomecol'])])){
-        //                 $camposAdd[$i] =  $_POST[lcfirst($listaColunas[$i]['nomecol'])];
-        //             }    
-        //         }
-        //     }
-
-        //     //print_r($camposAdd);exit;    
-        //     // testar se esta salvando os campos que não são obrigatorios
-        //     //print_r($_POST); exit;
-        //     if (!empty($camposAdd) && count($camposAdd) > 0 ){
-        //         $camposForm = Array();
-        //         for($j=1; $j <= count($_POST); $j++){
-        //             $camposForm[$j] = $_POST[lcfirst($listaColunas[$j]['nomecol'])];
-        //         }
-        //         //print_r($camposForm); exit;
-        //         //$prod->adicionar($camposAdd,$listaColunas);
-        //         $prod->adicionar($camposForm,$listaColunas);
-        //         header("Location: ".BASE_URL."/produtos");
-        //     }else{
-        //         $dados["listaColunas"] = $prod->nomeDasColunas();
-        //         $this->loadTemplate("produtos-add",$dados);
-        //     }
-        // }else{
-        //     $dados["listaColunas"] = $prod->nomeDasColunas();
-        //     $this->loadTemplate("produtos-add",$dados);
-        // }    
-
-        //----------------------------------------------------------
         $array = array();
         $dados['infoFunc'] = $_SESSION;
-        $prod = new Produtos();
-        
+        $listaColunas = $prod->nomeDasColunas();
+        $camposAdd = Array();
         $id = addslashes($id);
-        if(isset($_POST["txt"]) && count($_POST["txt"])> 0){
-            $txts = $_POST["txt"]; 
-            $sv->editar($id, $txts,$_SESSION["idEmpresaFuncionario"]);
-            header("Location: ".BASE_URL."/servicos");
+
+        //----------------------------------------
+
+        if(isset($_POST[lcfirst($listaColunas[1]['nomecol'])]) || !empty($_POST[lcfirst($listaColunas[1]['nomecol'])])){
+            for ($i = 1; $i < count($listaColunas) - 2; $i++ ){
+                if($listaColunas[$i]['nulo'] == "NO"){
+                    $nomevar = lcfirst($listaColunas[$i]['nomecol']);
+                    if(isset($_POST[lcfirst($listaColunas[$i]['nomecol'])]) || !empty($_POST[lcfirst($listaColunas[$i]['nomecol'])])){
+                        $camposAdd[$i] =  $_POST[lcfirst($listaColunas[$i]['nomecol'])];
+                    }    
+                }
+            }
+            
+            // testar se esta salvando os campos que não são obrigatorios
+            if (!empty($camposAdd) && count($camposAdd) > 0 ){
+                $camposForm = Array();
+                for($j=1; $j <= count($_POST); $j++){
+                    $camposForm[$j] = $_POST[lcfirst($listaColunas[$j]['nomecol'])];
+                }
+                // print_r($camposForm);exit;
+
+                $prod->adicionar($camposForm,$listaColunas);
+                header("Location: ".BASE_URL."/produtos");
+            }else{
+                $dados["listaColunas"] = $prod->nomeDasColunas();
+                $this->loadTemplate("produtos-add",$dados);
+            }
         }else{
             
             $dados["idSelecionado"] = $id;
-            $dados["infoProduto"] = $prod->pegarInfoProduto($id);
+            $dados["infoSelecionado"] = $prod->pegarInfo($id);
             $dados["listaColunas"] = $prod->nomeDasColunas();
-            $this->loadTemplate("servicos-edt",$dados);
-        }  
+
+             //print_r($dados); exit;
+            //print_r($dados["infoSelecionado"]); exit;
+            $this->loadTemplate("produtos-edt",$dados);
+        }
+        // //----------------------------------------
+        
     }
+
+
+
+
+
+
+
 
     public function excluir($id) {       
         if(in_array("servicos_exc",$_SESSION["permissoesFuncionario"]) == FALSE || empty($id) || !isset($id)){
