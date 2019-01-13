@@ -106,14 +106,19 @@ class Produtos extends model {
         }
     }    
     
-     public function pegarInfoProduto($id) {
+     public function pegarInfo($id) {
        $array = array();
+       $arrayAux = array();
        
-       $sql = "SELECT * FROM servicos WHERE id='$id' AND situacao = 'ativo'";      
+       $sql = "SELECT * FROM produtos WHERE id='$id' AND situacao = 'ativo'";      
        $sql = $this->db->query($sql);
        if($sql->rowCount()>0){
          $array = $sql->fetchAll(); 
        }
+       foreach ($arrayAux as $chave => $valor){
+        $array[$chave] = array(utf8_encode($valor));        
+        }
+       //print_r($array); exit; 
        return $array; 
     }
     
