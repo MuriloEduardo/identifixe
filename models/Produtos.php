@@ -60,14 +60,11 @@ class Produtos extends model {
     }
 
     public function adicionar($camposAdd,$dadosTabela){
-        // print_r($camposAdd); exit;
-        //echo "aqui4";exit;
+
         if(count($camposAdd) > 0 && !empty($dadosTabela)){
             $p = new Permissoes();
             $ipcliente = $p->pegaIPcliente();
             $alteracoes = ucwords($_SESSION["nomeFuncionario"])." - $ipcliente - ".date('d/m/Y H:i:s')." - CADASTRO";
-                   
-            //echo $camposAdd[7]; exit;
 
             //tratamento das informações vindas do formulário e montagem da query
             $campos = Array();
@@ -82,11 +79,11 @@ class Produtos extends model {
                     $campos[$i] = trim(addslashes($camposAdd[$i]));
 
                 }elseif(strpos($dadosTabela[$i]['tipo'], "float") !== false){
-                    //if(strpos(addslashes($camposAdd[$i]), "%") !== false){    
-                        
-                    //}
+                    
                     $campos[$i] = floatval(str_replace(",",".",str_replace(".","",addslashes($camposAdd[$i]))));    
+
                 }elseif(strpos($dadosTabela[$i]['tipo'], "date") !== false){
+
                     //tratamento da variavel se for data
                     $dtaux = explode("/",addslashes($camposAdd[$i]));
                     $campos[$i] = $dtaux[2]."-".$dtaux[1]."-".$dtaux[0];
@@ -122,31 +119,54 @@ class Produtos extends model {
        return $array; 
     }
     
-     public function editar($id, $txts, $empresa){
-        if(!empty($id) && !empty($empresa) && count($txts) >0 ){
-            
+     public function editar($camposAdd,$dadosTabela, $id){
+        if(!empty($id) && !empty($camposAdd) && count($dadosTabela) > 0 ){
+           
             $p = new Permissoes();
             $ipcliente = $p->pegaIPcliente();
-            //$altera = addslashes($txts[21])." | ".ucwords($_SESSION["nomeFuncionario"])." - $ipcliente - ".date('d/m/Y H:i:s')." - ALTERACAO";
-            
-            //tratamento das informações vindas do formulário
-            $txt1 =      trim(addslashes($txts[1])); // nome
-            $txt2 =           addslashes($txts[2]); // preço
-            $txt2 =  str_replace(".","",$txt2);
-            $txt2 = floatval(str_replace(",",".",$txt2));
-            //echo "$txt2";            exit();
-            $txt3 =      trim(addslashes($txts[3])); // obs                       
-            $altera = "$txts[4] | ".ucwords($_SESSION["nomeFuncionario"])." - $ipcliente - ".date('d/m/Y H:i:s')." - ALTERACAO";
+            $hist =  explode("##", addslashes($camposAdd[count($camposAdd)]));
+            if(!empty($hist[1])){
+                $alteracoes = $hist[0]." | ".ucwords($_SESSION["nomeFuncionario"])." - $ipcliente - ".date('d/m/Y H:i:s')." - ALTERACAO >> ".$hist[1];     
+            }
             
             
-            //montagem da query
-            $sql = "UPDATE servicos SET ".
-                "nome       =    '$txt1', ".
-                "preco      =    '$txt2', ".
-                "observacao =    '$txt3', ".
-                "alteracoes = '$altera' WHERE id = '$id' AND id_empresa = '$empresa'";
-            
-            $this->db->query($sql);
+            //tratamento das informações vindas do formulário e montagem da query
+            $campos = Array();
+            $sql = "UPDATE produtos SET ";
+            $sqlA = "( DEFAULT, ";
+
+            for($i = 1; $i <= count($camposAdd); $i++){
+                $nomecoluna = lcfirst($dadosTabela[$i]['nomecol']);
+
+                if(strpos($dadosTabela[$i]['tipo'], "varchar") !== false){
+                    
+                    $campos[$i] = trim(addslashes($camposAdd[$i]));
+
+                }elseif(strpos($dadosTabela[$i]['tipo'], "float") !== false){
+                    
+                    $campos[$i] = floatval(str_replace(",",".",str_replace(".","",addslashes($camposAdd[$i]))));    
+
+                }elseif(strpos($dadosTabela[$i]['tipo'], "date") !== false){
+
+                    //tratamento da variavel se for data
+                    $dtaux = explode("/",addslashes($camposAdd[$i]));
+                    $campos[$i] = $dtaux[2]."-".$dtaux[1]."-".$dtaux[0];
+                }else{
+
+                    $campos[$i] = trim(addslashes($camposAdd[$i]));
+                }
+                if($i < count($camposAdd)){
+                    $sql = $sql."$nomecoluna = '$campos[$i]', ";
+                }else{
+                    $sql = $sql."$nomecoluna = '$alteracoes' ";
+                }
+                
+
+            }   
+
+            echo $sql; exit;
+            $sql = $sql." WHERE id = '$id'";
+            $this->db->query($sql);   
 
         }
     }

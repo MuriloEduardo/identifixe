@@ -43,9 +43,10 @@ class produtosController extends controller{
         
 
         if(isset($_POST[lcfirst($listaColunas[1]['nomecol'])]) || !empty($_POST[lcfirst($listaColunas[1]['nomecol'])])){
+            $cont=0;
             for ($i = 1; $i < count($listaColunas) - 2; $i++ ){
                 if($listaColunas[$i]['nulo'] == "NO"){
-                    $nomevar = lcfirst($listaColunas[$i]['nomecol']);
+                    $cont++;
                     if(isset($_POST[lcfirst($listaColunas[$i]['nomecol'])]) || !empty($_POST[lcfirst($listaColunas[$i]['nomecol'])])){
                         $camposAdd[$i] =  $_POST[lcfirst($listaColunas[$i]['nomecol'])];
                     }    
@@ -53,7 +54,7 @@ class produtosController extends controller{
             }
             
             // testar se esta salvando os campos que não são obrigatorios
-            if (!empty($camposAdd) && count($camposAdd) > 0 ){
+            if (!empty($camposAdd) && count($camposAdd) == $cont ){
                 $camposForm = Array();
                 for($j=1; $j <= count($_POST); $j++){
                     $camposForm[$j] = $_POST[lcfirst($listaColunas[$j]['nomecol'])];
@@ -88,24 +89,31 @@ class produtosController extends controller{
         //----------------------------------------
 
         if(isset($_POST[lcfirst($listaColunas[1]['nomecol'])]) || !empty($_POST[lcfirst($listaColunas[1]['nomecol'])])){
+            $cont = 0;
             for ($i = 1; $i < count($listaColunas) - 2; $i++ ){
                 if($listaColunas[$i]['nulo'] == "NO"){
-                    $nomevar = lcfirst($listaColunas[$i]['nomecol']);
+                    $cont++;
                     if(isset($_POST[lcfirst($listaColunas[$i]['nomecol'])]) || !empty($_POST[lcfirst($listaColunas[$i]['nomecol'])])){
                         $camposAdd[$i] =  $_POST[lcfirst($listaColunas[$i]['nomecol'])];
                     }    
                 }
             }
+            //print_r($_POST); 
+            // print_r($camposAdd); exit;
+            //testar se esta salvando os campos que não são obrigatorios
+            //echo count($camposAdd). " -----  ".$cont; exit;
             
-            // testar se esta salvando os campos que não são obrigatorios
-            if (!empty($camposAdd) && count($camposAdd) > 0 ){
+            if (!empty($camposAdd) && count($camposAdd) == $cont ){
+                
                 $camposForm = Array();
                 for($j=1; $j <= count($_POST); $j++){
                     $camposForm[$j] = $_POST[lcfirst($listaColunas[$j]['nomecol'])];
                 }
-                // print_r($camposForm);exit;
+            //  print_r($camposForm);
+            //  echo "       ------------------        ".$id;
+            //  exit;
 
-                $prod->adicionar($camposForm,$listaColunas);
+                $prod->editar($camposForm,$listaColunas, $id);
                 header("Location: ".BASE_URL."/produtos");
             }else{
                 $dados["listaColunas"] = $prod->nomeDasColunas();
