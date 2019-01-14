@@ -40,7 +40,7 @@
 
     <div class="input-pai">
         <div class="input-filho">
-            <input type="submit" value="Editar" class="botao_sv" onclick="return testeEnvio()"/>
+            <input type="submit" value="Editar" class="botao_sv" onclick="return confirm('Deseja editar o Item?')"/>
         </div>
     </div>    
 

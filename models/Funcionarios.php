@@ -6,6 +6,16 @@ class Funcionarios extends model {
     public function __construct($id = "") {
         parent::__construct(); 
     }
+
+    public function unico($table, $campo, $valor) {
+        $array = array();
+        $sql = "SELECT * FROM $table WHERE $campo = '$valor' AND situacao = 'ativo'";      
+        $sql = $this->db->query($sql);
+        if($sql->rowCount()>0){
+            $array = $sql->fetchAll(); 
+        }
+        return $array;
+    }
      
     public function isLogged(){
         if(isset($_SESSION["idFuncionario"]) && !empty($_SESSION["idFuncionario"]) && isset($_SESSION["permissoesFuncionario"]) && !empty($_SESSION["permissoesFuncionario"])){
@@ -97,7 +107,7 @@ class Funcionarios extends model {
        if($sql->rowCount()>0){
          $array = $sql->fetchAll(); 
        }
-       return $array; 
+       return $array;
     }
     
     public function buscaFuncPeloNome($nome,$empresa){

@@ -10,6 +10,34 @@ class ajaxController extends controller{
            header("Location: ".BASE_URL."/login"); 
        }
     }
+
+    //
+    // Função para checar se registros já existem,
+    // essa função busca qualquer campo de qualquertabela
+    //
+    // @request model | Model a ser instanciado
+    // @request table | Tabela para ser feito o select
+    // @request campo | Campo a ser buscado
+    // @request valor | Valor a ser comparado
+    //
+    public function buscaUnico() {
+
+        
+        $module = $_POST["module"];
+        $campo = $_POST["campo"];
+        $valor = $_POST["valor"];
+        
+        $table = $module;
+        $model = new $module();
+        $dados = array();
+
+        if(isset($valor) && !empty($valor)){
+            $valor = trim(addslashes($valor));
+            $dados = $model->unico($table, $campo, $valor);
+        }
+
+        echo json_encode($dados);
+    }
      
     public function index() {
        //no index não existe função específica, módulo usado para as requisições ajax    

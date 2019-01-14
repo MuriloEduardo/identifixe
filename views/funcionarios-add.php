@@ -1,6 +1,7 @@
-<link href="<?php echo BASE_URL;?>/assets/css/funcionarios.css" rel="stylesheet" type="text/css"/>
-<script src="<?php echo BASE_URL;?>/assets/js/funcionarios.js" type="text/javascript"></script>
-<script type="text/javascript">var baselink = '<?php echo BASE_URL;?>'</script>
+<script type="text/javascript">
+    var baselink = '<?php echo BASE_URL;?>',
+        currentModule = '<?php echo str_replace(array("-add", "-edt"), "", basename(__FILE__, ".php")) ?>'
+</script>
 
 <h1 class="titulo_fn">ADICIONAR FUNCIONÁRIO</h1>
 <div class="input-pai">
@@ -10,28 +11,29 @@
    
     <div class="input-pai">
         <div class="input-filho">
-            <input type="text" name="txt[1]" id="itxt1" placeholder='<?php echo $listaColunas[2]["nomecol"];?>' class="input-block" required style="width: 98%"/>
+            <input type="text" name="nome" id="itxt1" placeholder='<?php echo $listaColunas[2]["nomecol"];?>' class="input-block" required style="width: 98%"/>
         </div>
     </div>    
     <div class="input-pai">
-        <div class="input-filho"><input type="email" name="txt[2]" id="itxt2" placeholder='<?php echo $listaColunas[3]["nomecol"];?>' class="input-block" required/></div>
-        <div class="input-filho"><input type="text" name="txt[3]" id="itxt3" placeholder='<?php echo $listaColunas[4]["nomecol"];?>' class="input-block" required/></div>
+        <div class="input-filho"><input type="email" name="email" id="itxt2" placeholder='<?php echo $listaColunas[3]["nomecol"];?>' class="input-block" required/></div>
+        <div class="input-filho"><input type="text" name="cpf" id="itxt3" placeholder='<?php echo $listaColunas[4]["nomecol"];?>' class="input-block" required/></div>
+        <div class="input-filho"><input type="text" name="rg" id="itxt3" placeholder='<?php echo $listaColunas[5]["nomecol"];?>' class="input-block" required/></div>
     </div>
     <div class="input-pai">
-        <div class="input-filho"><input type="text" name="txt[4]" id="itxt4" placeholder='<?php echo $listaColunas[5]["nomecol"];?>' class="input-block" required/></div>
-        <div class="input-filho"><input type="text" name="txt[5]" id="itxt5" placeholder='<?php echo $listaColunas[6]["nomecol"];?>' class="input-block" required/></div>
+        <div class="input-filho"><input type="text" name="cep" id="itxt4" placeholder='<?php echo $listaColunas[5]["nomecol"];?>' class="input-block" required/></div>
+        <div class="input-filho"><input type="text" name="endereco" id="itxt5" placeholder='<?php echo $listaColunas[6]["nomecol"];?>' class="input-block" required/></div>
     </div>
     <div class="input-pai">
-        <div class="input-filho"><input type="text" name="txt[6]" id="itxt6" placeholder='<?php echo $listaColunas[7]["nomecol"];?>' class="input-block" required/></div>
-        <div class="input-filho"><input type="text" name="txt[7]" id="itxt7" placeholder='<?php echo $listaColunas[8]["nomecol"];?>' class="input-block" /></div>
+        <div class="input-filho"><input type="text" name="numero" id="itxt6" placeholder='<?php echo $listaColunas[7]["nomecol"];?>' class="input-block" required/></div>
+        <div class="input-filho"><input type="text" name="complemento" id="itxt7" placeholder='<?php echo $listaColunas[8]["nomecol"];?>' class="input-block" /></div>
     </div>
     <div class="input-pai">
-        <div class="input-filho"><input type="text" name="txt[8]" id="itxt8" placeholder='<?php echo $listaColunas[9]["nomecol"];?>' class="input-block" required/></div>
-        <div class="input-filho"><input type="text" name="txt[9]" id="itxt9" placeholder='<?php echo $listaColunas[10]["nomecol"];?>' class="input-block" required/></div>
+        <div class="input-filho"><input type="text" name="bairro" id="itxt8" placeholder='<?php echo $listaColunas[9]["nomecol"];?>' class="input-block" required/></div>
+        <div class="input-filho"><input type="text" name="data" id="itxt9" placeholder='data' class="input-block" required/></div>
     </div>
     <div class="input-pai">
-        <div class="input-filho"><input type="text" name="txt[10]" id="itxt10" placeholder='<?php echo $listaColunas[11]["nomecol"];?>' class="input-block" required/></div>
-        <div class="input-filho"><input type="text" name="txt[11]" id="itxt11" placeholder='<?php echo $listaColunas[12]["nomecol"];?>' class="input-block" required/></div>
+        <div class="input-filho"><input type="text" name="telefone" id="itxt10" placeholder='<?php echo $listaColunas[11]["nomecol"];?>' class="input-block" required/></div>
+        <div class="input-filho"><input type="text" name="celular" id="itxt11" placeholder='<?php echo $listaColunas[12]["nomecol"];?>' class="input-block" required/></div>
     </div>
     <div class="input-pai">
         <div class="input-filho">
@@ -48,8 +50,8 @@
         </div>
     </div>
     <div class="input-pai">
-        <div class="input-filho"><input type="text" name="txt[16]" id="itxt16" placeholder='<?php echo $listaColunas[17]["nomecol"];?>' class="input-block" required/></div>
-        <div class="input-filho"><input type="text" name="txt[17]" id="itxt17" placeholder='<?php echo $listaColunas[18]["nomecol"];?>' class="input-block" required/></div>
+        <div class="input-filho"><input type="text" name="salario" id="itxt16" placeholder='<?php echo $listaColunas[17]["nomecol"];?>' class="input-block" required/></div>
+        <div class="input-filho"><input type="text" name="comissao" id="itxt17" placeholder='<?php echo $listaColunas[18]["nomecol"];?>' class="input-block" required/></div>
     </div>
     <div class="input-pai">
         <div class="input-filho"><input type="text" name="txt[18]" id="itxt18" placeholder='<?php echo $listaColunas[19]["nomecol"];?>' class="input-block" required/></div>

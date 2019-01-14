@@ -1,5 +1,8 @@
-<link href="<?php echo BASE_URL;?>/assets/css/servicos.css" rel="stylesheet" type="text/css"/>
-<script src="<?php echo BASE_URL;?>/assets/js/produtos.js" type="text/javascript"></script>
+<script type="text/javascript">
+    var baselink = '<?php echo BASE_URL;?>',
+        currentModule = '<?php echo str_replace(array("-add", "-edt"), "", basename(__FILE__, ".php")) ?>'
+</script>
+
     <h1 class="titulo_sv">Produtos</h1>
 
 <div class="aviso_sv"><?php if(!empty($aviso)){echo $aviso;}?></div>
@@ -26,7 +29,7 @@
         </div>
     </div>
 
-    <table id="tabelaservicos" class="display nowrap" cellspacing="0"  style="width: 100%" >
+    <table id="tabelaservicos" class="display nowrap dataTable" cellspacing="0"  style="width: 100%" >
     <thead>
         <tr>
             <th>Ações</th>

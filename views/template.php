@@ -1,99 +1,126 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-    <head>
-        <title>PAINEL - <?php echo NOME_EMPRESA;?></title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!-- CSS -->
-        <link href="<?php echo BASE_URL;?>/assets/css/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
-        <link href="<?php echo BASE_URL;?>/assets/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
-        <link href="<?php echo BASE_URL;?>/assets/css/template.css" rel="stylesheet" type="text/css"/>
-        <link href="<?php echo BASE_URL;?>/assets/css/style.css" rel="stylesheet" type="text/css"/>
-        
-        <!-- JAVASCRIPT -->
-        <script src="<?php echo BASE_URL;?>/assets/js/jquery-3.2.0.min.js" type="text/javascript"></script>
-        <script src="<?php echo BASE_URL;?>/assets/js/jquery.mask.js" type="text/javascript"></script>
-        <script src="<?php echo BASE_URL;?>/assets/js/jquery.dataTables.min.js" type="text/javascript"></script>
-        <script src="<?php echo BASE_URL;?>/assets/js/jquery-ui.min.js" type="text/javascript"></script>
-        <script src="<?php echo BASE_URL;?>/assets/js/template.js" type="text/javascript"></script>
-    </head>
-    <body>
-        <!-- Aqui COMEÇA as configurações do MENU SUPERIOR------->
-        <div class="navegacao">
-            <div class="botaomenu">
-                <img src="<?php echo BASE_URL;?>/assets/images/menu.png" alt="lista Menu" border="0" width="30" height="30"/>
+   <head>
+      <title>Painel - <?php echo NOME_EMPRESA;?></title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <!-- CSS -->
+      <!-- Vendor -->
+      <link href="<?php echo BASE_URL;?>/assets/css/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
+      <link href="<?php echo BASE_URL;?>/assets/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
+      <!-- Local -->
+      <link href="<?php echo BASE_URL;?>/assets/css/style.css" rel="stylesheet" type="text/css"/>
+      <!-- JAVASCRIPT -->
+      <!-- Vendor -->
+      <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+      <script src="<?php echo BASE_URL;?>/assets/js/vendor/jquery.mask.js" type="text/javascript"></script>
+      <script src="<?php echo BASE_URL;?>/assets/js/vendor/jquery.dataTables.min.js" type="text/javascript"></script>
+      <script src="<?php echo BASE_URL;?>/assets/js/vendor/jquery-ui.min.js" type="text/javascript"></script>
+      <!-- Popper.JS -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+      <!-- Bootstrap JS -->
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+      <!-- Local -->
+      <script src="<?php echo BASE_URL;?>/assets/js/main.js" type="text/javascript"></script>
+   </head>
+   <body>
+      <nav class="navbar navbar-dark bg-primary sticky-top">
+         <ul class="nav">
+            <li>
+               <a href="#menu-toggle" class="btn btn-outline-light" id="menu-toggle">Toggle Menu</a>
+            </li>
+            <li>
+               <a class="navbar-brand mx-3" href="#"><?php echo trim(NOME_EMPRESA);?></a>
+            </li>
+         </ul>
+         <ul class="nav navbar-nav">
+            <li class="nav-item">
+               <a class="nav-link" onclick="return confirm('Confirmar sua saída?')" href="<?php echo BASE_URL;?>/login/sair">Sair</a>
+            </li>
+         </ul>
+      </nav>
+      <div id="wrapper">
+         <!-- Sidebar -->
+         <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+               <li class="sidebar-brand">
+                  <a href="#">
+                  <?php echo ucfirst($infoFunc["nomeFuncionario"]);?>
+                  </a>
+               </li>
+               <li class="active">
+                  <a href="<?php echo BASE_URL;?>/home">Home</a>
+               </li>
+               <?php if(in_array("permissoes_ver", $infoFunc["permissoesFuncionario"])):?>
+               <li>
+                  <a href="<?php echo BASE_URL;?>/permissoes">Permissões</a>
+               </li>
+               <?php endif;?>
+               <?php if(in_array("admcartoes_ver", $infoFunc["permissoesFuncionario"])):?>
+               <li>
+                  <a href="<?php echo BASE_URL;?>/admcartoes">Administradoras de Cartão</a>
+               </li>
+               <?php endif;?>
+               <?php if(in_array("lancamentos_ver", $infoFunc["permissoesFuncionario"])):?>
+               <li>
+                  <a href="<?php echo BASE_URL;?>/lancamentos">Lançamentos de Caixa</a>
+               </li>
+               <?php endif;?>
+               <?php if(in_array("fornecedores_ver", $infoFunc["permissoesFuncionario"])):?>
+               <li>
+                  <a href="<?php echo BASE_URL;?>/fornecedores">Fornecedores</a>
+               </li>
+               <?php endif;?>
+               <?php if(in_array("funcionarios_ver", $infoFunc["permissoesFuncionario"])):?>
+               <li>
+                  <a href="<?php echo BASE_URL;?>/funcionarios">Funcionários</a>
+               </li>
+               <?php endif;?>
+               <?php if(in_array("controlecaixa_ver", $infoFunc["permissoesFuncionario"])):?>
+               <li>
+                  <a href="<?php echo BASE_URL;?>/controlecaixa">Controle de Caixa</a>
+               </li>
+               <?php endif;?>
+               <?php if(in_array("clientes_ver", $infoFunc["permissoesFuncionario"])):?>
+               <li>
+                  <a href="<?php echo BASE_URL;?>/clientes">Clientes</a>
+               </li>
+               <?php endif;?>
+               <?php if(in_array("estoque_ver", $infoFunc["permissoesFuncionario"])):?>
+               <li>
+                  <a href="<?php echo BASE_URL;?>/estoque">Estoque</a>
+               </li>
+               <?php endif;?>
+               <?php if(in_array("compras_ver", $infoFunc["permissoesFuncionario"])):?>
+               <li>
+                  <a href="<?php echo BASE_URL;?>/compras">Compras</a>
+               </li>
+               <?php endif;?>
+               <?php if(in_array("servicos_ver", $infoFunc["permissoesFuncionario"])):?>
+               <li>
+                  <a href="<?php echo BASE_URL;?>/servicos">Serviços</a>
+               </li>
+               <?php endif;?>
+               <?php if(in_array("produtos_ver", $infoFunc["permissoesFuncionario"])):?>
+               <li>
+                  <a href="<?php echo BASE_URL;?>/produtos">Produtos</a>
+               </li>
+               <?php endif;?>
+            </ul>
+         </div>
+         <!-- /#sidebar-wrapper -->
+         <!-- Page Content -->
+         <div id="page-content-wrapper">
+            <div class="container-fluid">
+               <?php $this->loadViewInTemplate($viewName, $viewData); ?>
             </div>
-            <div class="marcaempresa">
-                <div class="logoimg">
-                    <img src="<?php echo BASE_URL;?>/assets/images/relatorios.png" alt="Logo da Empresa" border="0" width="50" height="40"/>
-                </div>
-                <div class="nomeempresa">
-                    <?php echo trim(NOME_EMPRESA);?>
-                </div>
+         </div>
+         <footer class="py-3 bg-dark">
+            <div class="container-fluid">
+               <div class="text-muted text-center">Todos os direitos reservados <strong>SqualoAquile</strong><br/>Estamos à disposição: <a href="mailto:contato@squaloaquile.com.br">contato@squaloaquile.com.br</a></div>
             </div>
-            <div class="botaosair" onclick="return confirm('Confirmar sua saída?')">
-                <a href="<?php echo BASE_URL;?>/login/sair"><img src="<?php echo BASE_URL;?>/assets/images/sair.png" alt="Botão de Sair" border="0" width="30" height="30"></a>
-            </div>
-        </div>
-        <!-- Aqui TERMINA --------------------------------------->
-        <!-- Aqui começa as configurações do MENU DESCE E SOBE--->
-        <div class="menufixo">
-            <p class="logado1">Bem Vindo!</p>
-            <p class="logado"><span class="icon-user"></span> <?php echo ucfirst($infoFunc["nomeFuncionario"]);?></p>
-            <ul>
-                <li class="submenu"><a href="<?php echo BASE_URL;?>/home"><span class="icon-home3"></span> home</a></li>
-                <?php if(in_array("permissoes_ver", $infoFunc["permissoesFuncionario"])):?>
-                <li class="submenu"><a href="<?php echo BASE_URL;?>/permissoes"><span class="icon-key"></span> permissoes</a></li>
-                <?php endif;?>
-                <?php if(in_array("admcartoes_ver", $infoFunc["permissoesFuncionario"])):?>
-                <li class="submenu"><a href="<?php echo BASE_URL;?>/admcartoes"><span class="icon-coin-dollar"></span> administradoras de cartão</a></li>
-                <?php endif;?>
-                <?php if(in_array("lancamentos_ver", $infoFunc["permissoesFuncionario"])):?>
-                <li class="submenu"><a href="<?php echo BASE_URL;?>/lancamentos"><span class="icon-price-tags"></span> lançamentos Caixa</a></li>
-                <?php endif;?>
-                <?php if(in_array("fornecedores_ver", $infoFunc["permissoesFuncionario"])):?>
-                <li class="submenu"><a href="<?php echo BASE_URL;?>/fornecedores"><span class="icon-key"></span> fornecedores</a></li>
-                <?php endif;?>
-                <?php if(in_array("funcionarios_ver", $infoFunc["permissoesFuncionario"])):?>
-                <li class="submenu"><a href="<?php echo BASE_URL;?>/funcionarios"><span class="icon-location2"></span> funcionários</a></li>
-                <?php endif;?>
-                <?php if(in_array("controlecaixa_ver", $infoFunc["permissoesFuncionario"])):?>
-                <li class="submenu"><a href="<?php echo BASE_URL;?>/controlecaixa"><span class="icon-stats-dots"></span> Controle Caixa</a></li>
-                <?php endif;?>
-                <?php if(in_array("clientes_ver", $infoFunc["permissoesFuncionario"])):?>
-                <li class="submenu"><a href="<?php echo BASE_URL;?>/clientes"><span class="icon-map2"></span> Clientes</a></li>
-                <?php endif;?>
-                <?php if(in_array("estoque_ver", $infoFunc["permissoesFuncionario"])):?>
-                <li class="submenu"><a href="<?php echo BASE_URL;?>/estoque"><span class="icon-database"></span> Estoque</a></li>
-                <?php endif;?>
-                <?php if(in_array("compras_ver", $infoFunc["permissoesFuncionario"])):?>
-                <li class="submenu"><a href="<?php echo BASE_URL;?>/compras"><span class="icon-price-tags"></span> Compras</a></li>
-                <?php endif;?>
-                <?php if(in_array("servicos_ver", $infoFunc["permissoesFuncionario"])):?>
-                <li class="submenu"><a href="<?php echo BASE_URL;?>/servicos"><span class="icon-home3"></span> Serviços</a></li>
-                <?php endif;?>
-                <?php if(in_array("produtos_ver", $infoFunc["permissoesFuncionario"])):?>
-                <li class="submenu"><a href="<?php echo BASE_URL;?>/produtos"><span class="icon-home3"></span> Produtos</a></li>
-                <?php endif;?>
-            </ul>    
-            <div style="clear: both"></div>
-        </div>
-        <script>
-            var baselink = '<?php echo BASE_URL;?>';
-        </script>
-        <!-- Aqui TERMINA --------------------------------------->
-        <!-- Aqui começa as configurações do CONTEUDO ----------->
-        <div class="conteudo">
-            <?php $this->loadViewInTemplate($viewName, $viewData); ?>
-            <div style="clear: both"></div>
-        </div>
-        <!-- Aqui TERMINA --------------------------------------->       
-        <!-- Aqui começa as configurações do rodapé -->
-        <div class="rodape">
-            <p>Todos os direitos reservados <strong>SqualoAquile</strong><br/>Estamos à disposição: contato@squaloaquile.com.br</p>
-        </div>
-        <!-- Aqui começa as configurações do rodapé -->
-    </body>
+         </footer>
+         <!-- /#page-content-wrapper -->
+      </div>
+   </body>
 </html>
-
-

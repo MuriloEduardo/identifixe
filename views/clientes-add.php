@@ -1,6 +1,7 @@
-<link href="<?php echo BASE_URL;?>/assets/css/clientes.css" rel="stylesheet" type="text/css"/>
-<script src="<?php echo BASE_URL;?>/assets/js/clientes.js" type="text/javascript"></script>
-<script type="text/javascript">var baselink = '<?php echo BASE_URL;?>'</script>
+<script type="text/javascript">
+    var baselink = '<?php echo BASE_URL;?>',
+        currentModule = '<?php echo str_replace(array("-add", "-edt"), "", basename(__FILE__, ".php")) ?>'
+</script>
 
 <h1 class="titulo_cl">ADICIONAR CLIENTE</h1>
 
@@ -88,7 +89,7 @@
                     <input type="text" id="icel" placeholder='Celular' class="input-block" />
                 </div>
                 <div class="input-filho"> 
-                    <input type="email" id="iemail" placeholder='E-mail' class="input-block" />
+                    <input type="email" id="iemail" placeholder='E-mail' name="email" class="input-block" />
                 </div>
                 <div class="input-filho">
                     <div class="botao_peq_cl1" onclick="adicionaContato()"> + </div>

@@ -1,23 +1,23 @@
-<link href="<?php echo BASE_URL;?>/assets/css/fornecedores.css" rel="stylesheet" type="text/css"/>
-<script src="<?php echo BASE_URL;?>/assets/js/fornecedores.js" type="text/javascript"></script>
-<script type="text/javascript">var baselink = '<?php echo BASE_URL;?>'</script>
+<script type="text/javascript">
+    var baselink = '<?php echo BASE_URL;?>',
+        currentModule = '<?php echo str_replace(array("-add", "-edt"), "", basename(__FILE__, ".php")) ?>'
+</script>
 
 <h1 class="titulo_fr">ADICIONAR FORNECEDOR</h1>
-<div class="input-pai">
-    <div class="input-filho"><input type="button" value="Limpar Campos" class="botao_frAux" onclick="limparPreenchimento()"/></div>
-</div>
 <form method="POST">
+
+    <input type="reset" value="Limpar Campos" class="botao_frAux"/>
    
     <div class="input-pai">
-        <div class="input-filho"><input type="text" name="txt[1]" id="itxt1" placeholder='<?php echo $listaColunas[2]["nomecol"];?>' class="input-block" required/></div>
-        <div class="input-filho"><input type="text" name="txt[2]" id="itxt2" placeholder='<?php echo $listaColunas[3]["nomecol"];?>' class="input-block" required/></div>
+        <div class="input-filho"><input type="text" name="nome_fantasia" id="itxt1" placeholder='<?php echo $listaColunas[2]["nomecol"];?>' class="input-block" required/></div>
+        <div class="input-filho"><input type="text" name="sigla" id="itxt2" placeholder='<?php echo $listaColunas[3]["nomecol"];?>' class="input-block" required/></div>
     </div>
     <div class="input-pai">
         <div class="input-filho"><input type="text" name="txt[3]" id="itxt3" placeholder='<?php echo $listaColunas[4]["nomecol"];?>' class="input-block" required/></div>
-        <div class="input-filho"><input type="text" name="txt[4]" id="itxt4" placeholder='<?php echo $listaColunas[5]["nomecol"];?>' class="input-block" /></div>
+        <div class="input-filho"><input type="text" name="cnpj" id="itxt4" placeholder='<?php echo $listaColunas[5]["nomecol"];?>' class="input-block" /></div>
     </div>
     <div class="input-pai">
-        <div class="input-filho"><input type="text" name="txt[5]" id="itxt5" placeholder='<?php echo $listaColunas[6]["nomecol"];?>' class="input-block" /></div>
+        <div class="input-filho"><input type="text" name="cep" id="itxt5" placeholder='<?php echo $listaColunas[6]["nomecol"];?>' class="input-block" /></div>
         <div class="input-filho"><input type="text" name="txt[6]" id="itxt6" placeholder='<?php echo $listaColunas[7]["nomecol"];?>' class="input-block" /></div>
     </div>
     <div class="input-pai">

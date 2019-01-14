@@ -25,7 +25,7 @@
     </div>
     <div class="input-pai">
         <div class="input-filho">
-            <input type="submit" value="Adicionar" class="botao_sv" onclick="return testeEnvio1()"/>
+            <input type="submit" value="Adicionar" class="botao_sv" onclick="return confirm('Deseja adicionar o Item?')"/>
         </div>
     </div>    
 

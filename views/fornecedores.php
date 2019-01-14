@@ -26,7 +26,7 @@
         </div>
     </div>
 
-    <table id="tabelafornecedores" class="display nowrap" cellspacing="0"  style="width: 100%" >
+    <table id="tabelafornecedores" class="display nowrap dataTable" cellspacing="0"  style="width: 100%" >
     <thead>
         <tr>
             <th>Ações</th>

@@ -40,8 +40,6 @@ class produtosController extends controller{
         $listaColunas = $prod->nomeDasColunas();
         $camposAdd = Array();
 
-        
-
         if(isset($_POST[lcfirst($listaColunas[1]['nomecol'])]) || !empty($_POST[lcfirst($listaColunas[1]['nomecol'])])){
             for ($i = 1; $i < count($listaColunas) - 2; $i++ ){
                 if($listaColunas[$i]['nulo'] == "NO"){

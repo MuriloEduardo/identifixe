@@ -1,5 +1,6 @@
 <?php
 class funcionariosController extends controller{
+
     public function __construct() {
         parent::__construct();
     
@@ -74,7 +75,7 @@ class funcionariosController extends controller{
         }  
     }
 
-    public function excluir($id) {       
+    public function excluir($id) {
         if(in_array("funcionarios_exc",$_SESSION["permissoesFuncionario"]) == FALSE || empty($id) || !isset($id)){
             header("Location: ".BASE_URL."/funcionarios"); 
         }

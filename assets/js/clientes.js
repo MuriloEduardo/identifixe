@@ -40,7 +40,7 @@ window.onload = function(){
                 }  
             }
             $("#ipj").prop('checked','checked');
-            $("#itxt2").mask('00.000.000/0000-00', {reverse: true});
+            // $("#itxt2").mask('00.000.000/0000-00', {reverse: true});
             $("#itxt2").attr('placeholder','CNPJ');
             $('#icontatos').show();  
             
@@ -49,25 +49,25 @@ window.onload = function(){
                 var val = valoresCliente[0][3];
                     if(val.length < 17 ){
                         $("#ipf").prop('checked','checked');
-                        $("#itxt2").mask('000.000.000-00', {reverse: true});
+                        // $("#itxt2").mask('000.000.000-00', {reverse: true});
                         $("#itxt2").attr('placeholder','CPF');
                         $('#icontatos').hide();           
                     }else{
                         $("#ipj").prop('checked','checked');
-                        $("#itxt2").mask('00.000.000/0000-00', {reverse: true});
+                        // $("#itxt2").mask('00.000.000/0000-00', {reverse: true});
                         $("#itxt2").attr('placeholder','CNPJ');
                         excluiTodosContatos();
                         $('#icontatos').show();
                     }    
             }else{ // não tem contatos nem cnpj --> é pf
                 $("#ipf").prop('checked','checked');
-                $("#itxt2").mask('000.000.000-00', {reverse: true});
+                // $("#itxt2").mask('000.000.000-00', {reverse: true});
                 $("#itxt2").attr('placeholder','CPF');
                 $('#icontatos').hide(); 
             }
         }           
     }else{// inicialização do form se for a página de adicionar
-        $("#itxt2").mask('000.000.000-00', {reverse: true});
+        // $("#itxt2").mask('000.000.000-00', {reverse: true});
         $("#itxt2").attr('placeholder','CPF');
         $('#icontatos').hide();     
     }   
@@ -99,48 +99,6 @@ $(document).ready(function () {
           $('#ifiltro').change();  
         }
     });
-    
-    $('#tabelaclientes').DataTable( 
-        {
-            scrollY: '100vh',
-            scrollCollapse: true,
-            "scrollX": true,
-            
-            responsive:true,
-            
-            "language": {
-                "decimal": ",",
-                "thousands": ".",
-                "sEmptyTable": "Nenhum registro encontrado",
-                "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-                "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
-                "sInfoFiltered": "(Filtrados de _MAX_ registros)",
-                "sInfoPostFix": "",
-                "sInfoThousands": ".",
-                "sLengthMenu": "_MENU_ Resultados por página",
-                "sLoadingRecords": "Carregando...",
-                "sProcessing": "Processando...",
-                "sZeroRecords": "Nenhum registro encontrado",
-                "sSearch": "Pesquisar",
-                "oPaginate": {
-                    "sNext": "Próximo",
-                    "sPrevious": "Anterior",
-                    "sFirst": "Primeiro",
-                    "sLast": "Último"
-                },
-                "oAria": {
-                    "sSortAscending": ": Ordenar colunas de forma ascendente",
-                    "sSortDescending": ": Ordenar colunas de forma descendente"
-                }
-            },
-        
-            "lengthMenu": [[10, 20, 30, -1], [10, 20, 30, "Todos"]],
-            
-            "dom": '<l><t><ip>'
-        }
-        
-    );
-
     
     // coloca as máscaras nos inputs e testes
     $('#itxt1').on('blur',function(){
@@ -186,40 +144,40 @@ $(document).ready(function () {
     });
    
     
-    $('#itxt2').on('blur',function(){
-        if($("#itxt2").val() != ""){
-            if($("#ipf").is(':checked') && $("#itxt2").val().length < 14){
-                alert("Preencha o campo no formato: '000.000.000-00'");
-                $("#itxt2").val("");
-            }else if($("#ipj").is(':checked') && $("#itxt2").val().length < 18){
-                alert("Preencha o campo no formato: '00.000.000/0000-00'");
-                $("#itxt2").val("");
-            }else{
+    // $('#itxt2').on('blur',function(){
+    //     if($("#itxt2").val() != ""){
+    //         if($("#ipf").is(':checked') && $("#itxt2").val().length < 14){
+    //             alert("Preencha o campo no formato: '000.000.000-00'");
+    //             $("#itxt2").val("");
+    //         }else if($("#ipj").is(':checked') && $("#itxt2").val().length < 18){
+    //             alert("Preencha o campo no formato: '00.000.000/0000-00'");
+    //             $("#itxt2").val("");
+    //         }else{
             
-                var nome = $(this).val();
-                var action = "ConfereCpfCliente";
-                if($(this).val() != ''){
-                    $.ajax({
-                        url:baselink+"/ajax/"+action,
-                        type: 'POST',
-                        data:{q:nome},
-                        dataType:'json',
-                        success:function(json){
-                            if(json.length > 0){
-                               if($("#ipf").is(':checked')){
-                                    $('#itxt2').val("");
-                                    alert("O CPF já existe. Tente outro.");
-                                }else{
-                                    $('#itxt2').val("");
-                                    alert("O CNPJ já existe. Tente outro.");
-                                }   
-                            }
-                        }
-                    });
-                }
-            }
-        }    
-    });
+    //             var nome = $(this).val();
+    //             var action = "ConfereCpfCliente";
+    //             if($(this).val() != ''){
+    //                 $.ajax({
+    //                     url:baselink+"/ajax/"+action,
+    //                     type: 'POST',
+    //                     data:{q:nome},
+    //                     dataType:'json',
+    //                     success:function(json){
+    //                         if(json.length > 0){
+    //                            if($("#ipf").is(':checked')){
+    //                                 $('#itxt2').val("");
+    //                                 alert("O CPF já existe. Tente outro.");
+    //                             }else{
+    //                                 $('#itxt2').val("");
+    //                                 alert("O CNPJ já existe. Tente outro.");
+    //                             }   
+    //                         }
+    //                     }
+    //                 });
+    //             }
+    //         }
+    //     }    
+    // });
     
     $('#itxt3').mask('(00)00000-0000');
     $("#itxt3").blur(function(){
@@ -239,42 +197,6 @@ $(document).ready(function () {
                 $("#itxt5").val("");
             }
         }    
-    });
-    
-
-    $('#itxt6').on('blur',function(){
-        if($("#itxt6").val() != ""){
-            var email = $(this).val();
-                email = email.trim();
-            if(email.indexOf("@") == -1){
-                alert("E-mail inválido. Tente outro.")
-                $("#itxt6").val("");
-                return;
-            }else{
-                if((email.indexOf("@") >= email.lastIndexOf(".")) || (email.lastIndexOf(".")+1 >= email.length )){
-                    alert("E-mail inválido. Tente outro.")
-                    $("#itxt6").val("");
-                    return;
-                }
-            }
-            
-            var nome = $(this).val();
-            var action = "ConfereEmailCliente";
-            if($(this).val() != ''){
-                $.ajax({
-                    url:baselink+"/ajax/"+action,
-                    type: 'POST',
-                    data:{q:nome},
-                    dataType:'json',
-                    success:function(json){
-                        if(json.length > 0){
-                           $('#itxt6').val("");
-                           alert("O email já existe. Tente outro.");
-                        }
-                    }
-                });
-            }
-        }
     });
         
     $("#itxt7").mask('00000-000', {reverse: true});
@@ -329,24 +251,6 @@ $(document).ready(function () {
                 $("#icel").val("");
             }
         }    
-    });
-    
-    $('#iemail').on('blur',function(){
-        if($("#iemail").val() != ""){
-            var email = $(this).val();
-                email = email.trim();
-            if(email.indexOf("@") == -1){
-                alert("E-mail inválido. Tente outro.")
-                $("#iemail").val("");
-                return;
-            }else{
-                if((email.indexOf("@") >= email.lastIndexOf(".")) || (email.lastIndexOf(".")+1 >= email.length )){
-                    alert("E-mail inválido. Tente outro.")
-                    $("#iemail").val("");
-                    return;
-                }
-            }
-        }
     });
     
 });

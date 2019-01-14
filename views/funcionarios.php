@@ -1,5 +1,7 @@
 <link href="<?php echo BASE_URL;?>/assets/css/funcionarios.css" rel="stylesheet" type="text/css"/>
+
 <script src="<?php echo BASE_URL;?>/assets/js/funcionarios.js" type="text/javascript"></script>
+
 <h1 class="titulo_fn">FUNCIONÁRIOS</h1>
 
 <div class="aviso_fn"><?php if(!empty($aviso)){echo $aviso;}?></div>
@@ -26,7 +28,7 @@
         </div>
     </div>
 
-    <table id="tabelafuncionarios" class="display nowrap" cellspacing="0"  style="width: 100%" >
+    <table id="tabelafuncionarios" class="display nowrap dataTable" cellspacing="0"  style="width: 100%" >
     <thead>
         <tr>
             <th>Ações</th>
