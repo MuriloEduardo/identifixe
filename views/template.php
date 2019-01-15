@@ -27,7 +27,9 @@
       <nav class="navbar navbar-dark bg-primary sticky-top">
          <ul class="nav">
             <li>
-               <a href="#menu-toggle" class="btn btn-outline-light" id="menu-toggle">Toggle Menu</a>
+               <a href="#menu-toggle" class="btn btn-outline-light" id="menu-toggle">
+                  <i class="fas fa-bars"></i>
+               </a>
             </li>
             <li>
                <a class="navbar-brand mx-3" href="#"><?php echo trim(NOME_EMPRESA);?></a>
