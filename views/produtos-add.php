@@ -1,6 +1,8 @@
 <link href="<?php echo BASE_URL;?>/assets/css/servicos.css" rel="stylesheet" type="text/css"/>
-<script src="<?php echo BASE_URL;?>/assets/js/produtos.js" type="text/javascript"></script>
-<script type="text/javascript">var baselink = '<?php echo BASE_URL;?>'</script>
+<script type="text/javascript">
+    var baselink = '<?php echo BASE_URL;?>',
+        currentModule = '<?php echo str_replace(array("-add", "-edt"), "", basename(__FILE__, ".php")) ?>'
+</script>
 
 <h1 class="titulo_sv">ADICIONAR PRODUTO</h1>
 

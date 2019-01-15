@@ -210,6 +210,7 @@ $(function () {
     //
     // Nome, Nome Fantasia, Razao Social, Fornecedor, Sigla
     //
+    console.log('asdadasda', $('[name=nome], [name=nome_fantasia], [name=razao_social], [name=fornecedor], [name=sigla]'))
     $('[name=nome], [name=nome_fantasia], [name=razao_social], [name=fornecedor], [name=sigla]')
         .blur(function () {
             $(this).unico({
