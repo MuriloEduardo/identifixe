@@ -46,6 +46,18 @@
                     </textarea>
                 </div>
             </div>
+        <?php elseif($listaColunas[$i]['tipo'] == 'longtext'):?>
+            <div class="form_linha">
+                <div class="form_itemLinha">
+                    <input
+                        type="hidden"  
+                        name="<?php echo lcfirst($listaColunas[$i]['nomecol']);?>" 
+                        id="<?php echo 'itxt'.($i);?>"
+                        value='<?php echo  ucfirst($infoSelecionado[0][lcfirst($listaColunas[$i]['nomecol'])]);?>' 
+                        data-ant='<?php echo  ucfirst($infoSelecionado[0][lcfirst($listaColunas[$i]['nomecol'])]);?>'
+                    />
+                </div>                
+            </div>      
         <?php else:?>
             <div class="form_linha">
                 <div class="form_itemLinha">
@@ -69,14 +81,13 @@
         type="hidden"  
         name="<?php echo lcfirst($listaColunas[$i]['nomecol']);?>" 
         id="<?php echo 'itxt'.($i);?>"
-        <?php if($listaColunas[$i]['nulo'] == "NO"):?>
-            required                  
-        <?php endif;?>
         value='<?php echo  ucfirst($infoSelecionado[0][lcfirst($listaColunas[count($listaColunas)-2]['nomecol'])]);?>' 
+        required                        
     />
+
     <div class="input-pai">
         <div class="input-filho">
-            <input type="submit" value="Adicionar" class="botao_sv" onclick="return testeEnvio1()"/>
+            <input type="submit" value="Salvar" class="botao_sv" onclick="return testeEnvio1()"/>
         </div>
     </div>    
 
