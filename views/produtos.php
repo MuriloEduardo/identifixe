@@ -29,7 +29,7 @@
         </div>
     </div>
 
-    <table id="tabelaservicos" class="display nowrap dataTable" cellspacing="0"  style="width: 100%" >
+    <table class="display nowrap dataTable" cellspacing="0"  style="width: 100%" >
     <thead>
         <tr>
             <th>Ações</th>
@@ -43,7 +43,7 @@
             <?php endfor;?>
         </tr>
     </thead>
-    <tbody>
+    <!-- <tbody>
         <?php foreach ($listaProdutos as $chave => $valor ):?>
             <tr>
                 <td width="100px">
@@ -76,7 +76,7 @@
                 <?php endfor;?>              
             </tr>
         <?php endforeach;?>
-    </tbody>
+    </tbody> -->
 </table>
 
 <div style="clear: both"></div>

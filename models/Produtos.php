@@ -19,7 +19,7 @@ class Produtos extends model {
      
     // função para preencher o json da tabela de produtos
     
-    public function buscaProdutos1(){
+    public function buscaProdutos(){
         $dbtable = 'produtos';
 
         $sql = "SHOW COLUMNS FROM $dbtable";      
@@ -30,24 +30,21 @@ class Produtos extends model {
              $array[$chave] = array( "nomecol" => utf8_encode(ucwords($valor["Field"])));                                      
           }
         }
-
+     
         $meioQuery = '';
         for($i=1; $i < count($array)-2; $i++){
             //Indice da coluna na tabela visualizar resultado => nome da coluna no banco de dados
-            if($i = count($array)-2){
-                $meioQuery = $meioQuery.$array[$i]['nomecol']; 
-            }else{
-                $meioQuery = $meioQuery.$array[$i]['nomecol'].","; 
-            }
-            
+            $meioQuery.= lcfirst($array[$i]['nomecol'])." ,";
         }      
-
+        $meioQuery = substr($meioQuery, 0, -1);
+        
         //Receber a requisão da pesquisa 
-        $requestData = $_REQUEST;
+        $requestData = $_POST;
                 
         //Obtendo registros de número total sem qualquer pesquisa
         $sqlA = "SELECT $meioQuery FROM $dbtable WHERE situacao = 'ativo' ORDER BY id DESC";      
         $sqlA = $this->db->query($sqlA);
+        $temporaria = array();
         if($sqlA->rowCount()>0){
             $resultado_user = $sqlA->fetchAll();
             $qnt_linhas = $sqlA->rowCount();
@@ -60,10 +57,11 @@ class Produtos extends model {
         $campos = array();
         $campos = explode(",",$meioQuery);
 
-        $result_usuarios = "SELECT $meioQuery FROM $dbtable WHERE 1=1";
+        $result_usuarios = "SELECT $meioQuery FROM $dbtable WHERE situacao = 'ativo'";
+        //echo $result_usuarios; exit;
         if( !empty($requestData['search']['value']) ) {   // se houver um parâmetro de pesquisa, $requestData['search']['value'] contém o parâmetro de pesquisa
             
-            $result_usuarios.=" AND ( $campos[0] LIKE '%".$requestData['search']['value']."%' ";
+            $result_usuarios.=" AND ( ".$campos[0]." LIKE '%".$requestData['search']['value']."%' ";
             
             for($j=1; $j <= count($campos); $j++ ){
                 $result_usuarios.=" OR $campos[$j] LIKE '%".$requestData['search']['value']."%' ";
@@ -71,7 +69,7 @@ class Produtos extends model {
                 
             $result_usuarios.=" )";
         }
-
+        //echo $result_usuarios; exit;
         $temp = $this->db->query($result_usuarios);
         if($temp->rowCount()>0){
             $resultado_usuarios = $temp->fetchAll();
@@ -81,36 +79,47 @@ class Produtos extends model {
             $totalFiltered = 0;
         }   
 
+       
         //Ordenar o resultado
-        $result_usuarios.=" ORDER BY ". $columns[$requestData['order'][0]['column']]."   ".$requestData['order'][0]['dir']."  LIMIT ".$requestData['start']." ,".$requestData['length']."   ";
-        $resultado_usuarios=mysqli_query($conn, $result_usuarios);
+        //print_r($campos); exit;
+        $result_usuarios.=" ORDER BY ". $campos[$requestData['order'][0]['column'] + 1]."   ".$requestData['order'][0]['dir']."  LIMIT ".$requestData['start']." ,".$requestData['length']."   ";
+        
+        //echo $result_usuarios; exit;
+        $temp2 = $this->db->query($result_usuarios);
+        if($temp2->rowCount()>0){
+            $resultado_usuarios = $temp2->fetchAll();
+            $totalFiltered = $temp2->rowCount();
+        }else{
+            $resultado_usuarios = array();
+            $totalFiltered = 0;
+        } 
 
-        if (!$resultado_usuarios) {
-            printf("Error: %s\n", mysqli_error($conn));
-            exit();
-        }
-
+        //print_r($resultado_usuarios); exit;
+        //print_r($campos); exit;
         // Ler e criar o array de dados
-        $dados = array();
-        while( $row_usuarios =mysqli_fetch_array($resultado_usuarios) ) {  
-            $dado = array(); 
-            $dado[] = $row_usuarios["$campos[0]"];
-            $dado[] = $row_usuarios["$campos[1]"];
-            $dado[] = $row_usuarios["$campos[2]"];	
-            $dados[] = $dado;
+        $matriz = array();
+        for($lin = 0; $lin < count($resultado_usuarios); $lin++){ // quantidade de registrados mostrados 0 - 9 provavelmente 
+            $vetor = array(); 
+            for($col = 0; $col <= count($campos); $col++){
+                if($col == 0){
+                    $vetor[$col] = "<a href='#' class='btn btn-primary'>editar</a>";
+                }else{
+                    $vetor[$col] = utf8_encode(utf8_decode($resultado_usuarios[$lin][$col-1]));
+                }
+            }
+            $matriz[$lin] = $vetor;
         }
 
-        //print_r($dados); exit;
-
+        //print_r($matriz); exit;
         //Cria o array de informações a serem retornadas para o Javascript
         $json_data = array(
             "draw" => intval( $requestData['draw'] ),//para cada requisição é enviado um número como parâmetro
             "recordsTotal" => intval( $qnt_linhas ),  //Quantidade de registros que há no banco de dados
             "recordsFiltered" => intval( $totalFiltered ), //Total de registros quando houver pesquisa
-            "data" => $dados   //Array de dados completo dos dados retornados da tabela 
+            "data" => $matriz   //Array de dados completo dos dados retornados da tabela 
         );
 
-        echo json_encode($json_data);  //enviar dados como formato json
+        return $json_data;  //enviar dados como formato json
 
 
     }   
@@ -157,19 +166,7 @@ class Produtos extends model {
          $array = $sql->fetchAll(); 
        }
        return $array; 
-    }
-
-    public function buscaProdutos() {
-        $array = array();
-        
-        $sql = "SELECT * FROM produtos WHERE situacao = 'ativo' ORDER BY id DESC";      
-        $sql = $this->db->query($sql);
-        if($sql->rowCount()>0){
-          $array = $sql->fetchAll(); 
-        }
-        echo json_encode($array); 
-     }
-    
+    }   
     
     public function buscaServicoPeloNome($nome,$empresa){
         $array = array();

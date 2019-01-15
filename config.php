@@ -6,10 +6,10 @@ $config = array();
 
 if(ENVIRONMENT == "development"){
     
-    $config["dbname"] = "identifixe";
+    $config["dbname"] = "mmotos";
     $config["dbhost"] = "127.0.0.1";
     $config["dbuser"] = "root";
-    $config["dbpass"] = "lilo0202";
+    $config["dbpass"] = "";
     
 }else{
     

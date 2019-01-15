@@ -316,6 +316,12 @@ $(function () {
                 scrollCollapse: true,
                 'scrollX': true,
                 responsive: true,
+                processing: true, //testar se "processing" faz diferença
+				serverSide: true,
+				ajax: {
+					"url": baselink+"/ajax/buscaProdutos",
+					"type": "POST"
+				},
                 'language': {
                     'decimal': ',',
                     'thousands': '.',
@@ -341,8 +347,8 @@ $(function () {
                         'sSortDescending': ': Ordenar colunas de forma descendente'
                     }
                 },
-                'lengthMenu': [[10, 20, 30, -1], [10, 20, 30, 'Todos']],
-                'dom': '<l><t><ip>'
+    //              'lengthMenu': [[10, 20, 30, -1], [10, 20, 30, 'Todos']],//
+                'dom': '<s><t><p>'
             }
         );
     });
