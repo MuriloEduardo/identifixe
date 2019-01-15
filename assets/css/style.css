@@ -6923,25 +6923,7 @@ a.text-dark:hover, a.text-dark:focus {
 
 #wrapper {
   padding-left: 0;
-  -webkit-transition: all 0.5s ease;
-  -moz-transition: all 0.5s ease;
-  -o-transition: all 0.5s ease;
   transition: all 0.5s ease; }
-  #wrapper #sidebar-wrapper {
-    z-index: 1000;
-    position: fixed;
-    left: 250px;
-    width: 0;
-    height: 100%;
-    margin-left: -250px;
-    overflow-y: auto;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease; }
-  #wrapper #page-content-wrapper {
-    width: 100%;
-    position: absolute; }
   #wrapper.toggled {
     padding-left: 250px; }
     #wrapper.toggled #sidebar-wrapper {
@@ -6949,6 +6931,20 @@ a.text-dark:hover, a.text-dark:focus {
     #wrapper.toggled #page-content-wrapper {
       position: absolute;
       margin-right: -250px; }
+
+#sidebar-wrapper {
+  z-index: 1000;
+  position: fixed;
+  left: 250px;
+  width: 0;
+  height: 100%;
+  margin-left: -250px;
+  overflow-y: auto;
+  transition: all 0.5s ease; }
+
+#page-content-wrapper {
+  width: 100%;
+  position: absolute; }
 
 .sidebar-nav {
   position: absolute;
@@ -6960,14 +6956,14 @@ a.text-dark:hover, a.text-dark:focus {
 @media (min-width: 768px) {
   #wrapper {
     padding-left: 0; }
-    #wrapper #sidebar-wrapper {
-      width: 0; }
     #wrapper.toggled {
       padding-left: 250px; }
       #wrapper.toggled #sidebar-wrapper {
         width: 250px; }
+      #wrapper.toggled #page-content-wrapper {
+        position: relative;
+        margin-right: 0; }
+  #sidebar-wrapper {
+    width: 0; }
   #page-content-wrapper {
-    position: relative; }
-  #wrapper.toggled #page-content-wrapper {
-    position: relative;
-    margin-right: 0; } }
+    position: relative; } }

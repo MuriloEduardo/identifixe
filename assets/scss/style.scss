@@ -1,67 +1,59 @@
 @import "variables";
 @import "node_modules/bootstrap/scss/bootstrap";
-  
-  #wrapper {
-    padding-left: 0;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
-    #sidebar-wrapper {
-      z-index: 1000;
-      position: fixed;
-      left: $sidebar-width;
-      width: 0;
-      height: 100%;
-      margin-left: -$sidebar-width;
-      overflow-y: auto;
-      -webkit-transition: all 0.5s ease;
-      -moz-transition: all 0.5s ease;
-      -o-transition: all 0.5s ease;
-      transition: all 0.5s ease;
-    }
-    #page-content-wrapper {
-      width: 100%;
-      position: absolute;
-    }
-    &.toggled {
-      padding-left: $sidebar-width;
-      #sidebar-wrapper {
-        width: $sidebar-width;
-      }
-      #page-content-wrapper {
-        position: absolute;
-        margin-right: -$sidebar-width;
-      }
-    }
-  }
-  
-  .sidebar-nav {
-    position: absolute;
-    top: 0;
-    width: $sidebar-width;
-    margin: 0;
-    padding: 0;
-  }
-  
-  @media(min-width:768px) {
-    #wrapper {
-      padding-left: 0;
-      #sidebar-wrapper {
-        width: 0;
-      }
-      &.toggled {
-        padding-left: $sidebar-width;
-        #sidebar-wrapper {
-          width: $sidebar-width;
-        }
-      }
-    }
-    #page-content-wrapper {
-      position: relative;
-    }
-    #wrapper.toggled #page-content-wrapper {
-      position: relative;
-      margin-right: 0;
-    }
-  }
+
+#wrapper {
+	padding-left: 0;
+	transition: all 0.5s ease;
+	&.toggled {
+		padding-left: $sidebar-width;
+		#sidebar-wrapper {
+			width: $sidebar-width;
+		}
+		#page-content-wrapper {
+			position: absolute;
+			margin-right: -$sidebar-width;
+		}
+	}
+}
+#sidebar-wrapper {
+	z-index: 1000;
+	position: fixed;
+	left: $sidebar-width;
+	width: 0;
+	height: 100%;
+	margin-left: -$sidebar-width;
+	overflow-y: auto;
+	transition: all 0.5s ease;
+}
+#page-content-wrapper {
+	width: 100%;
+	position: absolute;
+}
+.sidebar-nav {
+	position: absolute;
+	top: 0;
+	width: $sidebar-width;
+	margin: 0;
+	padding: 0;
+}
+@media(min-width:768px) {
+	#wrapper {
+		padding-left: 0;
+		&.toggled {
+			padding-left: $sidebar-width;
+			#sidebar-wrapper {
+				width: $sidebar-width;
+			}
+			#page-content-wrapper {
+				position: relative;
+				margin-right: 0;
+			}
+		}
+	}
+	#sidebar-wrapper {
+		width: 0;
+	}
+	#page-content-wrapper {
+		position: relative;
+	}
+}
