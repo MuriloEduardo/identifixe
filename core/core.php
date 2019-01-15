@@ -7,7 +7,7 @@ class core {
         $url = '/'.(isset($_GET['q'])?$_GET['q']:'');
         $params = array();
         
-        if(!empty($url) && $url != '/'){        
+        if(!empty($url) && $url != '/'){
 
            $url = explode("/", $url);
            array_shift($url);
@@ -28,10 +28,8 @@ class core {
             
         }else{
             $currentController = "homeController";
-            $currentAction = "index";    
+            $currentAction = "index";
         }
-        ////////////////////////////////////
-//        echo "Controller: ".$currentController."<br/>Action: ".$currentAction."<br/>";
         
         if (class_exists($currentController)){
             $a = new $currentController(); 

@@ -1,4 +1,3 @@
 <?php
 define("ENVIRONMENT", "development");
 ?>
-

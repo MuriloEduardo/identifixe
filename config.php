@@ -9,7 +9,7 @@ if(ENVIRONMENT == "development"){
     $config["dbname"] = "identifixe";
     $config["dbhost"] = "127.0.0.1";
     $config["dbuser"] = "root";
-    $config["dbpass"] = "lilo0202";
+    $config["dbpass"] = "liloeduardo0202";
     
 }else{
     
@@ -21,4 +21,3 @@ if(ENVIRONMENT == "development"){
 }
 
 ?>
-

@@ -20,4 +20,3 @@ class homeController extends controller{
   
 }
 ?>
-
