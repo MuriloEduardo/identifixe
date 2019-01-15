@@ -31,6 +31,13 @@ $(document).ready(function () {
             "scrollX": true,
             
             responsive:true,
+
+            "processing": true,
+				"serverSide": true,
+				"ajax": {
+					"url": baselink+"/ajax/buscaProdutos",
+					"type": "POST"
+				},
             
             "language": {
                 "decimal": ",",

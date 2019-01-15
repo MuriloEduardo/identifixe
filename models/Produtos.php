@@ -7,7 +7,109 @@ class Produtos extends model {
         parent::__construct(); 
     }
      
-//    
+//   função para preencher o json da tabela de produtos
+    
+    public function buscaProdutos1(){
+        $dbtable = 'produtos';
+
+        $sql = "SHOW COLUMNS FROM $dbtable";      
+        $sql = $this->db->query($sql);
+        if($sql->rowCount()>0){
+          $sql = $sql->fetchAll(); 
+          foreach ($sql as $chave => $valor){
+             $array[$chave] = array( "nomecol" => utf8_encode(ucwords($valor["Field"])));                                      
+          }
+        }
+
+        $meioQuery = '';
+        for($i=1; $i < count($array)-2; $i++){
+            //Indice da coluna na tabela visualizar resultado => nome da coluna no banco de dados
+            if($i = count($array)-2){
+                $meioQuery = $meioQuery.$array[$i]['nomecol']; 
+            }else{
+                $meioQuery = $meioQuery.$array[$i]['nomecol'].","; 
+            }
+            
+        }      
+
+        //Receber a requisão da pesquisa 
+        $requestData = $_REQUEST;
+                
+        //Obtendo registros de número total sem qualquer pesquisa
+        $sqlA = "SELECT $meioQuery FROM $dbtable WHERE situacao = 'ativo' ORDER BY id DESC";      
+        $sqlA = $this->db->query($sqlA);
+        if($sqlA->rowCount()>0){
+            $resultado_user = $sqlA->fetchAll();
+            $qnt_linhas = $sqlA->rowCount();
+        }else{
+            $resultado_user = array();
+            $qnt_linhas = 0;
+        }   
+
+        //Obter os dados a serem apresentados
+        $campos = array();
+        $campos = explode(",",$meioQuery);
+
+        $result_usuarios = "SELECT $meioQuery FROM $dbtable WHERE 1=1";
+        if( !empty($requestData['search']['value']) ) {   // se houver um parâmetro de pesquisa, $requestData['search']['value'] contém o parâmetro de pesquisa
+            
+            $result_usuarios.=" AND ( $campos[0] LIKE '%".$requestData['search']['value']."%' ";
+            
+            for($j=1; $j <= count($campos); $j++ ){
+                $result_usuarios.=" OR $campos[$j] LIKE '%".$requestData['search']['value']."%' ";
+            }
+                
+            $result_usuarios.=" )";
+        }
+
+        $temp = $this->db->query($result_usuarios);
+        if($temp->rowCount()>0){
+            $resultado_usuarios = $temp->fetchAll();
+            $totalFiltered = $temp->rowCount();
+        }else{
+            $resultado_usuarios = array();
+            $totalFiltered = 0;
+        }   
+
+        //Ordenar o resultado
+        $result_usuarios.=" ORDER BY ". $columns[$requestData['order'][0]['column']]."   ".$requestData['order'][0]['dir']."  LIMIT ".$requestData['start']." ,".$requestData['length']."   ";
+        $resultado_usuarios=mysqli_query($conn, $result_usuarios);
+
+        if (!$resultado_usuarios) {
+            printf("Error: %s\n", mysqli_error($conn));
+            exit();
+        }
+
+        // Ler e criar o array de dados
+        $dados = array();
+        while( $row_usuarios =mysqli_fetch_array($resultado_usuarios) ) {  
+            $dado = array(); 
+            $dado[] = $row_usuarios["$campos[0]"];
+            $dado[] = $row_usuarios["$campos[1]"];
+            $dado[] = $row_usuarios["$campos[2]"];	
+            $dados[] = $dado;
+        }
+
+        //print_r($dados); exit;
+
+        //Cria o array de informações a serem retornadas para o Javascript
+        $json_data = array(
+            "draw" => intval( $requestData['draw'] ),//para cada requisição é enviado um número como parâmetro
+            "recordsTotal" => intval( $qnt_linhas ),  //Quantidade de registros que há no banco de dados
+            "recordsFiltered" => intval( $totalFiltered ), //Total de registros quando houver pesquisa
+            "data" => $dados   //Array de dados completo dos dados retornados da tabela 
+        );
+
+        echo json_encode($json_data);  //enviar dados como formato json
+
+
+    }   
+    
+    
+
+
+
+
     public function nomeDasColunas(){
        $array = array();
        
@@ -46,6 +148,18 @@ class Produtos extends model {
        }
        return $array; 
     }
+
+    public function buscaProdutos() {
+        $array = array();
+        
+        $sql = "SELECT * FROM produtos WHERE situacao = 'ativo' ORDER BY id DESC";      
+        $sql = $this->db->query($sql);
+        if($sql->rowCount()>0){
+          $array = $sql->fetchAll(); 
+        }
+        echo json_encode($array); 
+     }
+    
     
     public function buscaServicoPeloNome($nome,$empresa){
         $array = array();
