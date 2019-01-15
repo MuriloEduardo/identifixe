@@ -121,14 +121,16 @@ class Produtos extends model {
     
      public function editar($camposAdd,$dadosTabela, $id){
         if(!empty($id) && !empty($camposAdd) && count($dadosTabela) > 0 ){
-           
+            
             $p = new Permissoes();
             $ipcliente = $p->pegaIPcliente();
             $hist =  explode("##", addslashes($camposAdd[count($camposAdd)]));
+            
             if(!empty($hist[1])){
                 $alteracoes = $hist[0]." | ".ucwords($_SESSION["nomeFuncionario"])." - $ipcliente - ".date('d/m/Y H:i:s')." - ALTERACAO >> ".$hist[1];     
+            }else{
+                $alteracoes = '';
             }
-            
             
             //tratamento das informações vindas do formulário e montagem da query
             $campos = Array();
@@ -155,27 +157,28 @@ class Produtos extends model {
 
                     $campos[$i] = trim(addslashes($camposAdd[$i]));
                 }
-                if($i < count($camposAdd)){
-                    $sql = $sql."$nomecoluna = '$campos[$i]', ";
-                }else{
-                    $sql = $sql."$nomecoluna = '$alteracoes' ";
-                }
                 
-
+                if(!empty($alteracoes)){
+                    if($i < count($camposAdd)){
+                        $sql = $sql."$nomecoluna = '$campos[$i]', ";
+                    }else{
+                        $sql = $sql."$nomecoluna = '$alteracoes' ";
+                    }
+                }    
             }   
 
-            echo $sql; exit;
-            $sql = $sql." WHERE id = '$id'";
-            $this->db->query($sql);   
-
+            if(!empty($alteracoes)){
+                $sql = $sql." WHERE id = '$id'";
+                $this->db->query($sql);   
+            }    
         }
     }
     
-    public function excluir($id,$empresa){
-        if(!empty($id) && !empty($empresa)){
+    public function excluir($id){
+        if(!empty($id)){
             
             //se não achar nenhum usuario associado ao grupo - pode deletar, ou seja, tornar o cadastro situacao=excluído
-            $sql = "SELECT alteracoes FROM servicos WHERE id = '$id' AND id_empresa = '$empresa' AND situacao = 'ativo'";
+            $sql = "SELECT alteracoes FROM produtos WHERE id = '$id' AND situacao = 'ativo'";
             
             $sql = $this->db->query($sql);
             
@@ -187,7 +190,7 @@ class Produtos extends model {
 
                $palter = $palter." | ".ucwords($_SESSION["nomeFuncionario"])." - $ipcliente - ".date('d/m/Y H:i:s')." - EXCLUSAO";
                
-               $sqlA = "UPDATE servicos SET alteracoes = '$palter', situacao = 'excluido' WHERE id = '$id' AND id_empresa = '$empresa'";
+               $sqlA = "UPDATE produtos SET alteracoes = '$palter', situacao = 'excluido' WHERE id = '$id' ";
                $this->db->query($sqlA);
                
             }

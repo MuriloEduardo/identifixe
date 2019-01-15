@@ -5,7 +5,7 @@
 <h1 class="titulo_sv">ADICIONAR PRODUTO</h1>
 
 
-<form method="POST" class="formulario">
+<form method="POST" class="formulario" >
     <?php for($i = 1; $i< count($listaColunas)-2; $i++):?>
         <?php if($listaColunas[$i]['tipo'] == 'mediumtext'):?>
         <div class="form_linha">
@@ -38,7 +38,18 @@
                     >
                     </textarea>
                 </div>
-            </div>    
+            </div>
+        <?php elseif($listaColunas[$i]['tipo'] == 'longtext'):?>
+            <div class="form_linha">
+                <div class="form_itemLinha">
+                    <input
+                        type="hidden"  
+                        name="<?php echo lcfirst($listaColunas[$i]['nomecol']);?>" 
+                        id="<?php echo 'itxt'.($i);?>"
+                        value=''                         
+                    />
+                </div>                
+            </div>        
         <?php else:?>
             <div class="form_linha">
                 <div class="form_itemLinha">

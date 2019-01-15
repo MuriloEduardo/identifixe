@@ -31,7 +31,12 @@
         <tr>
             <th>Ações</th>
             <?php for($i = 1; $i< count($listaColunas)-2; $i++):?>
-                <th><?php echo ucwords(str_replace("_", " ", $listaColunas[$i]['nomecol']))?></th>
+                <?php if(lcfirst($listaColunas[$i]['tipo']) == 'longtext'):?>
+                    <th data-multidim = 'longtext'><?php echo ucwords(str_replace("_", " ", $listaColunas[$i]['nomecol']))?></th>
+                <?php else:?>
+                    <th><?php echo ucwords(str_replace("_", " ", $listaColunas[$i]['nomecol']))?></th>
+                <?php endif;?>
+                
             <?php endfor;?>
         </tr>
     </thead>
@@ -72,8 +77,6 @@
 </table>
 
 <div style="clear: both"></div>
-
-[ | | | | ]
 
 
 

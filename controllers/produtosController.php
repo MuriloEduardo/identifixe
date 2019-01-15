@@ -1,8 +1,11 @@
 <?php
 class produtosController extends controller{
+    
+    public $modulo = 'produtos';
+    
     public function __construct() {
         parent::__construct();
-    
+        
        $func = new Funcionarios();
        
        //verifica se está logado
@@ -10,10 +13,11 @@ class produtosController extends controller{
            header("Location: ".BASE_URL."/login"); 
        }
        //verifica se tem permissão para ver esse módulo
-       if(in_array("produtos_ver",$_SESSION["permissoesFuncionario"]) == FALSE){
+       if(in_array($this->modulo."_ver",$_SESSION["permissoesFuncionario"]) == FALSE){
            header("Location: ".BASE_URL."/home"); 
        }
     }
+
      
     public function index() {
         $dados = array();
@@ -23,14 +27,13 @@ class produtosController extends controller{
         
         $dados["listaColunas"] = $prod->nomeDasColunas();
         $dados["listaProdutos"]  = $prod->pegarListaProdutos();
-        //print_r($dados); exit;
-        $this->loadTemplate("produtos",$dados);      
+        $this->loadTemplate($this->modulo,$dados);      
     } 
     
     public function adicionar() {
         
-        if(in_array("produtos_add",$_SESSION["permissoesFuncionario"]) == FALSE){
-            header("Location: ".BASE_URL."/produtos"); 
+        if(in_array($this->modulo."_add",$_SESSION["permissoesFuncionario"]) == FALSE){
+            header("Location: ".BASE_URL."/".$this->modulo); 
         }
 
         $prod = new Produtos();
@@ -39,8 +42,6 @@ class produtosController extends controller{
         $dados['infoFunc'] = $_SESSION;
         $listaColunas = $prod->nomeDasColunas();
         $camposAdd = Array();
-
-        
 
         if(isset($_POST[lcfirst($listaColunas[1]['nomecol'])]) || !empty($_POST[lcfirst($listaColunas[1]['nomecol'])])){
             $cont=0;
@@ -59,36 +60,34 @@ class produtosController extends controller{
                 for($j=1; $j <= count($_POST); $j++){
                     $camposForm[$j] = $_POST[lcfirst($listaColunas[$j]['nomecol'])];
                 }
-                // print_r($camposForm);exit;
 
                 $prod->adicionar($camposForm,$listaColunas);
-                header("Location: ".BASE_URL."/produtos");
+                header("Location: ".BASE_URL."/".$this->modulo);
             }else{
                 $dados["listaColunas"] = $prod->nomeDasColunas();
-                $this->loadTemplate("produtos-add",$dados);
+                $this->loadTemplate($this->modulo."-add",$dados);
             }
         }else{
             $dados["listaColunas"] = $prod->nomeDasColunas();
-            $this->loadTemplate("produtos-add",$dados);
+            $this->loadTemplate($this->modulo."-add",$dados);
         }    
     }
     
     public function editar($id) {
-        if(in_array("produtos_edt",$_SESSION["permissoesFuncionario"]) == FALSE || empty($id) || !isset($id)){
-            header("Location: ".BASE_URL."/produtos"); 
+        if(in_array($this->modulo."_edt",$_SESSION["permissoesFuncionario"]) == FALSE || empty($id) || !isset($id)){
+            header("Location: ".BASE_URL."/".$this->modulo); 
         }
 
         $prod = new Produtos();
-
+        
         $array = array();
         $dados['infoFunc'] = $_SESSION;
         $listaColunas = $prod->nomeDasColunas();
         $camposAdd = Array();
         $id = addslashes($id);
 
-        //----------------------------------------
-
         if(isset($_POST[lcfirst($listaColunas[1]['nomecol'])]) || !empty($_POST[lcfirst($listaColunas[1]['nomecol'])])){
+             
             $cont = 0;
             for ($i = 1; $i < count($listaColunas) - 2; $i++ ){
                 if($listaColunas[$i]['nulo'] == "NO"){
@@ -98,10 +97,7 @@ class produtosController extends controller{
                     }    
                 }
             }
-            //print_r($_POST); 
-            // print_r($camposAdd); exit;
-            //testar se esta salvando os campos que não são obrigatorios
-            //echo count($camposAdd). " -----  ".$cont; exit;
+            
             
             if (!empty($camposAdd) && count($camposAdd) == $cont ){
                 
@@ -109,15 +105,12 @@ class produtosController extends controller{
                 for($j=1; $j <= count($_POST); $j++){
                     $camposForm[$j] = $_POST[lcfirst($listaColunas[$j]['nomecol'])];
                 }
-            //  print_r($camposForm);
-            //  echo "       ------------------        ".$id;
-            //  exit;
 
                 $prod->editar($camposForm,$listaColunas, $id);
-                header("Location: ".BASE_URL."/produtos");
+                header("Location: ".BASE_URL."/".$this->modulo);
             }else{
                 $dados["listaColunas"] = $prod->nomeDasColunas();
-                $this->loadTemplate("produtos-add",$dados);
+                $this->loadTemplate($this->modulo."-edt",$dados);
             }
         }else{
             
@@ -125,31 +118,21 @@ class produtosController extends controller{
             $dados["infoSelecionado"] = $prod->pegarInfo($id);
             $dados["listaColunas"] = $prod->nomeDasColunas();
 
-             //print_r($dados); exit;
-            //print_r($dados["infoSelecionado"]); exit;
-            $this->loadTemplate("produtos-edt",$dados);
+            $this->loadTemplate($this->modulo."-edt",$dados);
         }
-        // //----------------------------------------
         
     }
 
-
-
-
-
-
-
-
     public function excluir($id) {       
-        if(in_array("servicos_exc",$_SESSION["permissoesFuncionario"]) == FALSE || empty($id) || !isset($id)){
-            header("Location: ".BASE_URL."/servicos"); 
+        if(in_array($this->modulo."_exc",$_SESSION["permissoesFuncionario"]) == FALSE || empty($id) || !isset($id)){
+            header("Location: ".BASE_URL."/".$this->modulo); 
         }
         
-        $sv = new Servicos();
+        $prod = new Produtos();
         $id = addslashes($id);
         
-        $sv->excluir($id,$_SESSION["idEmpresaFuncionario"]);
-        header("Location: ".BASE_URL."/servicos");  
+        $prod->excluir($id);
+        header("Location: ".BASE_URL."/".$this->modulo);  
       }
     
 }   

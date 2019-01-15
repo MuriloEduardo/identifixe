@@ -46,6 +46,18 @@
                     </textarea>
                 </div>
             </div>
+        <?php elseif($listaColunas[$i]['tipo'] == 'longtext'):?>
+            <div class="form_linha">
+                <div class="form_itemLinha">
+                    <input
+                        type="hidden"  
+                        name="<?php echo lcfirst($listaColunas[$i]['nomecol']);?>" 
+                        id="<?php echo 'itxt'.($i);?>"
+                        value='<?php echo  ucfirst($infoSelecionado[0][lcfirst($listaColunas[$i]['nomecol'])]);?>' 
+                        data-ant='<?php echo  ucfirst($infoSelecionado[0][lcfirst($listaColunas[$i]['nomecol'])]);?>'
+                    />
+                </div>                
+            </div>      
         <?php else:?>
             <div class="form_linha">
                 <div class="form_itemLinha">
