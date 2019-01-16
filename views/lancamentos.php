@@ -196,8 +196,3 @@
             <input type="submit" value="Lançar" class="botao_lc" onclick="testeEnvio()"/>
         </form>
    </div>
-    
-
-<!--<div style="clear: both"></div>-->
-
-

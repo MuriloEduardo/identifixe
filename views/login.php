@@ -15,7 +15,12 @@
             <div class="col-lg-5 mx-auto">
                 <form method="POST" class="form-signin">
                     <?php if(!empty($aviso)):?>
-                        <div class="alert alert-danger"><?php echo $aviso;?></div>
+                        <div class="alert alert-danger alert-dismissible mb-5" role="alert">
+                            <?php echo $aviso ?>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
                     <?php endif;?>
                     <h1><?php echo NOME_EMPRESA;?></h1>
                     <p class="lead mb-4">Entre, por favor</p>

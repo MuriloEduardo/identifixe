@@ -31,9 +31,3 @@
             <?php endforeach;?>
     </tbody>
 </table>
-<div style="clear: both"></div>
-
-
-
-
-

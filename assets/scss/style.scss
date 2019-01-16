@@ -6,3 +6,13 @@
 @import "node_modules/@fortawesome/fontawesome-free/scss/solid";
 
 @import "sidebar";
+
+body {
+    padding-top: $navbar-height;
+    .dataTable {
+        white-space: nowrap;
+        td {
+            text-transform: capitalize;
+        }
+    }
+}

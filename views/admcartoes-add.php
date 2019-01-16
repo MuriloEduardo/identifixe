@@ -69,6 +69,3 @@
     <input type="submit" value="Adicionar" class="botao_adm" onclick="testeEnvio()"/>
    
 </form>
-<div style="clear: both"></div>
-
-

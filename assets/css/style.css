@@ -11145,7 +11145,6 @@ readers do not read off random characters that represent icons */
   font-weight: 900; }
 
 #wrapper {
-  padding-top: 56px;
   padding-left: 0;
   transition: all 0.5s ease; }
   #wrapper.toggled {
@@ -11195,3 +11194,10 @@ readers do not read off random characters that represent icons */
     width: 0; }
   #page-content-wrapper {
     position: relative; } }
+
+body {
+  padding-top: 56px; }
+  body .dataTable {
+    white-space: nowrap; }
+    body .dataTable td {
+      text-transform: capitalize; }

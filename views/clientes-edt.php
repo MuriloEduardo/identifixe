@@ -154,7 +154,5 @@
     </div>  
 </form>    
 <script>
-    var valoresCliente= new Array();
-        valoresCliente = <?php echo json_encode($infoCliente);?>;  
+    var valoresCliente = <?php echo json_encode($infoCliente);?>;  
 </script>
-<div style="clear: both"></div>

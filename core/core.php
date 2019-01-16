@@ -1,6 +1,17 @@
 <?php
 
 class core {
+
+    private function redirectMessage($partial = "Erro no endereço, você foi redirecionado para o início.") {
+        return '
+            <div class="alert alert-danger alert-dismissible m-0 rounded-0">
+                ' . $partial . '
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        ';
+    }
     
     public function run(){
 
@@ -37,13 +48,12 @@ class core {
                 //echo 'A classe existe e o método tbm!';exit;
             }else{
                 //echo 'A classe existe, mas o método NÂO!';exit;
-                echo "<div style='background-color:#ff7380;height: 50px;line-height: 20px; font-size: 20px;text-align: center; border: 3px solid #000'>Erro no endereço, você foi redirecionado para o início do(a)(s) ".ucfirst(str_replace("Controller","",$currentController)).".</div>";
-                 
+                echo $this->redirectMessage(ucfirst(str_replace("Controller","",$currentController)));
                 $currentAction = "index";
             }
         }else{
             //echo 'A classe não existe!';exit;
-            echo "<div style='background-color:#ff7380;height: 50px;line-height: 20px; font-size: 20px;text-align: center; border: 3px solid #000'>Erro no endereço, você foi redirecionado para o início.</div>";
+            echo $this->redirectMessage();
             $currentController = "homeController";
             $currentAction = "index";
         }

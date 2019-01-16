@@ -86,8 +86,7 @@
     </div></div>    
 
 </form>
+
 <script>
-    var valoresfunc = new Array();
-        valoresfunc = <?php echo json_encode($infoFuncionario);?>;  
+    var valoresfunc = <?php echo json_encode($infoFuncionario) ?>;
 </script>
-<div style="clear: both"></div>

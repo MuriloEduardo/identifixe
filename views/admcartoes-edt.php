@@ -70,9 +70,5 @@
    
 </form>
 <script>
-    var bandeirasAceitas = new Array();
-        bandeirasAceitas = <?php echo json_encode($bandeirasAceitas);?>;  
+    var bandeirasAceitas = <?php echo json_encode($bandeirasAceitas) ?>;  
 </script>
-<div style="clear: both"></div>
-
-

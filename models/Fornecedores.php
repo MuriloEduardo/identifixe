@@ -6,16 +6,6 @@ class Fornecedores extends model {
     public function __construct($id = "") {
         parent::__construct(); 
     }
-
-    public function unico($table, $campo, $valor) {
-        $array = array();
-        $sql = "SELECT * FROM $table WHERE $campo = '$valor' AND situacao = 'ativo'";      
-        $sql = $this->db->query($sql);
-        if($sql->rowCount()>0){
-            $array = $sql->fetchAll(); 
-        }
-        return $array;
-    }
         
     public function pegarListaFornecedores($empresa) {
        $array = array();

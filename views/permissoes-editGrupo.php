@@ -55,4 +55,3 @@
     <input type="submit" value="Editar" class="botao_pm" onclick="return confirm('Tem certeza?')"/>
    
 </form>
-<div style="clear: both"></div>

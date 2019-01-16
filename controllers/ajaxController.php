@@ -28,7 +28,7 @@ class ajaxController extends controller{
         $valor = $_POST["valor"];
         
         $table = $module;
-        $model = new $module();
+        $model = new Shared();
         $dados = array();
 
         if(isset($valor) && !empty($valor)){
@@ -314,14 +314,11 @@ class ajaxController extends controller{
     }
     
     /////// PRODUTOS
-    public function buscaProdutos(){
-        $prod = new Produtos();
-               
-        $dados = $prod->buscaProdutos();
-        
-        //print_r($dados); exit;
+    public function dataTableAjax(){
+        $shared = new Shared();
+        $dados = $shared->montaDataTable($_POST['module']);
         echo json_encode($dados);
-      }
+    }
     
 }   
 ?>

@@ -3,17 +3,23 @@
         currentModule = '<?php echo str_replace(array("-add", "-edt"), "", basename(__FILE__, ".php")) ?>'
 </script>
 
-<h1 class="display-4">FORNECEDORES</h1>
+<h1 class="display-4">Fornecedores</h1>
 
-<div class="aviso_fr"><?php if(!empty($aviso)){echo $aviso;}?></div>
-<div class="input-pai"><div class="input-filho">
-    <?php if(in_array("fornecedores_add", $infoFunc["permissoesFuncionario"])):?>
-        <a href="<?php echo BASE_URL;?>/fornecedores/adicionar" class="botao_fr">Adicionar</a>
-    <?php endif;?>
-</div></div>
+<?php if(!empty($aviso)): ?>
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <?php echo $aviso ?>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+<?php endif ?>
+
+<?php if(in_array("fornecedores_add", $infoFunc["permissoesFuncionario"])): ?>
+    <a href="<?php echo BASE_URL;?>/fornecedores/adicionar" class="btn btn-success">Adicionar</a>
+<?php endif ?>
     
     
-    <div class="input-pai">
+    <!-- <div class="input-pai">
         <div class="input-filho">
             <label class="label-block"> Procurar Por:
                 <select class="select-block" id="icampo">
@@ -27,9 +33,9 @@
         <div class="input-filho">            
             <label class="label-block" for="ifiltro">Texto Procurado:<input type="text" id="ifiltro" class="input-block" /></label>
         </div>
-    </div>
+    </div> -->
 
-    <table id="tabelafornecedores" class="display nowrap dataTable" cellspacing="0"  style="width: 100%" >
+    <table id="tabelafornecedores" class="table table-striped table-hover dataTable">
     <thead>
         <tr>
             <th>Ações</th>
@@ -38,28 +44,4 @@
             <?php endfor;?>
         </tr>
     </thead>
-    <tbody>
-        <?php foreach ($listaFornecedores as $chave => $valor ):?>
-            <tr>
-                <td width="100px">
-                    <?php if(in_array("fornecedores_edt", $infoFunc["permissoesFuncionario"])):?>
-                        <a href="<?php echo BASE_URL;?>/fornecedores/editar/<?php echo $valor["id"];?>" class="botao_peq_fr">Editar</a>
-                    <?php endif;?>
-                    <?php if(in_array("fornecedores_exc", $infoFunc["permissoesFuncionario"])):?>
-                        <a href="<?php echo BASE_URL;?>/fornecedores/excluir/<?php echo $valor["id"];?>" class="botao_peq_fr" onclick="return confirm('Tem Certeza?')">Excluir</a>
-                    <?php endif;?>
-                </td>
-
-                <?php for($col = 2; $col < count($listaColunas)-2; $col++):?>
-                <td><?php echo utf8_decode(ucwords($listaFornecedores[$chave][$col]));?></td>
-                <?php endfor;?>              
-            </tr>
-        <?php endforeach;?>
-    </tbody>
-</table>
-
-<div style="clear: both"></div>
-
-
-
-
+    </table>

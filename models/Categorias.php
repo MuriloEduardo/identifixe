@@ -1,4 +1,3 @@
-
 <?php
 
 class Categorias extends model {

@@ -2,7 +2,7 @@
 
 <script src="<?php echo BASE_URL;?>/assets/js/funcionarios.js" type="text/javascript"></script>
 
-<h1 class="titulo_fn">FUNCIONÁRIOS</h1>
+<h1 class="display-4">Funcionários</h1>
 
 <div class="aviso_fn"><?php if(!empty($aviso)){echo $aviso;}?></div>
 <div class="input-pai"><div class="input-filho">
@@ -68,9 +68,3 @@
         <?php endforeach;?>
     </tbody>
 </table>
-
-<div style="clear: both"></div>
-
-
-
-

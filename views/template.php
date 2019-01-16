@@ -79,48 +79,50 @@
       <link href="<?php echo BASE_URL;?>/assets/css/vendor/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
       <link href="<?php echo BASE_URL;?>/assets/css/style.css" rel="stylesheet" type="text/css"/>
    </head>
-   <body class="d-flex flex-column h-100">
-      <nav class="navbar navbar-dark bg-primary shadow-sm fixed-top">
-         <ul class="nav">
-            <li>
-               <a href="#menu-toggle" class="btn btn-link text-white" id="menu-toggle">
-                  <span class="navbar-toggler-icon"></span>
-               </a>
-            </li>
-            <li>
-               <a class="navbar-brand mx-3" href="#"><?php echo trim(NOME_EMPRESA);?></a>
-            </li>
+<body class="d-flex flex-column h-100">
+   <nav class="navbar navbar-dark bg-primary shadow-sm fixed-top">
+      <ul class="nav">
+         <li>
+            <a href="#menu-toggle" class="btn btn-link text-white" id="menu-toggle">
+               <span class="navbar-toggler-icon"></span>
+            </a>
+         </li>
+         <li>
+            <a class="navbar-brand mx-3" href="#"><?php echo trim(NOME_EMPRESA);?></a>
+         </li>
+      </ul>
+      <ul class="navbar-nav">
+         <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               <?php echo ucfirst($infoFunc["nomeFuncionario"]);?>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right position-absolute" aria-labelledby="navbarDropdown">
+               <a class="dropdown-item" onclick="return confirm('Confirmar sua saída?')" href="<?php echo BASE_URL;?>/login/sair">Sair</a>
+            </div>
+         </li>
+      </ul>
+   </nav>
+   <div id="wrapper">
+      <aside id="sidebar-wrapper" class="shadow-lg bg-dark">
+         <ul class="nav flex-column sidebar-nav p-3">
+            <?php foreach ($menus as $key => $value): ?>
+               <?php if($value["permissao"] == "home" || in_array("permissoes_ver", $infoFunc["permissoesFuncionario"])): ?>
+                  <li class="nav-item">
+                     <a class="nav-link my-2" href="<?php echo BASE_URL . $value["link"];?>" class="">
+                        <i class="<?php echo $value["icon"] ?> mr-3"></i>
+                        <span><?php echo $value["text"] ?></span>
+                     </a>
+                  </li>
+               <?php endif ?>
+            <?php endforeach ?>
          </ul>
-         <ul class="navbar-nav">
-            <li class="nav-item dropdown">
-               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  <?php echo ucfirst($infoFunc["nomeFuncionario"]);?>
-               </a>
-               <div class="dropdown-menu dropdown-menu-right position-absolute" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" onclick="return confirm('Confirmar sua saída?')" href="<?php echo BASE_URL;?>/login/sair">Sair</a>
-               </div>
-            </li>
-         </ul>
-      </nav>
-      <div id="wrapper">
-         <aside id="sidebar-wrapper" class="shadow-lg bg-dark">
-            <ul class="nav flex-column sidebar-nav p-3">
-               <?php foreach ($menus as $key => $value): ?>
-                  <?php if($value["permissao"] == "home" || in_array("permissoes_ver", $infoFunc["permissoesFuncionario"])): ?>
-                     <li class="nav-item">
-                        <a class="nav-link" href="<?php echo BASE_URL . $value["link"];?>" class="">
-                           <i class="<?php echo $value["icon"] ?> mr-3"></i>
-                           <span><?php echo $value["text"] ?></span>
-                        </a>
-                     </li>
-                  <?php endif ?>
-               <?php endforeach ?>
-            </ul>
-         </aside>
-         <main id="page-content-wrapper">
-            <div class="container-fluid">
+      </aside>
+      <main id="page-content-wrapper">
+         <div class="container-fluid">
+            <div class="px-3">
                <?php $this->loadViewInTemplate($viewName, $viewData); ?>
             </div>
+         </div>
          </main>
       </div>
       <footer class="py-3 bg-light mt-auto shadow-sm">
