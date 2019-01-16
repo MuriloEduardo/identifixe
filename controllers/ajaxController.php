@@ -313,7 +313,15 @@ class ajaxController extends controller{
       echo json_encode($dados);
     }
     
-    /////// COMPRAS
+    /////// PRODUTOS
+    public function buscaProdutos(){
+        $prod = new Produtos();
+               
+        $dados = $prod->buscaProdutos();
+        
+        //print_r($dados); exit;
+        echo json_encode($dados);
+      }
+    
 }   
 ?>
-

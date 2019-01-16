@@ -6,6 +6,7 @@ class loginController extends controller{
     }
     
     public function index() {
+
         $dados = array(
             "aviso" => ""
         );
@@ -44,4 +45,3 @@ class loginController extends controller{
 
 
 ?>
-

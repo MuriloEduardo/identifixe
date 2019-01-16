@@ -210,6 +210,7 @@ $(function () {
     //
     // Nome, Nome Fantasia, Razao Social, Fornecedor, Sigla
     //
+    console.log('asdadasda', $('[name=nome], [name=nome_fantasia], [name=razao_social], [name=fornecedor], [name=sigla]'))
     $('[name=nome], [name=nome_fantasia], [name=razao_social], [name=fornecedor], [name=sigla]')
         .blur(function () {
             $(this).unico({
@@ -315,6 +316,12 @@ $(function () {
                 scrollCollapse: true,
                 'scrollX': true,
                 responsive: true,
+                processing: true, //testar se "processing" faz diferença
+				serverSide: true,
+				ajax: {
+					"url": baselink+"/ajax/buscaProdutos",
+					"type": "POST"
+				},
                 'language': {
                     'decimal': ',',
                     'thousands': '.',
@@ -340,8 +347,7 @@ $(function () {
                         'sSortDescending': ': Ordenar colunas de forma descendente'
                     }
                 },
-                'lengthMenu': [[10, 20, 30, -1], [10, 20, 30, 'Todos']],
-                'dom': '<l><t><ip>'
+                'dom': '<s><t><p>'
             }
         );
     });
