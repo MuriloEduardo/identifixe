@@ -102,7 +102,12 @@ class Produtos extends model {
             $vetor = array(); 
             for($col = 0; $col <= count($campos); $col++){
                 if($col == 0){
-                    $vetor[$col] = "<a href='#' class='btn btn-primary'>editar</a>";
+                    $vetor[$col] = '
+                        <div class="btn-group btn-group-sm" role="group" aria-label="Ações">
+                            <button type="button" class="btn btn-primary">Editar</button>
+                            <button type="button" class="btn btn-secondary">Excluir</button>
+                        </div>
+                    ';
                 }else{
                     $vetor[$col] = utf8_encode(utf8_decode($resultado_usuarios[$lin][$col-1]));
                 }

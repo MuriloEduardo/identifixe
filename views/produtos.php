@@ -3,14 +3,15 @@
         currentModule = '<?php echo str_replace(array("-add", "-edt"), "", basename(__FILE__, ".php")) ?>'
 </script>
 
-    <h1 class="titulo_sv">Produtos</h1>
+    <h1 class="display-4">Produtos</h1>
 
-<div class="aviso_sv"><?php if(!empty($aviso)){echo $aviso;}?></div>
-<div class="input-pai"><div class="input-filho">
+    <?php if(!empty($aviso)): ?>
+        <div class="alert alert-danger"><?php echo $aviso ?></div>
+    <?php endif ?>
+    
     <?php if(in_array("produtos_add", $infoFunc["permissoesFuncionario"])):?>
-        <a href="<?php echo BASE_URL;?>/produtos/adicionar" class="botao_sv">Adicionar</a>
-    <?php endif;?>
-</div></div>
+        <a href="<?php echo BASE_URL;?>/produtos/adicionar" class="btn btn-success">Adicionar</a>
+    <?php endif ?>
     
     
     <div class="input-pai">

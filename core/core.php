@@ -11,8 +11,6 @@ class core {
 
            $url = explode("/", $url);
            array_shift($url);
-
-           var_dump($url);
            
            $currentController = $url[0]."Controller";
            array_shift($url);

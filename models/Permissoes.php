@@ -1,4 +1,3 @@
-
 <?php
 
 class Permissoes extends model {

@@ -11,6 +11,11 @@ const paths = {
     }
 };
 
+const fontawesome = () => {
+    return gulp.src('node_modules/@fortawesome/fontawesome-free/webfonts/*')
+        .pipe(gulp.dest('assets/fonts/webfonts'));
+}
+
 const styles = () => {
     return gulp.src(paths.styles.src)
         .pipe(sass())
@@ -32,6 +37,6 @@ const serve = (done) => {
 
 const watch = () => gulp.watch(paths.styles.src, gulp.series(styles, reload));
 
-const dev = gulp.series(styles, serve, watch);
+const dev = gulp.series(fontawesome, styles, serve, watch);
 
 export default dev;

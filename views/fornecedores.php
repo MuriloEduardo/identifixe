@@ -1,6 +1,9 @@
-<link href="<?php echo BASE_URL;?>/assets/css/fornecedores.css" rel="stylesheet" type="text/css"/>
-<script src="<?php echo BASE_URL;?>/assets/js/fornecedores.js" type="text/javascript"></script>
-<h1 class="titulo_fr">FORNECEDORES</h1>
+<script type="text/javascript">
+    var baselink = '<?php echo BASE_URL;?>',
+        currentModule = '<?php echo str_replace(array("-add", "-edt"), "", basename(__FILE__, ".php")) ?>'
+</script>
+
+<h1 class="display-4">FORNECEDORES</h1>
 
 <div class="aviso_fr"><?php if(!empty($aviso)){echo $aviso;}?></div>
 <div class="input-pai"><div class="input-filho">
