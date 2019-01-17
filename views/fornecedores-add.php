@@ -3,11 +3,16 @@
         currentModule = '<?php echo str_replace(array("-add", "-edt"), "", basename(__FILE__, ".php")) ?>'
 </script>
 
-<h1 class="display-4">Adicionar Fornecedor</h1>
+<div class="d-flex align-items-center my-5">
+    <?php if(in_array("permissoes_ver", $infoFunc["permissoesFuncionario"])): ?>
+        <a href="<?php echo BASE_URL . '/fornecedores' ?>" class="btn btn-secondary mr-4" title="Voltar">
+            <i class="fas fa-chevron-left"></i>
+        </a>
+    <?php endif ?>
+    <h1 class="display-4 m-0">Adicionar Fornecedor</h1>
+</div>
 
 <form method="POST">
-
-    <input type="reset" value="Limpar Campos" class="btn btn-secondary"/>
    
     <input type="text" name="nome_fantasia" id="itxt1" placeholder='<?php echo $listaColunas[2]["nomecol"];?>' class="form-control" required/>
     <input type="text" name="sigla" id="itxt2" placeholder='<?php echo $listaColunas[3]["nomecol"];?>' class="form-control" required/>

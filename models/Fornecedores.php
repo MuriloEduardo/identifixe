@@ -7,10 +7,10 @@ class Fornecedores extends model {
         parent::__construct(); 
     }
         
-    public function pegarListaFornecedores($empresa) {
+    public function pegarListaFornecedores() {
        $array = array();
        
-       $sql = "SELECT * FROM fornecedores WHERE id_empresa = '$empresa' AND situacao = 'ativo' ORDER BY id DESC";      
+       $sql = "SELECT * FROM fornecedores WHERE situacao = 'ativo' ORDER BY id DESC";      
        $sql = $this->db->query($sql);
        if($sql->rowCount()>0){
          $array = $sql->fetchAll(); 
@@ -18,10 +18,10 @@ class Fornecedores extends model {
        return $array; 
     }
     
-     public function pegarInfoForn($id,$empresa) {
+     public function pegarInfoForn($id) {
        $array = array();
        
-       $sql = "SELECT * FROM fornecedores WHERE id='$id' AND id_empresa = '$empresa' AND situacao = 'ativo'";      
+       $sql = "SELECT * FROM fornecedores WHERE id='$id' AND situacao = 'ativo'";      
        $sql = $this->db->query($sql);
        if($sql->rowCount()>0){
          $array = $sql->fetchAll(); 
@@ -43,9 +43,9 @@ class Fornecedores extends model {
        return $array;
     }
 
-    public function adicionar($txts,$empresa){
+    public function adicionar($txts){
         
-        if(count($txts) > 0 && !empty($empresa)){
+        if(count($txts) > 0){
             
             $p = new Permissoes();
             $ipcliente = $p->pegaIPcliente();
@@ -69,10 +69,9 @@ class Fornecedores extends model {
             $txt15 = addslashes($txts[15]); // observacao
             
             //montagem da query
-            $sql = "INSERT INTO fornecedores (id, id_empresa, nomefantasia, sigla, razaosocial, cnpj, cep, endereco, numero, complemento, bairro,".
+            $sql = "INSERT INTO fornecedores (id, nomefantasia, sigla, razaosocial, cnpj, cep, endereco, numero, complemento, bairro,".
                                              "cidade, telefone, celular, contato, site, observacao, alteracoes, situacao) VALUES ".
             "(DEFAULT, ".
-            "'$empresa', ".
             "'$txt1', ".
             "'$txt2', ".
             "'$txt3', ".
@@ -96,8 +95,8 @@ class Fornecedores extends model {
         }
     }    
     
-    public function editar($id, $txts, $empresa){
-        if(!empty($id) && !empty($empresa) && count($txts) >0 ){
+    public function editar($id, $txts){
+        if(!empty($id) && count($txts) >0 ){
             
             $p = new Permissoes();
             $ipcliente = $p->pegaIPcliente();
@@ -137,17 +136,17 @@ class Fornecedores extends model {
                 "contato =       '$txt13', ".
                 "site =          '$txt14', ".
                 "observacao =    '$txt15', ".
-                "alteracoes = '$altera' WHERE id='$id' AND id_empresa='$empresa'";
+                "alteracoes = '$altera' WHERE id='$id'";
 
             $this->db->query($sql);
 
         }
     }
 
-    public function excluir($id,$empresa){
-        if(!empty($id) && !empty($empresa)){
+    public function excluir($id){
+        if(!empty($id)){
             //se não achar nenhum usuario associado ao grupo - pode deletar, ou seja, tornar o cadastro situacao=excluído
-            $sql = "SELECT alteracoes FROM fornecedores WHERE id = '$id' AND id_empresa = '$empresa' AND situacao = 'ativo'";
+            $sql = "SELECT alteracoes FROM fornecedores WHERE id = '$id' AND situacao = 'ativo'";
             $sql = $this->db->query($sql);
 
             if($sql->rowCount() > 0){ 
@@ -157,17 +156,17 @@ class Fornecedores extends model {
                $ipcliente = $p->pegaIPcliente();
                
                $palter = $palter." | ".ucwords($_SESSION["nomeFuncionario"])." - $ipcliente - ".date('d/m/Y H:i:s')." - EXCLUSAO";
-               $sqlA = "UPDATE fornecedores SET alteracoes = '$palter', situacao = 'excluido' WHERE id = '$id' AND id_empresa = '$empresa'";
+               $sqlA = "UPDATE fornecedores SET alteracoes = '$palter', situacao = 'excluido' WHERE id = '$id'";
                $this->db->query($sqlA);
                
             }
         }
     }
     
-    public function buscaFornPeloNomeFantasia($nome,$empresa){
+    public function buscaFornPeloNomeFantasia($nome){
         $array = array();
-        if(!empty($nome) && !empty($empresa)){
-            $sql = "SELECT nomefantasia FROM fornecedores WHERE nomefantasia='$nome' AND id_empresa = '$empresa' AND situacao='ativo'";
+        if(!empty($nome)){
+            $sql = "SELECT nomefantasia FROM fornecedores WHERE nomefantasia='$nome' AND situacao='ativo'";
             $sql = $this->db->query($sql);
             if($sql->rowCount()>0){
                 $array = $sql->fetchAll();
@@ -176,10 +175,10 @@ class Fornecedores extends model {
         return $array;
     }
     
-    public function buscaFornPelaSigla($nome,$empresa){
+    public function buscaFornPelaSigla($nome){
         $array = array();
-        if(!empty($nome) && !empty($empresa)){
-            $sql = "SELECT sigla FROM fornecedores WHERE sigla='$nome' AND id_empresa = '$empresa' AND situacao='ativo'";
+        if(!empty($nome)){
+            $sql = "SELECT sigla FROM fornecedores WHERE sigla='$nome' AND situacao='ativo'";
             $sql = $this->db->query($sql);
             if($sql->rowCount()>0){
                 $array = $sql->fetchAll();
@@ -188,10 +187,10 @@ class Fornecedores extends model {
         return $array;
     }
     
-    public function buscaFornPelaRazao($nome,$empresa){
+    public function buscaFornPelaRazao($nome){
         $array = array();
-        if(!empty($nome) && !empty($empresa)){
-            $sql = "SELECT razaosocial FROM fornecedores WHERE razaosocial='$nome' AND id_empresa = '$empresa' AND situacao='ativo'";
+        if(!empty($nome)){
+            $sql = "SELECT razaosocial FROM fornecedores WHERE razaosocial='$nome' AND situacao='ativo'";
             $sql = $this->db->query($sql);
             if($sql->rowCount()>0){
                 $array = $sql->fetchAll();
@@ -200,10 +199,10 @@ class Fornecedores extends model {
         return $array;
     }
     
-    public function buscaFornPeloCnpj($nome,$empresa){
+    public function buscaFornPeloCnpj($nome){
         $array = array();
-        if(!empty($nome) && !empty($empresa)){
-            $sql = "SELECT cnpj FROM fornecedores WHERE cnpj='$nome' AND id_empresa = '$empresa' AND situacao='ativo'";
+        if(!empty($nome)){
+            $sql = "SELECT cnpj FROM fornecedores WHERE cnpj='$nome' AND situacao='ativo'";
             $sql = $this->db->query($sql);
             if($sql->rowCount()>0){
                 $array = $sql->fetchAll();

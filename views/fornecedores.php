@@ -18,22 +18,6 @@
     <a href="<?php echo BASE_URL;?>/fornecedores/adicionar" class="btn btn-success">Adicionar</a>
 <?php endif ?>
     
-    
-    <!-- <div class="input-pai">
-        <div class="input-filho">
-            <label class="label-block"> Procurar Por:
-                <select class="select-block" id="icampo">
-                    <option value="">Todos As Colunas</option>
-                    <?php for($i = 2; $i< count($listaColunas)-2; $i++):?>
-                    <option value="<?php echo ($i-1);?>"><?php echo $listaColunas[$i]['nomecol']?></option>
-                <?php endfor;?>
-                </select>
-            </label>    
-        </div>
-        <div class="input-filho">            
-            <label class="label-block" for="ifiltro">Texto Procurado:<input type="text" id="ifiltro" class="input-block" /></label>
-        </div>
-    </div> -->
 
     <table id="tabelafornecedores" class="table table-striped table-hover dataTable">
     <thead>

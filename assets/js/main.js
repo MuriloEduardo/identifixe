@@ -318,10 +318,11 @@ $(function () {
             serverSide: true,
             scrollCollapse: true,
             conditionalPaging: true,
+            autoWidth: false,
             ajax: {
-                'url': baselink + '/ajax/dataTableAjax',
-                'type': 'POST',
-                'data': {
+                url: baselink + '/ajax/dataTableAjax',
+                type: 'POST',
+                data: {
                     module: currentModule
                 }
             },

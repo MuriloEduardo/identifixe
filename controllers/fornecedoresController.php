@@ -21,7 +21,7 @@ class fornecedoresController extends controller{
         
         $fr = new Fornecedores();
         $dados["listaColunas"] = $fr->nomeDasColunas();
-        $dados["listaFornecedores"]  = $fr->pegarListaFornecedores($_SESSION["idEmpresaFuncionario"]);
+        $dados["listaFornecedores"]  = $fr->pegarListaFornecedores();
         $this->loadTemplate("fornecedores",$dados);      
     } 
     
@@ -38,7 +38,7 @@ class fornecedoresController extends controller{
         
         if(isset($_POST["txt"]) && count($_POST["txt"])> 0){
             $txts = $_POST["txt"]; 
-            $fr->adicionar($txts,$_SESSION["idEmpresaFuncionario"]);
+            $fr->adicionar($txts);
             header("Location: ".BASE_URL."/fornecedores");
         }else{
 
@@ -58,11 +58,11 @@ class fornecedoresController extends controller{
         $id = addslashes($id);
         if(isset($_POST["txt"]) && count($_POST["txt"])> 0){
             $txts = $_POST["txt"]; 
-            $fr->editar($id, $txts,$_SESSION["idEmpresaFuncionario"]);
+            $fr->editar($id, $txts);
             header("Location: ".BASE_URL."/fornecedores");
         }else{
             
-            $dados["infoForn"] = $fr->pegarInfoForn($id,$_SESSION["idEmpresaFuncionario"]);
+            $dados["infoForn"] = $fr->pegarInfoForn($id);
             $dados["listaColunas"] = $fr->nomeDasColunas();
             $this->loadTemplate("fornecedores-edt",$dados);
         }  
@@ -76,7 +76,7 @@ class fornecedoresController extends controller{
         $fr = new Fornecedores();
         $id = addslashes($id);
 
-        $fr->excluir($id,$_SESSION["idEmpresaFuncionario"]);
+        $fr->excluir($id);
         header("Location: ".BASE_URL."/fornecedores");  
       }
     }   

@@ -16,7 +16,7 @@
          "text" => "Administradoras de Cartão",
          "icon" => "fas fa-credit-card",
          "permissao" => "admcartoes_ver",
-         "link" => "/admcartoes"
+         "link" => "/administradoras"
       ],
       [
          "text" => "Lançamentos de Caixa",
@@ -106,9 +106,9 @@
       <aside id="sidebar-wrapper" class="shadow-lg bg-dark">
          <ul class="nav flex-column sidebar-nav p-3">
             <?php foreach ($menus as $key => $value): ?>
-               <?php if($value["permissao"] == "home" || in_array("permissoes_ver", $infoFunc["permissoesFuncionario"])): ?>
+               <?php if($value["permissao"] == "home" || in_array($value["permissao"], $infoFunc["permissoesFuncionario"])): ?>
                   <li class="nav-item">
-                     <a class="nav-link my-2" href="<?php echo BASE_URL . $value["link"];?>" class="">
+                     <a class="nav-link my-2" href="<?php echo BASE_URL . $value["link"];?>">
                         <i class="<?php echo $value["icon"] ?> mr-3"></i>
                         <span><?php echo $value["text"] ?></span>
                      </a>

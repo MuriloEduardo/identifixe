@@ -111,7 +111,7 @@ class Shared extends model {
                         </div>
                     ';
                 }else{
-                    $vetor[$col] = $resultado_usuarios[$lin][$col-1];
+                    $vetor[$col] = $resultado_usuarios[$lin][$col];
                 }
             }
             $matriz[$lin] = $vetor;
