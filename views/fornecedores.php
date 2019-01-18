@@ -3,8 +3,6 @@
         currentModule = '<?php echo str_replace(array("-add", "-edt"), "", basename(__FILE__, ".php")) ?>'
 </script>
 
-<h1 class="display-4">Fornecedores</h1>
-
 <?php if(!empty($aviso)): ?>
     <div class="alert alert-danger alert-dismissible" role="alert">
         <?php echo $aviso ?>
@@ -13,19 +11,26 @@
         </button>
     </div>
 <?php endif ?>
-
-<?php if(in_array("fornecedores_add", $infoFunc["permissoesFuncionario"])): ?>
-    <a href="<?php echo BASE_URL;?>/fornecedores/adicionar" class="btn btn-success">Adicionar</a>
-<?php endif ?>
-    
-
-    <table id="tabelafornecedores" class="table table-striped table-hover dataTable">
+<?php
+$headerData = [
+    "titulo" => "Fornecedores",
+    "adicionar" => [
+        "permissao" => "fornecedores_add",
+        "url" => "/fornecedores/adicionar"
+    ]
+];
+require "_header_browser.php";
+?>
+<table id="tabelafornecedores" class="table table-striped table-hover dataTable">
     <thead>
         <tr>
-            <th>Ações</th>
+            <th class="actions">Ações</th>
             <?php for($i = 1; $i< count($listaColunas)-2; $i++):?>
-                <th><?php echo $listaColunas[$i]['nomecol']?></th>
+                <th>
+                    <span><?php echo $listaColunas[$i]['nomecol']?></span>
+                    <i class="small text-muted fas fa-sort ml-2"></i>
+                </th>
             <?php endfor;?>
         </tr>
     </thead>
-    </table>
+</table>

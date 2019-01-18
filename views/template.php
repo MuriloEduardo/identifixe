@@ -76,8 +76,15 @@
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
       <link href="<?php echo BASE_URL;?>/assets/css/vendor/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
-      <link href="<?php echo BASE_URL;?>/assets/css/vendor/jquery.dataTables.min.css" rel="stylesheet" type="text/css"/>
       <link href="<?php echo BASE_URL;?>/assets/css/style.css" rel="stylesheet" type="text/css"/>
+
+      <script src="<?php echo BASE_URL;?>/assets/js/vendor/jquery-3.3.1.min.js" type="text/javascript"></script>
+      <script src="<?php echo BASE_URL;?>/assets/js/vendor/jquery.mask.js" type="text/javascript"></script>
+      <script src="<?php echo BASE_URL;?>/assets/js/vendor/jquery.dataTables.min.js" type="text/javascript"></script>
+      <script src="<?php echo BASE_URL;?>/assets/js/vendor/jquery-ui.min.js" type="text/javascript"></script>
+      <script src="<?php echo BASE_URL;?>/assets/js/vendor/popper.min.js" type="text/javascript"></script>
+      <script src="<?php echo BASE_URL;?>/assets/js/vendor/bootstrap.min.js" type="text/javascript"></script>
+      <script src="<?php echo BASE_URL;?>/assets/js/main.js" type="text/javascript"></script>
    </head>
 <body class="d-flex flex-column h-100">
    <nav class="navbar navbar-dark bg-primary shadow-sm fixed-top">
@@ -131,11 +138,4 @@
          </div>
       </footer>
    </body>
-   <script src="<?php echo BASE_URL;?>/assets/js/vendor/jquery-3.3.1.min.js" type="text/javascript"></script>
-   <script src="<?php echo BASE_URL;?>/assets/js/vendor/jquery.mask.js" type="text/javascript"></script>
-   <script src="<?php echo BASE_URL;?>/assets/js/vendor/jquery.dataTables.min.js" type="text/javascript"></script>
-   <script src="<?php echo BASE_URL;?>/assets/js/vendor/jquery-ui.min.js" type="text/javascript"></script>
-   <script src="<?php echo BASE_URL;?>/assets/js/vendor/popper.min.js" type="text/javascript"></script>
-   <script src="<?php echo BASE_URL;?>/assets/js/vendor/bootstrap.min.js" type="text/javascript"></script>
-   <script src="<?php echo BASE_URL;?>/assets/js/main.js" type="text/javascript"></script>
 </html>
