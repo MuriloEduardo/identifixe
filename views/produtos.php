@@ -2,15 +2,7 @@
     var baselink = '<?php echo BASE_URL;?>',
         currentModule = '<?php echo str_replace(array("-add", "-edt"), "", basename(__FILE__, ".php")) ?>'
 </script>
-
-<?php if(!empty($aviso)): ?>
-    <div class="alert alert-danger alert-dismissible" role="alert">
-        <?php echo $aviso ?>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-<?php endif ?>
+<!-- header -->
 <?php
 $headerData = [
     "titulo" => "Produtos",
@@ -21,6 +13,7 @@ $headerData = [
 ];
 require "_header_browser.php";
 ?>
+<!-- end header -->
 <table class="table table-striped table-hover dataTable">
     <thead>
         <tr>
