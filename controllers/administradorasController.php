@@ -19,9 +19,10 @@ class administradorasController extends controller{
         $dados = array();
         $dados['infoFunc'] = $_SESSION;
         
-        $a = new Administradoras();
-        $dados["listaAdministradoras"]  = $a->pegarListaAdministradoras();
-        $this->loadTemplate("administradoras",$dados);      
+        $shared = new Shared("administradoras");
+        $dados["listaColunas"] = $shared->nomeDasColunas();
+        $dados["listaAdministradoras"]  = $shared->pegarListas();
+        $this->loadTemplate("administradoras",$dados);
     } 
     
     public function adicionar() {

@@ -17,7 +17,8 @@
 	position: fixed;
 	left: $sidebar-width;
 	width: 0;
-	height: 100%;
+	top: $navbar-height;
+	bottom: 0;
 	margin-left: -$sidebar-width;
 	overflow-y: auto;
 	transition: all 0.5s ease;
@@ -31,15 +32,10 @@
 	top: 0;
 	width: $sidebar-width;
 	margin: 0;
-    padding: 0;
-    .nav-item {
-        > .nav-link {
-            color: $white;
-            &:hover {
-                color: rgba($white, 0.7);
-            }
-        }
-    }
+	padding: 0;
+	.dropdown-menu {
+		transform: none!important;
+	}
 }
 @include media-breakpoint-up(md) {
 	#wrapper {

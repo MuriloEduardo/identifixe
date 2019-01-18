@@ -6,17 +6,6 @@ class Administradoras extends model {
     public function __construct($id = "") {
         parent::__construct(); 
     }
-        
-    public function pegarListaAdministradoras() {
-       $array = array();
-       
-       $sql = "SELECT id, nome FROM administradoras WHERE situacao = 'ativo' ORDER BY id DESC";      
-       $sql = $this->db->query($sql);
-       if($sql->rowCount()>0){
-         $array = $sql->fetchAll(); 
-       }
-       return $array; 
-    }
     
     public function pegarListaBandeiras() {
        $array = array();

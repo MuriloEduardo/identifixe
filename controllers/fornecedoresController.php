@@ -22,7 +22,7 @@ class fornecedoresController extends controller{
         $fr = new Fornecedores();
         $dados["listaColunas"] = $fr->nomeDasColunas();
         $dados["listaFornecedores"]  = $fr->pegarListaFornecedores();
-        $this->loadTemplate("fornecedores",$dados);      
+        $this->loadTemplate("fornecedores",$dados);
     } 
     
     public function adicionar() {

@@ -52,5 +52,30 @@ class Shared extends model {
         }
         return $array;
     }
+
+    public function nomeDasColunas(){
+        $array = array();
+        
+        $sql = "SHOW COLUMNS FROM " . $this->table;      
+        $sql = $this->db->query($sql);
+        if($sql->rowCount()>0){
+          $sql = $sql->fetchAll(); 
+          foreach ($sql as $chave => $valor){
+             $array[$chave] = array("nomecol" => utf8_encode(ucwords($valor["Field"])));        
+          }
+        }
+        return $array;
+     }
+
+     public function pegarListas() {
+        $array = array();
+        
+        $sql = "SELECT * FROM " . $this->table . " WHERE situacao = 'ativo' ORDER BY id DESC";      
+        $sql = $this->db->query($sql);
+        if($sql->rowCount()>0){
+          $array = $sql->fetchAll(); 
+        }
+        return $array; 
+     }
 }
 ?>

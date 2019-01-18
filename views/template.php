@@ -1,52 +1,48 @@
 <?php
-   $menus = array(
+   $menus = [
       [
-         "text" => "Home",
-         "icon" => "fas fa-home",
-         "permissao" => "home",
+         "text" => "Dashboard",
+         "icon" => "fas fa-tachometer-alt",
+         "permissao" => "",
          "link" => "/home"
+      ],
+      [
+         "text" => "Cadastros",
+         "icon" => "fas fa-save",
+         "permissao" => "",
+         "link" => "/#",
+         "filhos" => [
+            [
+               "text" => "Clientes",
+               "icon" => "fas fa-handshake",
+               "permissao" => "clientes_ver",
+               "link" => "/clientes"
+            ],
+            [
+               "text" => "Produtos",
+               "icon" => "fas fa-boxes",
+               "permissao" => "produtos_ver",
+               "link" => "/produtos"
+            ],
+            [
+               "text" => "Fornecedores",
+               "icon" => "fas fa-truck",
+               "permissao" => "fornecedores_ver",
+               "link" => "/fornecedores"
+            ],
+            [
+               "text" => "Funcionários",
+               "icon" => "fas fa-users",
+               "permissao" => "funcionarios_ver",
+               "link" => "/funcionarios"
+            ]
+         ]
       ],
       [
          "text" => "Permissões",
          "icon" => "fas fa-ban",
          "permissao" => "permissoes_ver",
          "link" => "/permissoes"
-      ],
-      [
-         "text" => "Administradoras de Cartão",
-         "icon" => "fas fa-credit-card",
-         "permissao" => "admcartoes_ver",
-         "link" => "/administradoras"
-      ],
-      [
-         "text" => "Lançamentos de Caixa",
-         "icon" => "fas fa-cart-plus",
-         "permissao" => "lancamentos_ver",
-         "link" => "/lancamentos"
-      ],
-      [
-         "text" => "Fornecedores",
-         "icon" => "fas fa-truck",
-         "permissao" => "fornecedores_ver",
-         "link" => "/fornecedores"
-      ],
-      [
-         "text" => "Funcionários",
-         "icon" => "fas fa-users",
-         "permissao" => "funcionarios_ver",
-         "link" => "/funcionarios"
-      ],
-      [
-         "text" => "Controle de Caixa",
-         "icon" => "fas fa-calculator",
-         "permissao" => "controlecaixa_ver",
-         "link" => "/controlecaixa"
-      ],
-      [
-         "text" => "Clientes",
-         "icon" => "fas fa-handshake",
-         "permissao" => "clientes_ver",
-         "link" => "/clientes"
       ],
       [
          "text" => "Estoque",
@@ -61,12 +57,32 @@
          "link" => "/compras"
       ],
       [
-         "text" => "Produtos",
-         "icon" => "fas fa-boxes",
-         "permissao" => "produtos_ver",
-         "link" => "/produtos"
+         "text" => "Financeiro",
+         "icon" => "fas fa-money-bill-alt",
+         "permissao" => "",
+         "link" => "/#",
+         "filhos" => [
+            [
+               "text" => "Administradoras de Cartão",
+               "icon" => "fas fa-credit-card",
+               "permissao" => "admcartoes_ver",
+               "link" => "/administradoras"
+            ],
+            [
+               "text" => "Lançamentos de Caixa",
+               "icon" => "fas fa-cart-plus",
+               "permissao" => "lancamentos_ver",
+               "link" => "/lancamentos"
+            ],
+            [
+               "text" => "Controle de Caixa",
+               "icon" => "fas fa-calculator",
+               "permissao" => "controlecaixa_ver",
+               "link" => "/controlecaixa"
+            ]
+         ]
       ]
-   );
+   ];
 ?>
 <!doctype html>
 <html class="h-100">
@@ -90,12 +106,12 @@
    <nav class="navbar navbar-dark bg-primary shadow-sm fixed-top">
       <ul class="nav">
          <li>
-            <a href="#menu-toggle" class="btn btn-link text-white" id="menu-toggle">
+            <a href="#menu-toggle" class="btn btn-link px-0 border-0" id="menu-toggle">
                <span class="navbar-toggler-icon"></span>
             </a>
          </li>
          <li>
-            <a class="navbar-brand mx-3" href="#"><?php echo trim(NOME_EMPRESA);?></a>
+            <a class="navbar-brand mx-3" href="<?php echo BASE_URL ?>/home"><?php echo trim(NOME_EMPRESA);?></a>
          </li>
       </ul>
       <ul class="navbar-nav">
@@ -110,27 +126,62 @@
       </ul>
    </nav>
    <div id="wrapper">
-      <aside id="sidebar-wrapper" class="shadow-lg bg-dark">
-         <ul class="nav flex-column sidebar-nav p-3">
+      <aside id="sidebar-wrapper" class="shadow-lg bg-white">
+         <ul class="nav flex-column sidebar-nav py-3">
             <?php foreach ($menus as $key => $value): ?>
-               <?php if($value["permissao"] == "home" || in_array($value["permissao"], $infoFunc["permissoesFuncionario"])): ?>
-                  <li class="nav-item">
-                     <a class="nav-link my-2" href="<?php echo BASE_URL . $value["link"];?>">
-                        <i class="<?php echo $value["icon"] ?> mr-3"></i>
+               <?php if($value["permissao"] == "" || in_array($value["permissao"], $infoFunc["permissoesFuncionario"])): ?>
+                  <?php
+                     // Menu com Dropdown
+                     if ($value["filhos"]) {
+                        
+                        $filhos = "";
+                        foreach ($value["filhos"] as $keyFilho => $valueFilho) {
+                           $filhos .= '
+                              <li class="nav-item">
+                                 <a class="nav-link my-2" href="' . BASE_URL . $valueFilho["link"] . '">
+                                    <i class="' . $valueFilho["icon"] . ' mr-2"></i>
+                                    <span>' . $valueFilho["text"] . '</span>
+                                 </a>
+                              </li>
+                           ';
+                        }
+
+                        $navItemDropdownClass = "dropdown position-static";
+                        $navLinkDropdownClass = "dropdown-toggle";
+                        $navLinkDropdownAttrs = 'data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"';
+                        $dropdownMenu = '
+                           <ul class="dropdown-menu float-none border-0 rounded-0 position-static mt-0 py-0 px-3">' . $filhos . '</ul>
+                        ';
+                     } else {
+                        $navItemDropdownClass = "";
+                        $navLinkDropdownClass = "";
+                        $navLinkDropdownAttrs = "";
+                        $dropdownMenu = "";
+                     }
+                  ?>
+                  <li class="nav-item <?php echo $navItemDropdownClass ?>">
+                     <a class="nav-link my-2 <?php echo $navLinkDropdownClass ?>" href="<?php echo BASE_URL . $value["link"] ?>" <?php echo $navLinkDropdownAttrs ?>>
+                        <i class="<?php echo $value["icon"] ?> mr-2"></i>
                         <span><?php echo $value["text"] ?></span>
                      </a>
+                     <?php echo $dropdownMenu ?>
                   </li>
                <?php endif ?>
             <?php endforeach ?>
          </ul>
       </aside>
       <main id="page-content-wrapper">
+         <nav aria-label="breadcrumb">
+            <ol class="breadcrumb rounded-0">
+               <li class="breadcrumb-item"><a href="<?php echo BASE_URL ?>/home">Dashboard</a></li>
+               <li class="breadcrumb-item"><a href="#">Library</a></li>
+               <li class="breadcrumb-item active" aria-current="page">Data</li>
+            </ol>
+         </nav>
          <div class="container-fluid">
-            <div class="px-3">
-               <?php $this->loadViewInTemplate($viewName, $viewData); ?>
-            </div>
+            <?php $this->loadViewInTemplate($viewName, $viewData); ?>
          </div>
-         </main>
+      </main>
       </div>
       <footer class="py-3 bg-light mt-auto shadow-sm">
          <div class="container-fluid">

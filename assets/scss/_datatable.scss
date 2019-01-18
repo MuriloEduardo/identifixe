@@ -1,5 +1,8 @@
 .dataTables_wrapper {
     margin-bottom: $spacer * 2;
+    #DataTables_Table_0_paginate {
+        display: none;
+    }
     .dataTables_scrollHead {
         .table {
             margin-bottom: 0;
