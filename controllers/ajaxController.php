@@ -316,7 +316,7 @@ class ajaxController extends controller{
     /////// PRODUTOS
     public function dataTableAjax(){
         $shared = new Shared();
-        $dados = $shared->montaDataTable($_POST['module']);
+        $dados = $shared->montaDataTable($_POST["module"]);
         echo json_encode($dados);
     }
     

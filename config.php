@@ -6,14 +6,14 @@ $config = array();
 
 if(ENVIRONMENT == "development") {
     $config["dbname"] = "identifixe";
-    $config["dbhost"] = "127.0.0.1";
+    $config["dbhost"] = "localhost";
     $config["dbuser"] = "root";
-    $config["dbpass"] = "liloeduardo0202";
+    $config["dbpass"] = "";
 } else {
-    $config["dbname"] = "u372331304_teste";
-    $config["dbhost"] = "mysql.hostinger.com.br";
-    $config["dbuser"] = "u372331304_teste";
-    $config["dbpass"] = "testesqualo";
+    //$config["dbname"] = "u372331304_teste";
+    //$config["dbhost"] = "mysql.hostinger.com.br";
+    //$config["dbuser"] = "u372331304_teste";
+    //$config["dbpass"] = "testesqualo";
 }
 
 ?>

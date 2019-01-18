@@ -23,7 +23,7 @@
     <thead>
         <tr>
             <th>Ações</th>
-            <?php for($i = 2; $i< count($listaColunas)-2; $i++):?>
+            <?php for($i = 1; $i< count($listaColunas)-2; $i++):?>
                 <th><?php echo $listaColunas[$i]['nomecol']?></th>
             <?php endfor;?>
         </tr>

@@ -99,8 +99,9 @@ class Shared extends model {
         //print_r($resultado_usuarios); exit;
         //print_r($campos); exit;
         // Ler e criar o array de dados
+        //print_r($campos);exit;
         $matriz = array();
-        for($lin = 0; $lin < count($resultado_usuarios); $lin++){ // quantidade de registrados mostrados 0 - 9 provavelmente 
+        for($lin = 0; $lin < count($resultado_usuarios)-1; $lin++){ // quantidade de registrados mostrados 0 - 9 provavelmente 
             $vetor = array(); 
             for($col = 0; $col <= count($campos); $col++){
                 if($col == 0){
@@ -112,12 +113,14 @@ class Shared extends model {
                     ';
                 }else{
                     $vetor[$col] = $resultado_usuarios[$lin][$col];
+                    //print_r($vetor);exit;
                 }
             }
             $matriz[$lin] = $vetor;
+            //print_r($matriz);exit;
         }
 
-        // print_r($matriz); exit;
+        //print_r($matriz); exit;
         //Cria o array de informações a serem retornadas para o Javascript
         $json_data = array(
             "draw" => intval( $requestData['draw'] ),//para cada requisição é enviado um número como parâmetro
