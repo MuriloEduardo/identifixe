@@ -11,7 +11,7 @@ class Permissoes extends model {
         $array = array();
         if(!empty($id_empresa) && !empty($id_grupopermissao)){
            //busca os id dos parametros correspondentes do grupo de permissao pesquisado 
-           $sql = "SELECT pg.parametros FROM permissoes_grupos as pg WHERE pg.id = '$id_grupopermissao' AND pg.id_empresa = '$id_empresa' AND pg.situacao = 'ativo'";
+           $sql = "SELECT parametros FROM permissoes as pg WHERE id = '$id_grupopermissao' AND id_empresa = '$id_empresa' AND situacao = 'ativo'";
            $sql = $this->db->query($sql);
            if($sql->rowCount() > 0){
                 $pr = $sql->fetch();
@@ -21,7 +21,7 @@ class Permissoes extends model {
                 }
                 
                 //busca os nomes dos parametros de permissão do grupo de permissao pesquisado
-                $sqlA = "SELECT pp.nome FROM permissoes_parametros as pp WHERE pp.id_empresa = '$id_empresa' AND pp.id IN (".$pr["parametros"].")";
+                $sqlA = "SELECT nome FROM permissoes_parametros as pp WHERE id_empresa = '$id_empresa' AND id IN (".$pr["parametros"].")";
                 $sqlA = $this->db->query($sqlA);
                 if($sqlA->rowCount()>0){
                     foreach ($sqlA->fetchAll() as $item){
@@ -36,7 +36,7 @@ class Permissoes extends model {
     public function pegarListaPermissoes($empresa){
        $array = array();
        
-       $sql = "SELECT pp.id, pp.nome FROM permissoes_parametros as pp WHERE pp.id_empresa = '$empresa'";      
+       $sql = "SELECT id, nome FROM permissoes_parametros as pp WHERE id_empresa = '$empresa'";      
        $sql = $this->db->query($sql);
        if($sql->rowCount()>0){
          $array = $sql->fetchAll(); 
@@ -47,8 +47,9 @@ class Permissoes extends model {
     public function pegarListaGrupos($empresa) {
        $array = array();
        
-       $sql = "SELECT pg.id, pg.nome FROM permissoes_grupos as pg WHERE pg.id_empresa = '$empresa' AND pg.situacao = 'ativo' ORDER BY id DESC";      
+       $sql = "SELECT id, nome FROM permissoes as pg WHERE id_empresa = '$empresa' AND situacao = 'ativo' ORDER BY id DESC";      
        $sql = $this->db->query($sql);
+       
        if($sql->rowCount()>0){
          $array = $sql->fetchAll(); 
        }
@@ -64,7 +65,7 @@ class Permissoes extends model {
             $ipcliente = $p->pegaIPcliente();
 
             $alteracoes = ucwords($_SESSION["nomeFuncionario"])." - $ipcliente - ".date('d/m/Y H:i:s')." - CADASTRO";
-            $sql = "INSERT INTO permissoes_grupos (id,id_empresa,nome,parametros,alteracoes,situacao) VALUES (DEFAULT, '$empresa', '$nome', '$params','$alteracoes', 'ativo')";
+            $sql = "INSERT INTO permissoes (id,id_empresa,nome,parametros,alteracoes,situacao) VALUES (DEFAULT, '$empresa', '$nome', '$params','$alteracoes', 'ativo')";
             $this->db->query($sql); 
         }           
     }
@@ -72,7 +73,7 @@ class Permissoes extends model {
     public function pegarPermissoesAtivas($id_grupo,$empresa){
        $array = array();
        if(!empty($id_grupo) && !empty($empresa)){         
-            $sql = "SELECT * FROM permissoes_grupos WHERE id_empresa = '$empresa' AND id = '$id_grupo' AND situacao = 'ativo'";
+            $sql = "SELECT * FROM permissoes WHERE id_empresa = '$empresa' AND id = '$id_grupo' AND situacao = 'ativo'";
             $sql = $this->db->query($sql);
                 
             if($sql->rowCount() > 0){
@@ -89,7 +90,7 @@ class Permissoes extends model {
             $p = new Permissoes();
             $ipcliente = $p->pegaIPcliente();
             $palter = $palter." | ".ucwords($_SESSION["nomeFuncionario"])." - ".$ipcliente." - ".date('d/m/Y H:i:s')." - ALTERACAO";
-            $sql = "UPDATE permissoes_grupos SET nome = '$pnome', parametros = '$params', alteracoes = '$palter' WHERE id = '$id_grupo' AND id_empresa = '$empresa'";
+            $sql = "UPDATE permissoes SET nome = '$pnome', parametros = '$params', alteracoes = '$palter' WHERE id = '$id_grupo' AND id_empresa = '$empresa'";
             $this->db->query($sql);             
         }
     }
@@ -103,7 +104,7 @@ class Permissoes extends model {
             if($numFunc == 0){
                 
                 //se não achar nenhum usuario associado ao grupo - pode deletar, ou seja, tornar o cadastro situacao=excluído
-                $sql = "SELECT alteracoes FROM permissoes_grupos WHERE id = '$id_grupo' AND id_empresa = '$empresa' AND situacao = 'ativo'";
+                $sql = "SELECT alteracoes FROM permissoes WHERE id = '$id_grupo' AND id_empresa = '$empresa' AND situacao = 'ativo'";
                 $sql = $this->db->query($sql);
                 
                 if($sql->rowCount() > 0){ 
@@ -112,7 +113,7 @@ class Permissoes extends model {
                    $p = new Permissoes();
                    $ipcliente = $p->pegaIPcliente();
                    $palter = $palter." | ".ucwords($_SESSION["nomeFuncionario"])." - ".$ipcliente." - ".date('d/m/Y H:i:s')." - EXCLUSAO";
-                   $sqlA = "UPDATE permissoes_grupos SET alteracoes = '$palter', situacao = 'excluido' WHERE id = '$id_grupo' AND id_empresa = '$empresa'";
+                   $sqlA = "UPDATE permissoes SET alteracoes = '$palter', situacao = 'excluido' WHERE id = '$id_grupo' AND id_empresa = '$empresa'";
                    $this->db->query($sqlA);  
                 }         
             }

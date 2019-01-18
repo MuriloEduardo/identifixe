@@ -1,71 +1,79 @@
+
 <script type="text/javascript">
     var baselink = '<?php echo BASE_URL;?>',
         currentModule = '<?php echo str_replace(array("-add", "-edt"), "", basename(__FILE__, ".php")) ?>'
 </script>
 
-<h1 class="titulo_fn">ADICIONAR FUNCIONÁRIO</h1>
-<div class="input-pai">
-    <div class="input-filho"><input type="button" value="Limpar Campos" class="botao_fnAux" onclick="limparPreenchimento()"/></div>
-</div>
+
+<header class="d-flex align-items-center my-5">
+    <?php if(in_array("funcionarios_ver", $infoFunc["permissoesFuncionario"])): ?>
+        <a href="<?php echo BASE_URL . '/funcionarios' ?>" class="btn btn-secondary mr-4" title="Voltar">
+            <i class="fas fa-chevron-left"></i>
+        </a>
+    <?php endif ?>
+    <h1 class="display-4 m-0">Adicionar Funcionário</h1>
+</header>
+
 <form method="POST">
-   
-    <div class="input-pai">
-        <div class="input-filho">
-            <input type="text" name="nome" id="itxt1" placeholder='<?php echo $listaColunas[2]["nomecol"];?>' class="input-block" required style="width: 98%"/>
-        </div>
-    </div>    
-    <div class="input-pai">
-        <div class="input-filho"><input type="email" name="email" id="itxt2" placeholder='<?php echo $listaColunas[3]["nomecol"];?>' class="input-block" required/></div>
-        <div class="input-filho"><input type="text" name="cpf" id="itxt3" placeholder='<?php echo $listaColunas[4]["nomecol"];?>' class="input-block" required/></div>
-        <div class="input-filho"><input type="text" name="rg" id="itxt3" placeholder='<?php echo $listaColunas[5]["nomecol"];?>' class="input-block" required/></div>
-    </div>
-    <div class="input-pai">
-        <div class="input-filho"><input type="text" name="cep" id="itxt4" placeholder='<?php echo $listaColunas[5]["nomecol"];?>' class="input-block" required/></div>
-        <div class="input-filho"><input type="text" name="endereco" id="itxt5" placeholder='<?php echo $listaColunas[6]["nomecol"];?>' class="input-block" required/></div>
-    </div>
-    <div class="input-pai">
-        <div class="input-filho"><input type="text" name="numero" id="itxt6" placeholder='<?php echo $listaColunas[7]["nomecol"];?>' class="input-block" required/></div>
-        <div class="input-filho"><input type="text" name="complemento" id="itxt7" placeholder='<?php echo $listaColunas[8]["nomecol"];?>' class="input-block" /></div>
-    </div>
-    <div class="input-pai">
-        <div class="input-filho"><input type="text" name="bairro" id="itxt8" placeholder='<?php echo $listaColunas[9]["nomecol"];?>' class="input-block" required/></div>
-        <div class="input-filho"><input type="text" name="data" id="itxt9" placeholder='data' class="input-block" required/></div>
-    </div>
-    <div class="input-pai">
-        <div class="input-filho"><input type="text" name="telefone" id="itxt10" placeholder='<?php echo $listaColunas[11]["nomecol"];?>' class="input-block" required/></div>
-        <div class="input-filho"><input type="text" name="celular" id="itxt11" placeholder='<?php echo $listaColunas[12]["nomecol"];?>' class="input-block" required/></div>
-    </div>
-    <div class="input-pai">
-        <div class="input-filho">
-            <input type="text" name="txt[12]" onfocus="(this.type='date')" onblur="if(this.value==''){this.type='text'}" id="itxt12" placeholder='<?php echo $listaColunas[13]["nomecol"];?>' class="input-block" required/>
-        </div>
-        <div class="input-filho">
-            <input type="hidden" name="txt[13]" id="itxt13" class="input-block" />
-            <select id="itxt14" name="txt[14]" class="select-block" required>
-                <option value="" selected disabled>Grupos de Permissão</option>
-                    <?php foreach ($listaGruposPerm as $gp):?>
-                        <option value="<?php echo $gp["id"]?>" ><?php echo ucwords($gp["nome"]);?></option>
-                    <?php endforeach;?>
-            </select>
-        </div>
-    </div>
-    <div class="input-pai">
-        <div class="input-filho"><input type="text" name="salario" id="itxt16" placeholder='<?php echo $listaColunas[17]["nomecol"];?>' class="input-block" required/></div>
-        <div class="input-filho"><input type="text" name="comissao" id="itxt17" placeholder='<?php echo $listaColunas[18]["nomecol"];?>' class="input-block" required/></div>
-    </div>
-    <div class="input-pai">
-        <div class="input-filho"><input type="text" name="txt[18]" id="itxt18" placeholder='<?php echo $listaColunas[19]["nomecol"];?>' class="input-block" required/></div>
-        <div class="input-filho"><input type="text" name="txt[19]" id="itxt19" placeholder='<?php echo $listaColunas[20]["nomecol"];?>' class="input-block" required/></div>
-    </div>
-    <div class="input-pai">
-        <div class="input-filho"><textarea name="txt[15]" id="itxt15" placeholder='<?php echo $listaColunas[16]["nomecol"];?>' class="select-block"></textarea></div>
-    </div>
-    <div class="input-pai">
-        <div class="input-filho"><input type="password" name="senha1" id="senha1" placeholder='Digite sua Senha' class="input-block" required /></div>
-        <div class="input-filho"><input type="password" name="txt[20]" id="itxt20" placeholder='Repita sua Senha' class="input-block" required/></div>
-    </div>    
-    <div class="input-pai"><div class="input-filho">
-        <input type="submit" value="Adicionar" class="botao_fn" onclick="return testeEnvio()"/>
-    </div></div>    
+    <?php for($i = 1; $i< count($listaColunas)-2; $i++):?>
+        <?php if($listaColunas[$i]['tipo'] == 'mediumtext'):?>
+            <div class="form-group">
+                <label for="<?php echo 'itxt'.($i);?>"><?php echo ucwords(str_replace("_", " ", $listaColunas[$i]['nomecol']));?></label>
+                <select id="<?php echo 'itxt'.($i);?>" 
+                        name="<?php echo lcfirst($listaColunas[$i]['nomecol']);?>"
+                        class="form-control"
+                        <?php if($listaColunas[$i]['nulo'] == "NO"):?>
+                            required                  
+                        <?php endif;?> 
+                        >
+                        
+                        <option value="" selected >Selecione</option>
+                    <?php for($j = 0; $j < count($listaColunas[$i]['relacional']); $j++):?>
+                        <option value="<?php echo $listaColunas[$i]['relacional'][$j]['nome'];?>" ><?php echo $listaColunas[$i]['relacional'][$j]['nome'];?></option>
+                    <?php endfor;?>     
+                </select>
+            </div>
+        <?php elseif($listaColunas[$i]['tipo'] == 'text'):?>
+            <div class="form-group">
+                <label for="<?php echo 'itxt'.($i);?>"><?php echo ucwords(str_replace("_", " ", $listaColunas[$i]['nomecol']));?></label>
+                <textarea
+                    class="form-control"
+                    name="<?php echo lcfirst($listaColunas[$i]['nomecol']);?>" 
+                    id="<?php echo 'itxt'.($i);?>"
+                    <?php if($listaColunas[$i]['nulo'] == "NO"):?>
+                        required                  
+                    <?php endif;?>
+                >
+                </textarea>
+            </div>
+        <?php elseif($listaColunas[$i]['tipo'] == 'longtext'):?>
+            <div class="form_linha">
+                <div class="form_itemLinha">
+                    <input
+                        type="hidden"  
+                        name="<?php echo lcfirst($listaColunas[$i]['nomecol']);?>" 
+                        id="<?php echo 'itxt'.($i);?>"
+                        value=''                         
+                    />
+                </div>                
+            </div>        
+        <?php else:?>
+            <div class="form-group">
+                <label for="<?php echo 'itxt'.($i);?>"><?php echo ucwords(str_replace("_", " ", $listaColunas[$i]['nomecol']));?></label>
+                <input
+                    type="text" 
+                    class="form-control" 
+                    name="<?php echo lcfirst($listaColunas[$i]['nomecol']);?>" 
+                    id="<?php echo 'itxt'.($i);?>"
+                    <?php if($listaColunas[$i]['nulo'] == "NO"):?>
+                        required                  
+                    <?php endif;?> 
+                />
+            </div>
+        <?php endif;?>
+    <?php endfor;?>
+
+    <input type="submit" value="Adicionar" class="btn btn-primary" onclick="return testeEnvio1()"/>
 
 </form>
+
