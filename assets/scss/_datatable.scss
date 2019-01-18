@@ -1,0 +1,91 @@
+.dataTables_wrapper {
+    margin-bottom: $spacer * 2;
+    .dataTables_scrollHead {
+        .table {
+            margin-bottom: 0;
+            thead {
+                th {
+                    border-bottom: none;
+                }
+            }
+        }
+    }
+    .dataTable {
+        white-space: nowrap;
+        thead {
+            tr {
+                th {
+                    &:not(.actions) {
+                        cursor: pointer;
+                    }
+                    &.sorting_asc {
+                        .fas {
+                            &::before {
+                                content: "\f0de";
+                            }
+                        }
+                    }
+                    &.sorting_desc {
+                        .fas {
+                            &::before {
+                                content: "\f0dd";
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        tr {
+            th:first-child,
+            td:first-child {
+                position: sticky;
+                left: 0;
+            }
+            td {
+                text-transform: capitalize;
+            }
+            th:first-child {
+                background: $white;
+            }
+            &:nth-of-type(odd) {
+                td:first-child {
+                    background: #f2f2f2;
+                }
+            }
+            &:nth-of-type(even) {
+                td:first-child {
+                    background: $white;
+                }
+            }
+            &:hover {
+                td:first-child {
+                    background: #ececec;
+                }
+            }
+        }
+    }
+    .dataTables_paginate {
+        display: flex;
+        justify-content: center;
+        .paginate_button {
+            @extend .btn;
+            margin: $spacer;
+            &.disabled {
+                display: none;
+            }
+            &:not(.previous):not(.current):not(.next) {
+                @include button-outline-variant($primary);
+                &:not(:hover) {
+                    border-color: transparent!important;
+                }
+            }
+            &.previous,
+            &.next {
+                @include button-outline-variant($primary);
+            }
+            &.current {
+                @include button-variant($primary, $primary);
+            }
+        }
+    }
+}

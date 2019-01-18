@@ -3,7 +3,14 @@
         currentModule = '<?php echo str_replace(array("-add", "-edt"), "", basename(__FILE__, ".php")) ?>'
 </script>
 
-<h1 class="display-4">Adicionar Produto</h1>
+<header class="d-flex align-items-center my-5">
+    <?php if(in_array("produtos_ver", $infoFunc["permissoesFuncionario"])): ?>
+        <a href="<?php echo BASE_URL . '/produtos' ?>" class="btn btn-secondary mr-4" title="Voltar">
+            <i class="fas fa-chevron-left"></i>
+        </a>
+    <?php endif ?>
+    <h1 class="display-4 m-0">Adicionar Produto</h1>
+</header>
 
 <form method="POST">
     <?php for($i = 1; $i< count($listaColunas)-2; $i++):?>
@@ -18,7 +25,7 @@
                         <?php endif;?> 
                         >
                         
-                        <option value="" selected > Selecione <?php echo ucfirst($listaColunas[$i]['nomecol']);?></option>    
+                        <option value="" selected >Selecione</option>
                     <?php for($j = 0; $j < count($listaColunas[$i]['relacional']); $j++):?>
                         <option value="<?php echo $listaColunas[$i]['relacional'][$j]['nome'];?>" ><?php echo $listaColunas[$i]['relacional'][$j]['nome'];?></option>
                     <?php endfor;?>     

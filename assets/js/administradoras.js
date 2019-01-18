@@ -1,7 +1,7 @@
 window.onload = function(){
     $('#inroparc').change();
     
-    if(bandeirasAceitas.length > 0){
+    if(typeof bandeirasAceitas !== 'undefined'){
         preenchetabela();
         limparPreenchimento();
     }
@@ -119,27 +119,21 @@ $(function(){
                 if(i <= nroparc){
                     $('#itxantecip_'+i+'').val("");
                     $('#itxantecip_'+i+'').removeAttr('readonly');
-                    $('#itxantecip_'+i+'').css('background-color',"#FFF");
                     $('#itxcredsemjuros_'+(12+i)+'').val("");
                     $('#itxcredsemjuros_'+(12+i)+'').removeAttr('readonly');
-                    $('#itxcredsemjuros_'+(12+i)+'').css('background-color',"#FFF");
                 }else{
                     $('#itxantecip_'+i+'').val(0);
                     $('#itxantecip_'+i+'').attr('readonly','readonly');
-                    $('#itxantecip_'+i+'').css('background-color',"#CCC");
                     $('#itxcredsemjuros_'+(12+i)+'').val(0);
                     $('#itxcredsemjuros_'+(12+i)+'').attr('readonly','readonly');
-                    $('#itxcredsemjuros_'+(12+i)+'').css('background-color',"#CCC");
                 }
             }
         }else{
             for(var i=1;i<=12;i++){
                 $('#itxantecip_'+i+'').val("");
                 $('#itxantecip_'+i+'').attr('readonly','readonly');
-                $('#itxantecip_'+i+'').css('background-color',"#CCC");
                 $('#itxcredsemjuros_'+(12+i)+'').val("");
                 $('#itxcredsemjuros_'+(12+i)+'').attr('readonly','readonly');
-                $('#itxcredsemjuros_'+(12+i)+'').css('background-color',"#CCC");
             }
         }
     });

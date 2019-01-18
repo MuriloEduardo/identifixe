@@ -5,7 +5,7 @@ class model{
     public function __construct() {
         global $config;
         try{
-            $this->db = new PDO("mysql:dbname=".$config["dbname"].";host=".$config["dbhost"].";",$config["dbuser"],$config["dbpass"]);
+            $this->db = new PDO("mysql:dbname=".$config["db"].";host=".$config["host"].";",$config["user"],$config["pass"]);
         } catch (PDOException $e){
              echo "FALHA : ".$e->getMessage()."<br/> Entre em contato com o administrador do sistema.";
         }

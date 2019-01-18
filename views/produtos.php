@@ -11,20 +11,16 @@
         </button>
     </div>
 <?php endif ?>
-
-<header class="pt-4 pb-5">
-    <div class="row align-items-center">
-        <div class="col">
-            <h1 class="display-4">Produtos</h1>
-        </div>
-        <div class="col text-right">
-            <?php if(in_array("produtos_add", $infoFunc["permissoesFuncionario"])):?>
-                <a href="<?php echo BASE_URL;?>/produtos/adicionar" class="btn btn-success">Adicionar</a>
-            <?php endif ?>
-        </div>
-    </div>
-</header>
-
+<?php
+$headerData = [
+    "titulo" => "Produtos",
+    "adicionar" => [
+        "permissao" => "produtos_add",
+        "url" => "/produtos/adicionar"
+    ]
+];
+require "_header_browser.php";
+?>
 <table class="table table-striped table-hover dataTable">
     <thead>
         <tr>

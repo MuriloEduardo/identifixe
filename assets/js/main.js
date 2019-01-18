@@ -305,12 +305,10 @@ $(function () {
             }
         });
 
-    $.fn.dataTable.ext.classes.sPageButton = 'btn btn-primary';
-
     //
     // Configurações do DataTable
     //
-    $('.dataTable').DataTable(
+    let dataTable = $('.dataTable').DataTable(
         {
             scrollX: true,
             responsive: true,
@@ -319,6 +317,7 @@ $(function () {
             scrollCollapse: true,
             conditionalPaging: true,
             autoWidth: false,
+            order: [1, 'asc'],
             ajax: {
                 url: baselink + '/ajax/dataTableAjax',
                 type: 'POST',
@@ -339,7 +338,6 @@ $(function () {
                 'sLoadingRecords': 'Carregando...',
                 'sProcessing': 'Processando...',
                 'sZeroRecords': 'Nenhum registro encontrado',
-                'sSearch': 'Pesquisar',
                 'oPaginate': {
                     'sNext': 'Próximo',
                     'sPrevious': 'Anterior',
@@ -351,13 +349,17 @@ $(function () {
                     'sSortDescending': ': Ordenar colunas de forma descendente'
                 }
             },
-            dom: '<f><t><p><r><i>'
+            dom: '<t><p><r><i>'
         }
     );
 
     $('#menu-toggle').click(function (e) {
         e.preventDefault();
         $('#wrapper').toggleClass('toggled');
+    });
+
+    $('[name=searchDataTable]').keyup(function () {
+        dataTable.search(this.value).draw();
     });
 
 });

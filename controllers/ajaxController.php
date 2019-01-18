@@ -22,18 +22,15 @@ class ajaxController extends controller{
     //
     public function buscaUnico() {
 
-        
-        $module = $_POST["module"];
         $campo = $_POST["campo"];
         $valor = $_POST["valor"];
-        
-        $table = $module;
-        $model = new Shared();
+
+        $model = new Shared($_POST["module"]);
         $dados = array();
 
         if(isset($valor) && !empty($valor)){
             $valor = trim(addslashes($valor));
-            $dados = $model->unico($table, $campo, $valor);
+            $dados = $model->unico($campo, $valor);
         }
 
         echo json_encode($dados);
@@ -315,9 +312,10 @@ class ajaxController extends controller{
     
     /////// PRODUTOS
     public function dataTableAjax(){
-        $shared = new Shared();
-        $dados = $shared->montaDataTable($_POST['module']);
-        echo json_encode($dados);
+        $shared = new Shared($_POST['module']);
+        echo json_encode(
+            $shared->montaDataTable()
+        );
     }
     
 }   
