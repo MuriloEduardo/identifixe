@@ -132,7 +132,7 @@
                <?php if($value["permissao"] == "" || in_array($value["permissao"], $infoFunc["permissoesFuncionario"])): ?>
                   <?php
                      // Menu com Dropdown
-                     if ($value["filhos"]) {
+                     if (isset($value["filhos"])) {
                         
                         $filhos = "";
                         foreach ($value["filhos"] as $keyFilho => $valueFilho) {
