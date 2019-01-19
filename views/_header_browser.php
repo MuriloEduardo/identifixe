@@ -9,7 +9,7 @@
 <header class="pt-4 pb-5">
     <div class="row align-items-center">
         <div class="col">
-            <h1 class="display-4 text-capitalize text-nowrap"><?php echo !is_null($headerData["titulo"]) ? $headerData["titulo"] : $modulo ?></h1>
+            <h1 class="display-4 text-capitalize text-nowrap"><?php echo isset($headerData) && !is_null($headerData["titulo"]) ? $headerData["titulo"] : $modulo ?></h1>
         </div>
         <div class="col">
             <div class="input-group">
@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="col-xl-2">
-            <?php if(in_array(!is_null($headerData["adicionar"]["permissao"]) ? $headerData["adicionar"]["permissao"] : $modulo . "_add", $infoFunc["permissoesFuncionario"])):?>
+            <?php if(in_array(isset($headerData) && !is_null($headerData["adicionar"]["permissao"]) ? $headerData["adicionar"]["permissao"] : $modulo . "_add", $infoFunc["permissoesFuncionario"])):?>
                 <a href="<?php echo BASE_URL . "/" . (!is_null($headerData["adicionar"]["url"]) ? $headerData["adicionar"]["url"] : $modulo . "/adicionar") ?>" class="btn btn-success btn-block">Adicionar</a>
             <?php endif ?>
         </div>
