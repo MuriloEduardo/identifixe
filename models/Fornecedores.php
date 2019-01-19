@@ -6,17 +6,6 @@ class Fornecedores extends model {
     public function __construct($id = "") {
         parent::__construct(); 
     }
-        
-    public function pegarListaFornecedores() {
-       $array = array();
-       
-       $sql = "SELECT * FROM fornecedores WHERE situacao = 'ativo' ORDER BY id DESC";      
-       $sql = $this->db->query($sql);
-       if($sql->rowCount()>0){
-         $array = $sql->fetchAll(); 
-       }
-       return $array; 
-    }
     
      public function pegarInfoForn($id) {
        $array = array();

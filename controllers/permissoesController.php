@@ -11,7 +11,7 @@ class permissoesController extends controller{
        }
        //verifica se tem permissão para ver esse módulo
        if(in_array("permissoes_ver",$_SESSION["permissoesFuncionario"]) == FALSE){
-           header("Location: ".BASE_URL."/home"); 
+           header("Location: ".BASE_URL."/dashboard"); 
        }
     }
      
@@ -20,7 +20,7 @@ class permissoesController extends controller{
         $dados['infoFunc'] = $_SESSION;
         
         $p = new Permissoes();
-        $dados["listaGrupoPermissoes"]  = $p->pegarListaGrupos($_SESSION["idEmpresaFuncionario"]);
+        $dados["listaGrupoPermissoes"]  = $p->pegarListaGrupos();
         $this->loadTemplate("permissoes",$dados);      
     } 
     
@@ -89,7 +89,7 @@ class permissoesController extends controller{
         }
                 
         $dados['infoFunc'] = $_SESSION;       
-        $dados["listaGrupoPermissoes"]  = $p->pegarListaGrupos($_SESSION["idEmpresaFuncionario"]);
+        $dados["listaGrupoPermissoes"]  = $p->pegarListaGrupos();
         $this->loadTemplate("permissoes",$dados);  
       }
     }   

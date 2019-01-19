@@ -11239,8 +11239,6 @@ readers do not read off random characters that represent icons */
 
 .dataTables_wrapper {
   margin-bottom: 2rem; }
-  .dataTables_wrapper #DataTables_Table_0_paginate {
-    display: none; }
   .dataTables_wrapper .dataTables_scrollHead .table {
     margin-bottom: 0; }
     .dataTables_wrapper .dataTables_scrollHead .table thead th {

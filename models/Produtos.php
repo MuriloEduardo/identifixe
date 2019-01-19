@@ -6,47 +6,6 @@ class Produtos extends model {
     public function __construct($id = "") {
         parent::__construct(); 
     }
-     
-    // função para preencher o json da tabela de produtos
-
-    public function nomeDasColunas(){
-       $array = array();
-       
-       $sql = "SHOW COLUMNS FROM produtos";      
-       $sql = $this->db->query($sql);
-       if($sql->rowCount()>0){
-         $sql = $sql->fetchAll(); 
-         foreach ($sql as $chave => $valor){
-            $array[$chave] = array( "nomecol" => utf8_encode(ucwords($valor["Field"])), 
-                                    "tipo" => $valor["Type"], 
-                                    "nulo" => $valor["Null"], 
-                                    "relacional" => array() );        
-         }
-       }
-       for($i=0; $i < count($array); $i++){
-           $model = '';
-           $lista = array();
-           if($array[$i]['tipo'] == 'mediumtext'){
-               
-              $model =  ucfirst($array[$i]['nomecol'])."s";
-              $a = new $model();
-              $lista = $a->pegarLista();
-              $array[$i]['relacional'] = $lista;
-           }
-       }
-       return $array;
-    }
-    
-    public function pegarListaProdutos() {
-       $array = array();
-       
-       $sql = "SELECT * FROM produtos WHERE situacao = 'ativo' ORDER BY id DESC";      
-       $sql = $this->db->query($sql);
-       if($sql->rowCount()>0){
-         $array = $sql->fetchAll(); 
-       }
-       return $array; 
-    }   
     
     public function buscaServicoPeloNome($nome,$empresa){
         $array = array();

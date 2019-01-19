@@ -10,7 +10,7 @@ class loginController extends controller{
         $dados = array(
             "aviso" => ""
         );
-        
+
         if(isset($_POST["email"]) && !empty($_POST["email"]) && isset($_POST["senha"]) && !empty($_POST["senha"])){
           
             $email = addslashes($_POST["email"]);
@@ -19,7 +19,7 @@ class loginController extends controller{
             $funcionario = new Funcionarios();
             
             if($funcionario->fazerLogin($email,$senha)){
-               header("Location: ".BASE_URL."/home");
+               header("Location: ".BASE_URL."/dashboard");
                exit;
             }else{
                 $dados["aviso"] = "E-mail e/ou senha incorretos.";

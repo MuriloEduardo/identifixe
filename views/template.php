@@ -4,7 +4,7 @@
          "text" => "Dashboard",
          "icon" => "fas fa-tachometer-alt",
          "permissao" => "",
-         "link" => "/home"
+         "link" => "/dashboard"
       ],
       [
          "text" => "Cadastros",
@@ -65,7 +65,7 @@
             [
                "text" => "Administradoras de Cartão",
                "icon" => "fas fa-credit-card",
-               "permissao" => "admcartoes_ver",
+               "permissao" => "administradoras_ver",
                "link" => "/administradoras"
             ],
             [
@@ -102,7 +102,7 @@
       <script src="<?php echo BASE_URL;?>/assets/js/vendor/bootstrap.min.js" type="text/javascript"></script>
       <script src="<?php echo BASE_URL;?>/assets/js/main.js" type="text/javascript"></script>
    </head>
-<body class="d-flex flex-column h-100">
+<body class="d-flex flex-column h-100 bg-light">
    <nav class="navbar navbar-dark bg-primary shadow-sm fixed-top">
       <ul class="nav">
          <li>
@@ -111,7 +111,7 @@
             </a>
          </li>
          <li>
-            <a class="navbar-brand mx-3" href="<?php echo BASE_URL ?>/home"><?php echo trim(NOME_EMPRESA);?></a>
+            <a class="navbar-brand mx-3" href="<?php echo BASE_URL ?>/dashboard"><?php echo trim(NOME_EMPRESA);?></a>
          </li>
       </ul>
       <ul class="navbar-nav">
@@ -171,21 +171,15 @@
          </ul>
       </aside>
       <main id="page-content-wrapper">
-         <nav aria-label="breadcrumb">
-            <ol class="breadcrumb rounded-0">
-               <li class="breadcrumb-item"><a href="<?php echo BASE_URL ?>/home">Dashboard</a></li>
-               <li class="breadcrumb-item"><a href="#">Library</a></li>
-               <li class="breadcrumb-item active" aria-current="page">Data</li>
-            </ol>
-         </nav>
+         <?php include "_breadcrumb.php" ?>
          <div class="container-fluid">
             <?php $this->loadViewInTemplate($viewName, $viewData); ?>
          </div>
       </main>
       </div>
-      <footer class="py-3 bg-light mt-auto shadow-sm">
+      <footer class="py-3 bg-white mt-auto shadow-sm">
          <div class="container-fluid">
-            <div class="text-muted text-center">Todos os direitos reservados <strong>SqualoAquile</strong><br/>Estamos à disposição: <a href="mailto:contato@squaloaquile.com.br">contato@squaloaquile.com.br</a></div>
+            <div class="text-muted text-center">Todos os direitos reservados <strong>SqualoAquile</strong><br/>Estamos à disposição: <a href="mailto:contato@squaloaquile.com.br" class="text-muted font-italic">contato@squaloaquile.com.br</a></div>
          </div>
       </footer>
    </body>

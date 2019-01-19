@@ -7,7 +7,7 @@
 </script>
 
 <header class="d-flex align-items-center my-5">
-    <?php if(in_array("admcartoes_ver", $infoFunc["permissoesFuncionario"])): ?>
+    <?php if(in_array("administradoras_ver", $infoFunc["permissoesFuncionario"])): ?>
         <a href="<?php echo BASE_URL . '/administradoras' ?>" class="btn btn-secondary mr-4" title="Voltar">
             <i class="fas fa-chevron-left"></i>
         </a>

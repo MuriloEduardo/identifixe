@@ -6,22 +6,6 @@ class Clientes extends model {
     public function __construct($id = "") {
         parent::__construct(); 
     }
-     
-//    
-    public function nomeDasColunas(){
-       $array = array();
-       
-       $sql = "SHOW COLUMNS FROM clientes";      
-       $sql = $this->db->query($sql);
-       if($sql->rowCount()>0){
-         $sql = $sql->fetchAll(); 
-         foreach ($sql as $chave => $valor){
-            $array[$chave] = array("nomecol" => utf8_encode(ucwords($valor["Field"])), "tipo" => $valor["Type"]);        
-         }
-       }
-//       print_r($array);exit;
-       return $array;
-    }
     
     public function pegarListaClientes($empresa) {
        $array = array();
@@ -121,10 +105,10 @@ class Clientes extends model {
         }
     }    
     
-     public function pegarInfoCliente($id,$empresa) {
+     public function pegarInfoCliente($id) {
        $array = array();
        
-       $sql = "SELECT * FROM clientes WHERE id='$id' AND id_empresa = '$empresa' AND situacao = 'ativo'";      
+       $sql = "SELECT * FROM clientes WHERE id='$id' AND situacao = 'ativo'";      
        $sql = $this->db->query($sql);
        if($sql->rowCount()>0){
          $array = $sql->fetchAll(); 

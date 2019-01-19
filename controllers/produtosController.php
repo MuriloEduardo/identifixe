@@ -1,12 +1,17 @@
 <?php
 class produtosController extends controller{
     
-    public $modulo = 'produtos';
-    
+    protected $modulo = "produtos";
+    protected $colunas;
+    protected $shared;
+
     public function __construct() {
         parent::__construct();
         
        $func = new Funcionarios();
+       $this->shared = new Shared($this->modulo);
+
+       $this->colunas = $this->shared->nomeDasColunas();
        
        //verifica se está logado
        if($func->isLogged() == false){
@@ -17,18 +22,13 @@ class produtosController extends controller{
            header("Location: ".BASE_URL."/home"); 
        }
     }
-
      
     public function index() {
         $dados = array();
         $dados['infoFunc'] = $_SESSION;
-        
-        $prod = new Produtos();
-        
-        $dados["listaColunas"] = $prod->nomeDasColunas();
-        $dados["listaProdutos"]  = $prod->pegarListaProdutos();
+        $dados["listaColunas"] = $this->colunas;
         $this->loadTemplate($this->modulo,$dados);      
-    } 
+    }
     
     public function adicionar() {
         
@@ -40,7 +40,7 @@ class produtosController extends controller{
 
         $array = array();
         $dados['infoFunc'] = $_SESSION;
-        $listaColunas = $prod->nomeDasColunas();
+        $listaColunas = $this->colunas;
         $camposAdd = Array();
 
         if(isset($_POST[lcfirst($listaColunas[1]['nomecol'])]) || !empty($_POST[lcfirst($listaColunas[1]['nomecol'])])){
@@ -64,16 +64,17 @@ class produtosController extends controller{
                 $prod->adicionar($camposForm,$listaColunas);
                 header("Location: ".BASE_URL."/".$this->modulo);
             }else{
-                $dados["listaColunas"] = $prod->nomeDasColunas();
+                $dados["listaColunas"] = $listaColunas;
                 $this->loadTemplate($this->modulo."-add",$dados);
             }
         }else{
-            $dados["listaColunas"] = $prod->nomeDasColunas();
+            $dados["listaColunas"] = $listaColunas;
             $this->loadTemplate($this->modulo."-add",$dados);
         }    
     }
     
     public function editar($id) {
+
         if(in_array($this->modulo."_edt",$_SESSION["permissoesFuncionario"]) == FALSE || empty($id) || !isset($id)){
             header("Location: ".BASE_URL."/".$this->modulo); 
         }
@@ -82,7 +83,7 @@ class produtosController extends controller{
         
         $array = array();
         $dados['infoFunc'] = $_SESSION;
-        $listaColunas = $prod->nomeDasColunas();
+        $listaColunas = $this->colunas;
         $camposAdd = Array();
         $id = addslashes($id);
 
@@ -109,14 +110,14 @@ class produtosController extends controller{
                 $prod->editar($camposForm,$listaColunas, $id);
                 header("Location: ".BASE_URL."/".$this->modulo);
             }else{
-                $dados["listaColunas"] = $prod->nomeDasColunas();
+                $dados["listaColunas"] = $this->colunas;
                 $this->loadTemplate($this->modulo."-edt",$dados);
             }
         }else{
             
             $dados["idSelecionado"] = $id;
             $dados["infoSelecionado"] = $prod->pegarInfo($id);
-            $dados["listaColunas"] = $prod->nomeDasColunas();
+            $dados["listaColunas"] = $this->colunas;
 
             $this->loadTemplate($this->modulo."-edt",$dados);
         }

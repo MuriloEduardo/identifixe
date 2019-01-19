@@ -11,14 +11,14 @@ class controlecaixaController extends controller{
        }
        //verifica se tem permissão para ver esse módulo
        if(in_array("controlecaixa_ver",$_SESSION["permissoesFuncionario"]) == FALSE){
-           header("Location: ".BASE_URL."/home"); 
+           header("Location: ".BASE_URL."/dashboard"); 
        }
     }
          
     public function index() {
         
         if(in_array("controlecaixa_ver",$_SESSION["permissoesFuncionario"]) == FALSE || in_array("controlecaixa_edt",$_SESSION["permissoesFuncionario"]) == FALSE){
-            header("Location: ".BASE_URL."/home"); 
+            header("Location: ".BASE_URL."/dashboard"); 
         }
         
         $array = array();
@@ -38,7 +38,7 @@ class controlecaixaController extends controller{
     }
     
 //    public function editar($id) {
-//        if(in_array("admcartoes_edt",$_SESSION["permissoesFuncionario"]) == FALSE || empty($id) || !isset($id)){
+//        if(in_array("administradoras_edt",$_SESSION["permissoesFuncionario"]) == FALSE || empty($id) || !isset($id)){
 //            header("Location: ".BASE_URL."/admcartoes"); 
 //        }
 //        $array = array();
@@ -68,7 +68,7 @@ class controlecaixaController extends controller{
 //    }
 
 //    public function excluir($id) {
-//        if(in_array("admcartoes_exc",$_SESSION["permissoesFuncionario"]) == FALSE || empty($id) || !isset($id)){
+//        if(in_array("administradoras_exc",$_SESSION["permissoesFuncionario"]) == FALSE || empty($id) || !isset($id)){
 //            header("Location: ".BASE_URL."/admcartoes"); 
 //        }
 //        

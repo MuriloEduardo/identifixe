@@ -17,10 +17,10 @@ class Funcionarios extends model {
     
     public function fazerLogin($email,$senha){
         $array = array();
-        If(!empty($senha) && !empty($email)){
+        if(!empty($senha) && !empty($email)){
 
            $sql = "SELECT * FROM funcionarios WHERE email='$email' AND senha = '$senha' AND situacao = 'ativo'";
-//           echo $sql; exit;
+
            $sql = $this->db->query($sql);
            if($sql->rowCount()>0){
               $sql = $sql->fetch();
@@ -29,32 +29,18 @@ class Funcionarios extends model {
               $_SESSION["nomeFuncionario"] = $sql["nome"];
               $_SESSION["idFuncionario"] = $sql["id"];
               $_SESSION["emailFuncionario"] = $sql["email"];
-              $_SESSION["idEmpresaFuncionario"] = $sql["id_empresa"];
-              
-              //buscar o nome da empresa
-              $ide = $sql['id_empresa'];
-              $sqlA = "SELECT empresas.nome FROM empresas WHERE empresas.id = '$ide'";
-              $sqlA = $this->db->query($sqlA);
-              if($sqlA->rowCount()>0){
-                $sqlA = $sqlA->fetch();
-                $_SESSION["empresaFuncionario"] = $sqlA["nome"];
-              }
 
               //buscar as permissoes que o usuario tem
               $p = new Permissoes();
-              $_SESSION["permissoesFuncionario"] = $p->getPermissoes($sql["id_empresa"],$sql["id_gp"]);
+              $_SESSION["permissoesFuncionario"] = $p->getPermissoes($sql["id_gp"]);
               
               //verifica se todas as informações de login estão corretas
               if(empty($_SESSION["nomeFuncionario"]) || empty($_SESSION["idFuncionario"]) || empty($_SESSION["emailFuncionario"])){
                  return false;     
               }
-              if(empty($_SESSION["idEmpresaFuncionario"]) || empty($_SESSION["empresaFuncionario"]) || empty($_SESSION["permissoesFuncionario"])){
+              if(empty($_SESSION["permissoesFuncionario"])){
                  return false; 
               }
-
-             //verifica se a empresa está em dia com a contratante
-             //
-             // 
               return true;
            }else{
               return false;     
@@ -72,32 +58,6 @@ class Funcionarios extends model {
  
            return $numFunc;
         }
-    }
-    
-    public function nomeDasColunas(){
-       $array = array();
-       
-       $sql = "SHOW COLUMNS FROM funcionarios";      
-       $sql = $this->db->query($sql);
-       if($sql->rowCount()>0){
-         $sql = $sql->fetchAll(); 
-         foreach ($sql as $chave => $valor){
-            $array[$chave] = array("nomecol" => utf8_encode(ucwords($valor["Field"])), "tipo" => $valor["Type"]);        
-         }
-       }
-//       print_r($array);exit;
-       return $array;
-    }
-    
-    public function pegarListaFuncionarios($empresa) {
-       $array = array();
-       
-       $sql = "SELECT * FROM funcionarios WHERE id_empresa = '$empresa' AND situacao = 'ativo' ORDER BY id DESC";      
-       $sql = $this->db->query($sql);
-       if($sql->rowCount()>0){
-         $array = $sql->fetchAll(); 
-       }
-       return $array;
     }
     
     public function buscaFuncPeloNome($nome,$empresa){
@@ -199,10 +159,10 @@ class Funcionarios extends model {
         }
     }    
     
-     public function pegarInfoFunc($id,$empresa) {
+     public function pegarInfoFunc($id) {
        $array = array();
        
-       $sql = "SELECT * FROM funcionarios WHERE id='$id' AND id_empresa = '$empresa' AND situacao = 'ativo'";      
+       $sql = "SELECT * FROM funcionarios WHERE id='$id' AND situacao = 'ativo'";      
        $sql = $this->db->query($sql);
        if($sql->rowCount()>0){
          $array = $sql->fetchAll(); 
@@ -210,8 +170,8 @@ class Funcionarios extends model {
        return $array; 
     }
     
-     public function editar($id, $txts, $empresa){
-        if(!empty($id) && !empty($empresa) && count($txts) >0 ){
+     public function editar($id, $txts){
+        if(!empty($id) && count($txts) >0 ){
             
             $p = new Permissoes();
             $ipcliente = $p->pegaIPcliente();
@@ -260,7 +220,7 @@ class Funcionarios extends model {
                 "comissao =        '$txt17', ".
                 "fgts =            '$txt18', ".
                 "inss =            '$txt19', ".
-                "alteracoes = '$altera' WHERE id='$id' AND id_empresa='$empresa'";
+                "alteracoes = '$altera' WHERE id='$id'";
             
             $this->db->query($sql);
 

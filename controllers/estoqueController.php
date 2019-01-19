@@ -11,7 +11,7 @@ class estoqueController extends controller{
        }
        //verifica se tem permissão para ver esse módulo
        if(in_array("estoque_ver",$_SESSION["permissoesFuncionario"]) == FALSE){
-           header("Location: ".BASE_URL."/home"); 
+           header("Location: ".BASE_URL."/dashboard"); 
        }
     }
          
@@ -20,7 +20,7 @@ class estoqueController extends controller{
         if(in_array("estoque_ver",$_SESSION["permissoesFuncionario"]) == FALSE ||
            in_array("estoque_edt",$_SESSION["permissoesFuncionario"]) == FALSE || 
            in_array("estoque_add",$_SESSION["permissoesFuncionario"]) == FALSE){
-            header("Location: ".BASE_URL."/home"); 
+            header("Location: ".BASE_URL."/dashboard"); 
         }
         
         $array = array();

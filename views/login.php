@@ -7,6 +7,10 @@
     <title>Entrar - <?php echo NOME_EMPRESA;?></title>
 
     <link href="<?php echo BASE_URL;?>/assets/css/login.css" rel="stylesheet" type="text/css"/>
+
+    <script src="<?php echo BASE_URL;?>/assets/js/vendor/jquery-3.3.1.min.js" type="text/javascript"></script>
+    <script src="<?php echo BASE_URL;?>/assets/js/vendor/popper.min.js" type="text/javascript"></script>
+    <script src="<?php echo BASE_URL;?>/assets/js/vendor/bootstrap.min.js" type="text/javascript"></script>
   </head>
 
   <body class="text-center">

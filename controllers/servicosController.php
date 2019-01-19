@@ -11,7 +11,7 @@ class servicosController extends controller{
        }
        //verifica se tem permissão para ver esse módulo
        if(in_array("servicos_ver",$_SESSION["permissoesFuncionario"]) == FALSE){
-           header("Location: ".BASE_URL."/home"); 
+           header("Location: ".BASE_URL."/dashboard"); 
        }
     }
      

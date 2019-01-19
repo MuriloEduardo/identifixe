@@ -1,29 +1,34 @@
 <?php
 class fornecedoresController extends controller{
+    
+    protected $modulo = "fornecedores";
+    protected $colunas;
+    protected $shared;
+
     public function __construct() {
         parent::__construct();
-    
+        
        $func = new Funcionarios();
+       $this->shared = new Shared($this->modulo);
+
+       $this->colunas = $this->shared->nomeDasColunas();
        
        //verifica se está logado
        if($func->isLogged() == false){
            header("Location: ".BASE_URL."/login"); 
        }
        //verifica se tem permissão para ver esse módulo
-       if(in_array("fornecedores_ver",$_SESSION["permissoesFuncionario"]) == FALSE){
-           header("Location: ".BASE_URL."/home"); 
+       if(in_array($this->modulo."_ver",$_SESSION["permissoesFuncionario"]) == FALSE){
+           header("Location: ".BASE_URL."/dashboard"); 
        }
     }
      
     public function index() {
         $dados = array();
         $dados['infoFunc'] = $_SESSION;
-        
-        $fr = new Fornecedores();
-        $dados["listaColunas"] = $fr->nomeDasColunas();
-        $dados["listaFornecedores"]  = $fr->pegarListaFornecedores();
-        $this->loadTemplate("fornecedores",$dados);
-    } 
+        $dados["listaColunas"] = $this->colunas;
+        $this->loadTemplate($this->modulo,$dados);      
+    }
     
     public function adicionar() {
         
@@ -42,7 +47,7 @@ class fornecedoresController extends controller{
             header("Location: ".BASE_URL."/fornecedores");
         }else{
 
-            $dados["listaColunas"] = $fr->nomeDasColunas();
+            $dados["listaColunas"] = $this->colunas;
             $this->loadTemplate("fornecedores-add",$dados);
         }  
     }
@@ -63,7 +68,7 @@ class fornecedoresController extends controller{
         }else{
             
             $dados["infoForn"] = $fr->pegarInfoForn($id);
-            $dados["listaColunas"] = $fr->nomeDasColunas();
+            $dados["listaColunas"] = $this->colunas;
             $this->loadTemplate("fornecedores-edt",$dados);
         }  
     }

@@ -9,7 +9,7 @@
 <header class="pt-4 pb-5">
     <div class="row align-items-center">
         <div class="col">
-            <h1 class="display-4 text-capitalize"><?php echo !is_null($headerData["titulo"]) ? $headerData["titulo"] : $modulo ?></h1>
+            <h1 class="display-4 text-capitalize text-nowrap"><?php echo !is_null($headerData["titulo"]) ? $headerData["titulo"] : $modulo ?></h1>
         </div>
         <div class="col">
             <div class="input-group">

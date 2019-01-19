@@ -55,27 +55,39 @@ class Shared extends model {
 
     public function nomeDasColunas(){
         $array = array();
-        
         $sql = "SHOW COLUMNS FROM " . $this->table;      
         $sql = $this->db->query($sql);
         if($sql->rowCount()>0){
           $sql = $sql->fetchAll(); 
           foreach ($sql as $chave => $valor){
-             $array[$chave] = array("nomecol" => utf8_encode(ucwords($valor["Field"])));        
+             $array[$chave] = array( "nomecol" => utf8_encode(ucwords($valor["Field"])), 
+                                     "tipo" => $valor["Type"], 
+                                     "nulo" => $valor["Null"], 
+                                     "relacional" => array() );        
           }
+        }
+        for($i=0; $i < count($array); $i++){
+            $model = '';
+            $lista = array();
+            if($array[$i]['tipo'] == 'mediumtext'){
+                
+               $model =  ucfirst($array[$i]['nomecol'])."s";
+               $a = new $model();
+               $lista = $a->pegarLista();
+               $array[$i]['relacional'] = $lista;
+            }
         }
         return $array;
      }
 
-     public function pegarListas() {
+    public function pegarListas() {
         $array = array();
-        
         $sql = "SELECT * FROM " . $this->table . " WHERE situacao = 'ativo' ORDER BY id DESC";      
         $sql = $this->db->query($sql);
         if($sql->rowCount()>0){
-          $array = $sql->fetchAll(); 
+            $array = $sql->fetchAll(); 
         }
         return $array; 
-     }
+    }
 }
 ?>

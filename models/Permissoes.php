@@ -6,12 +6,12 @@ class Permissoes extends model {
         parent::__construct(); 
     }
         
-    public function getPermissoes($id_empresa,$id_grupopermissao){
+    public function getPermissoes($id_grupopermissao){
         
         $array = array();
-        if(!empty($id_empresa) && !empty($id_grupopermissao)){
+        if(!empty($id_grupopermissao)){
            //busca os id dos parametros correspondentes do grupo de permissao pesquisado 
-           $sql = "SELECT parametros FROM permissoes as pg WHERE id = '$id_grupopermissao' AND id_empresa = '$id_empresa' AND situacao = 'ativo'";
+           $sql = "SELECT parametros FROM permissoes as pg WHERE id = '$id_grupopermissao' AND situacao = 'ativo'";
            $sql = $this->db->query($sql);
            if($sql->rowCount() > 0){
                 $pr = $sql->fetch();
@@ -21,7 +21,7 @@ class Permissoes extends model {
                 }
                 
                 //busca os nomes dos parametros de permissão do grupo de permissao pesquisado
-                $sqlA = "SELECT nome FROM permissoes_parametros as pp WHERE id_empresa = '$id_empresa' AND id IN (".$pr["parametros"].")";
+                $sqlA = "SELECT nome FROM permissoes_parametros as pp WHERE id IN (".$pr["parametros"].")";
                 $sqlA = $this->db->query($sqlA);
                 if($sqlA->rowCount()>0){
                     foreach ($sqlA->fetchAll() as $item){
@@ -44,10 +44,10 @@ class Permissoes extends model {
        return $array;
     }
     
-    public function pegarListaGrupos($empresa) {
+    public function pegarListaGrupos() {
        $array = array();
        
-       $sql = "SELECT id, nome FROM permissoes as pg WHERE id_empresa = '$empresa' AND situacao = 'ativo' ORDER BY id DESC";      
+       $sql = "SELECT id, nome FROM permissoes as pg WHERE situacao = 'ativo' ORDER BY id DESC";      
        $sql = $this->db->query($sql);
        
        if($sql->rowCount()>0){

@@ -1,33 +1,38 @@
 <?php
 class administradorasController extends controller{
+    
+    protected $modulo = "administradoras";
+    protected $colunas;
+    protected $shared;
+
     public function __construct() {
         parent::__construct();
-    
+        
        $func = new Funcionarios();
+       $this->shared = new Shared($this->modulo);
+
+       $this->colunas = $this->shared->nomeDasColunas();
        
        //verifica se está logado
        if($func->isLogged() == false){
            header("Location: ".BASE_URL."/login"); 
        }
        //verifica se tem permissão para ver esse módulo
-       if(in_array("admcartoes_ver",$_SESSION["permissoesFuncionario"]) == FALSE){
-           header("Location: ".BASE_URL."/home"); 
+       if(in_array($this->modulo."_ver",$_SESSION["permissoesFuncionario"]) == FALSE){
+           header("Location: ".BASE_URL."/dashboard"); 
        }
     }
      
     public function index() {
         $dados = array();
         $dados['infoFunc'] = $_SESSION;
-        
-        $shared = new Shared("administradoras");
-        $dados["listaColunas"] = $shared->nomeDasColunas();
-        $dados["listaAdministradoras"]  = $shared->pegarListas();
-        $this->loadTemplate("administradoras",$dados);
-    } 
+        $dados["listaColunas"] = $this->colunas;
+        $this->loadTemplate($this->modulo,$dados);      
+    }
     
     public function adicionar() {
         
-        if(in_array("admcartoes_add",$_SESSION["permissoesFuncionario"]) == FALSE){
+        if(in_array("administradoras_add",$_SESSION["permissoesFuncionario"]) == FALSE){
             header("Location: ".BASE_URL."/administradoras"); 
         }
         
@@ -53,7 +58,7 @@ class administradorasController extends controller{
     }
     
     public function editar($id) {
-        if(in_array("admcartoes_edt",$_SESSION["permissoesFuncionario"]) == FALSE || empty($id) || !isset($id)){
+        if(in_array("administradoras_edt",$_SESSION["permissoesFuncionario"]) == FALSE || empty($id) || !isset($id)){
             header("Location: ".BASE_URL."/administradoras"); 
         }
         $array = array();
@@ -83,7 +88,7 @@ class administradorasController extends controller{
     }
 
     public function excluir($id) {
-        if(in_array("admcartoes_exc",$_SESSION["permissoesFuncionario"]) == FALSE || empty($id) || !isset($id)){
+        if(in_array("administradoras_exc",$_SESSION["permissoesFuncionario"]) == FALSE || empty($id) || !isset($id)){
             header("Location: ".BASE_URL."/administradoras"); 
         }
         
@@ -96,4 +101,3 @@ class administradorasController extends controller{
     }   
   
 ?>
-
