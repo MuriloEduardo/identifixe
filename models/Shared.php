@@ -17,7 +17,7 @@ class Shared extends model {
         $index = 0;
         foreach ($this->nomeDasColunas() as $key => $value) {
             if($value["Comment"]["ver"] != "false") {
-                if($value["Comment"]["label"] == "Ações") {
+                if(array_key_exists("label",$value["Comment"]) && $value["Comment"]["label"] == "Ações") {
                     $columns[] = [
                         "db" => $value["Field"],
                         "dt" => $index,
@@ -56,7 +56,9 @@ class Shared extends model {
     public function nomeDasColunas(){
         $sql = $this->db->query("SHOW FULL COLUMNS FROM " . $this->table);
         return array_map(function ($item) {
-            $item["Comment"] = json_decode($item["Comment"], true);
+            //var_dump(utf8_encode($item["Comment"]));exit;
+            $item["Comment"] = json_decode(utf8_encode($item["Comment"]), true);
+            //var_dump($item["Comment"]);exit;
             return $item;
         }, $sql->fetchAll());
      }
