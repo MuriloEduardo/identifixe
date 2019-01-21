@@ -27,50 +27,19 @@ class produtosController extends controller{
         $dados = array();
         $dados['infoFunc'] = $_SESSION;
         $dados["listaColunas"] = $this->colunas;
-        $this->loadTemplate($this->modulo,$dados);      
+        $this->loadTemplate($this->modulo, $dados);      
     }
     
     public function adicionar() {
         
-        if(in_array($this->modulo."_add",$_SESSION["permissoesFuncionario"]) == FALSE){
-            header("Location: ".BASE_URL."/".$this->modulo); 
+        // Se nao tiver permissao redireciona pro index desse modulo
+        if(in_array($this->modulo . "_add", $_SESSION["permissoesFuncionario"]) == FALSE){
+            header("Location: " . BASE_URL . "/" . $this->modulo); 
         }
-
-        $prod = new Produtos();
-
-        $array = array();
+        
+        $dados["colunas"] = $this->colunas;
         $dados['infoFunc'] = $_SESSION;
-        $listaColunas = $this->colunas;
-        $camposAdd = Array();
-
-        if(isset($_POST[lcfirst($listaColunas[1]['nomecol'])]) || !empty($_POST[lcfirst($listaColunas[1]['nomecol'])])){
-            $cont=0;
-            for ($i = 1; $i < count($listaColunas) - 2; $i++ ){
-                if($listaColunas[$i]['nulo'] == "NO"){
-                    $cont++;
-                    if(isset($_POST[lcfirst($listaColunas[$i]['nomecol'])]) || !empty($_POST[lcfirst($listaColunas[$i]['nomecol'])])){
-                        $camposAdd[$i] =  $_POST[lcfirst($listaColunas[$i]['nomecol'])];
-                    }    
-                }
-            }
-            
-            // testar se esta salvando os campos que não são obrigatorios
-            if (!empty($camposAdd) && count($camposAdd) == $cont ){
-                $camposForm = Array();
-                for($j=1; $j <= count($_POST); $j++){
-                    $camposForm[$j] = $_POST[lcfirst($listaColunas[$j]['nomecol'])];
-                }
-
-                $prod->adicionar($camposForm,$listaColunas);
-                header("Location: ".BASE_URL."/".$this->modulo);
-            }else{
-                $dados["listaColunas"] = $listaColunas;
-                $this->loadTemplate($this->modulo."-add",$dados);
-            }
-        }else{
-            $dados["listaColunas"] = $listaColunas;
-            $this->loadTemplate($this->modulo."-add",$dados);
-        }    
+        $this->loadTemplate($this->modulo . "-add", $dados);
     }
     
     public function editar($id) {
