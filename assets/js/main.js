@@ -45,7 +45,6 @@ $(function () {
             dataType: 'json',
             success: function (json) {
                 if (json.length > 0) {
-                    console.log('success unico ajax', $self)
                     $self.val('');
                     alert(params.mensagem);
                 }

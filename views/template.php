@@ -100,7 +100,6 @@
       <script src="<?php echo BASE_URL;?>/assets/js/vendor/jquery-ui.min.js" type="text/javascript"></script>
       <script src="<?php echo BASE_URL;?>/assets/js/vendor/popper.min.js" type="text/javascript"></script>
       <script src="<?php echo BASE_URL;?>/assets/js/vendor/bootstrap.min.js" type="text/javascript"></script>
-      <script src="<?php echo BASE_URL;?>/assets/js/main.js" type="text/javascript"></script>
    </head>
 <body class="d-flex flex-column h-100 bg-light">
    <nav class="navbar navbar-dark bg-primary shadow-sm fixed-top">
@@ -183,4 +182,5 @@
          </div>
       </footer>
    </body>
+   <script src="<?php echo BASE_URL;?>/assets/js/main.js" type="text/javascript"></script>
 </html>

@@ -19,7 +19,7 @@ class Produtos extends model {
         return $array;
     }
 
-    public function adicionar($camposAdd,$dadosTabela){
+    public function adicionar($camposAdd, $dadosTabela){
 
         if(count($camposAdd) > 0 && !empty($dadosTabela)){
             $p = new Permissoes();

@@ -26,7 +26,7 @@ class clientesController extends controller{
     public function index() {
         $dados = array();
         $dados['infoFunc'] = $_SESSION;
-        $dados["listaColunas"] = $this->colunas;
+        $dados["colunas"] = $this->colunas;
         $this->loadTemplate($this->modulo,$dados);      
     }
     
@@ -45,8 +45,7 @@ class clientesController extends controller{
             $cl->adicionar($txts,$_SESSION["idEmpresaFuncionario"]);
             header("Location: ".BASE_URL."/clientes");
         }else{
-            
-            $dados["listaColunas"] = $this->colunas;
+            $dados["colunas"] = $this->colunas;
             $this->loadTemplate("clientes-add",$dados);
         }  
     }

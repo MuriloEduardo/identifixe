@@ -6,33 +6,6 @@ class Estoque extends model {
     public function __construct($id = "") {
         parent::__construct(); 
     }
-     
-//    
-    public function nomeDasColunas(){
-       $array = array();
-       
-       $sql = "SHOW COLUMNS FROM estoque";      
-       $sql = $this->db->query($sql);
-       if($sql->rowCount()>0){
-         $sql = $sql->fetchAll(); 
-         foreach ($sql as $chave => $valor){
-            $array[$chave] = array("nomecol" => utf8_encode(ucwords($valor["Field"])), "tipo" => $valor["Type"]);        
-         }
-       }
-//              print_r($array);exit;
-       return $array;
-    }
-    
-    public function pegarListaEstoque($empresa) {
-       $array = array();
-       
-       $sql = "SELECT * FROM estoque WHERE id_empresa = '$empresa' AND situacao = 'ativo' ORDER BY id DESC";      
-       $sql = $this->db->query($sql);
-       if($sql->rowCount()>0){
-         $array = $sql->fetchAll(); 
-       }
-       return $array; 
-    }
     
     public function buscaProdsForn($nome,$empresa){
         $array = array();

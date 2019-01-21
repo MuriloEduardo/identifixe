@@ -13,15 +13,14 @@ class Shared extends model {
     }
 
     public function montaDataTable() {
-        $sql = "SHOW COLUMNS FROM $this->table";      
-        $sql = $this->db->query($sql);
-        if($sql->rowCount()>0){
-            $all = $sql->fetchAll();
-            for ($i=0; $i < count($all); $i++) { 
-                if ($i == 0) {
+
+        $index = 0;
+        foreach ($this->nomeDasColunas() as $key => $value) {
+            if($value["Comment"]["ver"] != "false") {
+                if($value["Comment"]["label"] == "Ações") {
                     $columns[] = [
-                        "db" => $all[$i]["Field"],
-                        "dt" => $i,
+                        "db" => $value["Field"],
+                        "dt" => $index,
                         "formatter" => function($id, $row) {
                             return '
                                 <div class="btn-group btn-group-sm" role="group" aria-label="Ações">
@@ -33,12 +32,13 @@ class Shared extends model {
                     ];
                 } else {
                     $columns[] = [
-                        "db" => $all[$i]["Field"],
-                        "dt" => $i
+                        "db" => $value["Field"],
+                        "dt" => $index
                     ];
                 }
+                $index++;
             }
-        }
+        };
 
         return SSP::simple($_POST, $this->config, $this->table, "id", $columns);
     }
@@ -54,30 +54,11 @@ class Shared extends model {
     }
 
     public function nomeDasColunas(){
-        $array = array();
-        $sql = "SHOW COLUMNS FROM " . $this->table;      
-        $sql = $this->db->query($sql);
-        if($sql->rowCount()>0){
-          $sql = $sql->fetchAll(); 
-          foreach ($sql as $chave => $valor){
-             $array[$chave] = array( "nomecol" => utf8_encode(ucwords($valor["Field"])), 
-                                     "tipo" => $valor["Type"], 
-                                     "nulo" => $valor["Null"], 
-                                     "relacional" => array() );        
-          }
-        }
-        for($i=0; $i < count($array); $i++){
-            $model = '';
-            $lista = array();
-            if($array[$i]['tipo'] == 'mediumtext'){
-                
-               $model =  ucfirst($array[$i]['nomecol'])."s";
-               $a = new $model();
-               $lista = $a->pegarLista();
-               $array[$i]['relacional'] = $lista;
-            }
-        }
-        return $array;
+        $sql = $this->db->query("SHOW FULL COLUMNS FROM " . $this->table);
+        return array_map(function ($item) {
+            $item["Comment"] = json_decode($item["Comment"], true);
+            return $item;
+        }, $sql->fetchAll());
      }
 
     public function pegarListas() {
