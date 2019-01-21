@@ -40,7 +40,7 @@ class Shared extends model {
             }
         };
 
-        return SSP::simple($_POST, $this->config, $this->table, "id", $columns);
+        return SSP::complex($_POST, $this->config, $this->table, "id", $columns, null, "situacao='ativo'");
     }
 
     public function unico($campo, $valor) {
@@ -59,7 +59,7 @@ class Shared extends model {
             $item["Comment"] = json_decode($item["Comment"], true);
             return $item;
         }, $sql->fetchAll());
-     }
+    }
 
     public function pegarListas() {
         $array = array();

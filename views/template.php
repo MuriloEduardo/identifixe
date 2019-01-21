@@ -88,7 +88,7 @@
 <html class="h-100">
    <head>
       <title>Painel - <?php echo NOME_EMPRESA;?></title>
-      <meta charset="utf-8">
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
       <link href="<?php echo BASE_URL;?>/assets/css/vendor/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
@@ -182,5 +182,6 @@
          </div>
       </footer>
    </body>
+   <script src="<?php echo BASE_URL;?>/assets/js/validacao_form_bootstrap.js" type="text/javascript"></script>
    <script src="<?php echo BASE_URL;?>/assets/js/main.js" type="text/javascript"></script>
 </html>

@@ -36,10 +36,17 @@ class produtosController extends controller{
         if(in_array($this->modulo . "_add", $_SESSION["permissoesFuncionario"]) == FALSE){
             header("Location: " . BASE_URL . "/" . $this->modulo); 
         }
-        
-        $dados["colunas"] = $this->colunas;
+
         $dados['infoFunc'] = $_SESSION;
-        $this->loadTemplate($this->modulo . "-add", $dados);
+        $prdt = new Produtos;
+
+        if(isset($_POST)) {
+            $prdt->adicionar($_POST);
+            header("Location: ".BASE_URL."/funcionarios");
+        } else {
+            $dados["colunas"] = $this->colunas;
+            $this->loadTemplate($this->modulo . "-add", $dados);
+        }
     }
     
     public function editar($id) {

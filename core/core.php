@@ -30,6 +30,9 @@ class core {
                $currentAction = $url[0];
                array_shift($url) ;
            }else{
+               if ($_SESSION["returnMessage"]["show"]) {
+                   unset($_SESSION["returnMessage"]);
+               }
                $currentAction = "index"; 
            }
            

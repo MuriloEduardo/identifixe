@@ -32,44 +32,39 @@ class clientesController extends controller{
     
     public function adicionar() {
         
-        if(in_array("clientes_add",$_SESSION["permissoesFuncionario"]) == FALSE){
-            header("Location: ".BASE_URL."/clientes"); 
+        if(in_array($this->modulo. "_add", $_SESSION["permissoesFuncionario"]) == FALSE){
+            header("Location: " . BASE_URL . "/" . $this->modulo); 
         }
         
-        $array = array();
         $dados['infoFunc'] = $_SESSION;
-        $cl = new Clientes();
+        $clientes = new Clientes();
         
-        if(isset($_POST["txt"]) && count($_POST["txt"])> 0){
-            $txts = $_POST["txt"]; 
-            $cl->adicionar($txts,$_SESSION["idEmpresaFuncionario"]);
-            header("Location: ".BASE_URL."/clientes");
+        if(isset($_POST) && !empty($_POST)){
+            $clientes->adicionar($_POST);
+            header("Location: " . BASE_URL . "/" . $this->modulo);
         }else{
             $dados["colunas"] = $this->colunas;
-            $this->loadTemplate("clientes-add",$dados);
-        }  
+            $this->loadTemplate($this->modulo . "-add",$dados);
+        }
     }
     
     public function editar($id) {
-        if(in_array("clientes_edt",$_SESSION["permissoesFuncionario"]) == FALSE || empty($id) || !isset($id)){
-            header("Location: ".BASE_URL."/clientes"); 
+
+        if(in_array($this->modulo . "_edt",$_SESSION["permissoesFuncionario"]) == FALSE || empty($id) || !isset($id)){
+            header("Location: " . BASE_URL . "/" . $this->modulo); 
         }
-        $array = array();
+
         $dados['infoFunc'] = $_SESSION;
-        $cl = new Clientes();
+        $clientes = new Clientes();
         
-        $id = addslashes($id);
-        if(isset($_POST["txt"]) && count($_POST["txt"])> 0){
-            $txts = $_POST["txt"]; 
-            $cl->editar($id, $txts,$_SESSION["idEmpresaFuncionario"]);
-            header("Location: ".BASE_URL."/clientes");
+        if(isset($_POST) && !empty($_POST)){
+            $clientes->editar($id, $_POST);
+            header("Location: " . BASE_URL . "/" . $this->modulo); 
         }else{
-            
-            $dados["idSelecionado"] = $id;
-            $dados["infoCliente"] = $cl->pegarInfoCliente($id);
-            $dados["listaColunas"] = $this->colunas;
-            $this->loadTemplate("clientes-edt",$dados);
-        }  
+            $dados["dados"] = $clientes->pegarInfoCliente($id);
+            $dados["colunas"] = $this->colunas;
+            $this->loadTemplate($this->modulo . "-edt", $dados);
+        }
     }
 
     public function excluir($id) {       

@@ -1,7 +1,8 @@
 <?php
 
 class Clientes extends model {
-    
+
+    protected $table = "clientes";
 
     public function __construct($id = "") {
         parent::__construct(); 
@@ -54,7 +55,34 @@ class Clientes extends model {
         return $array;
     }
 
-    public function adicionar($txts,$empresa){
+    public function adicionar($request) {
+
+        $permissoes = new Permissoes();
+        $alteracoes = ucwords($_SESSION["nomeFuncionario"]) . " - " . $permissoes->pegaIPcliente() . " - " . date('d/m/Y H:i:s') . " - CADASTRO";
+        
+        $request["situacao"] = "ativo";
+        $request["alteracoes"] = $alteracoes;
+
+        $keys = implode(",", array_keys($request));
+        $values = "'" . implode("','", array_values($request)) . "'";
+
+        $sql = "INSERT INTO " . $this->table . " (" . $keys . ") VALUES (" . $values . ")";
+        $this->db->query($sql);
+
+        if ($this->db->lastInsertId()) {
+            $_SESSION["returnMessage"] = [
+                "mensagem" => "Registro inserido com sucesso!",
+                "class" => "alert-success"
+            ];
+        } else {
+            $_SESSION["returnMessage"] = [
+                "mensagem" => "Houve uma falha, entre em contato conosco!",
+                "class" => "alert-danger"
+            ];
+        }
+    }
+
+    public function adicionarOld($txts,$empresa){
         
         if(count($txts) > 0 && !empty($empresa)){
             
@@ -105,19 +133,23 @@ class Clientes extends model {
         }
     }    
     
-     public function pegarInfoCliente($id) {
-       $array = array();
-       
-       $sql = "SELECT * FROM clientes WHERE id='$id' AND situacao = 'ativo'";      
-       $sql = $this->db->query($sql);
-       if($sql->rowCount()>0){
-         $array = $sql->fetchAll(); 
-       }
-       return $array; 
+    public function pegarInfoCliente($id) {
+        $array = array();
+        $arrayAux = array();
+
+        $sql = "SELECT * FROM " . $this->table . " WHERE id='$id' AND situacao = 'ativo'";      
+        $sql = $this->db->query($sql);
+        if($sql->rowCount()>0){
+            $array = $sql->fetch();
+        }
+        foreach ($arrayAux as $chave => $valor){
+            $array[$chave] = array(utf8_encode($valor));        
+        }
+        return $array; 
     }
     
-     public function editar($id, $txts, $empresa){
-        if(!empty($id) && !empty($empresa) && count($txts) >0 ){
+     public function editarOld($id, $txts){
+        if(!empty($id) && count($txts) >0 ){
             
             $p = new Permissoes();
             $ipcliente = $p->pegaIPcliente();
@@ -163,10 +195,35 @@ class Clientes extends model {
                 "cidade =      '$txt12', ".
                 "observacao =  '$txt13', ".
                 "contatos =    '$txt14', ".
-                "alteracoes = '$altera' WHERE id = '$id' AND id_empresa = '$empresa'";
+                "alteracoes = '$altera' WHERE id = '$id'";
             
             $this->db->query($sql);
 
+        }
+    }
+
+    public function editar($id, $request) {
+
+        $output = implode(', ', array_map(
+            function ($v, $k) { return sprintf("%s='%s'", $k, $v); },
+            $request,
+            array_keys($request)
+        ));
+
+        $sql = "UPDATE " . $this->table . " SET " . $output . " WHERE id='" . $id . "'";
+
+        $result = $this->db->query($sql);
+
+        if ($result) {
+            $_SESSION["returnMessage"] = [
+                "mensagem" => "Registro alterado com sucesso!",
+                "class" => "alert-success"
+            ];
+        } else {
+            $_SESSION["returnMessage"] = [
+                "mensagem" => "Houve uma falha, entre em contato conosco!",
+                "class" => "alert-danger"
+            ];
         }
     }
     

@@ -19,7 +19,11 @@ class Produtos extends model {
         return $array;
     }
 
-    public function adicionar($camposAdd, $dadosTabela){
+    public function adicionar($request) {
+        var_dump($request);exit;
+    }
+
+    public function adicionarOld($camposAdd, $dadosTabela){
 
         if(count($camposAdd) > 0 && !empty($dadosTabela)){
             $p = new Permissoes();
@@ -64,19 +68,18 @@ class Produtos extends model {
     }    
     
      public function pegarInfo($id) {
-       $array = array();
-       $arrayAux = array();
-       
-       $sql = "SELECT * FROM produtos WHERE id='$id' AND situacao = 'ativo'";      
-       $sql = $this->db->query($sql);
-       if($sql->rowCount()>0){
-         $array = $sql->fetchAll(); 
-       }
-       foreach ($arrayAux as $chave => $valor){
-        $array[$chave] = array(utf8_encode($valor));        
+        $array = array();
+        $arrayAux = array();
+
+        $sql = "SELECT * FROM produtos WHERE id='$id' AND situacao = 'ativo'";      
+        $sql = $this->db->query($sql);
+        if($sql->rowCount()>0){
+            $array = $sql->fetchAll(); 
         }
-       //print_r($array); exit; 
-       return $array; 
+        foreach ($arrayAux as $chave => $valor){
+            $array[$chave] = array(utf8_encode($valor));        
+        }
+        return $array; 
     }
     
      public function editar($camposAdd,$dadosTabela, $id){
