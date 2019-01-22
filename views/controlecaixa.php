@@ -1,5 +1,5 @@
-<link href="<?php echo BASE_URL;?>/assets/css/controlecaixa.css" rel="stylesheet" type="text/css"/>
-<script src="<?php echo BASE_URL;?>/assets/js/controlecaixa.js" type="text/javascript"></script>
+<!-- <link href="<?php echo BASE_URL;?>/assets/css/controlecaixa.css" rel="stylesheet" type="text/css"/>
+<script src="<?php echo BASE_URL;?>/assets/js/controlecaixa.js" type="text/javascript"></script> -->
 <script type="text/javascript">var baselink = '<?php echo BASE_URL;?>'; var targetCols = 11;</script>
 
 <h1 class="titulo_lc">CONTROLE LANÇAMENTOS FLUXO DE CAIXA</h1>

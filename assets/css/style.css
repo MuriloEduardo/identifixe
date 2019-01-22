@@ -11191,21 +11191,21 @@ readers do not read off random characters that represent icons */
   padding-left: 0;
   transition: all 0.5s ease; }
   #wrapper.toggled {
-    padding-left: 300px; }
+    padding-left: 350px; }
     #wrapper.toggled #sidebar-wrapper {
-      width: 300px; }
+      width: 350px; }
     #wrapper.toggled #page-content-wrapper {
       position: absolute;
-      margin-right: -300px; }
+      margin-right: -350px; }
 
 #sidebar-wrapper {
   z-index: 1000;
   position: fixed;
-  left: 300px;
+  left: 350px;
   width: 0;
   top: 56px;
   bottom: 0;
-  margin-left: -300px;
+  margin-left: -350px;
   overflow-y: auto;
   transition: all 0.5s ease; }
 
@@ -11216,7 +11216,7 @@ readers do not read off random characters that represent icons */
 .sidebar-nav {
   position: absolute;
   top: 0;
-  width: 300px;
+  width: 350px;
   margin: 0;
   padding: 0; }
   .sidebar-nav .dropdown-menu {
@@ -11226,9 +11226,9 @@ readers do not read off random characters that represent icons */
   #wrapper {
     padding-left: 0; }
     #wrapper.toggled {
-      padding-left: 300px; }
+      padding-left: 350px; }
       #wrapper.toggled #sidebar-wrapper {
-        width: 300px; }
+        width: 350px; }
       #wrapper.toggled #page-content-wrapper {
         position: relative;
         margin-right: 0; }

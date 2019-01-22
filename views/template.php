@@ -100,14 +100,16 @@
       <script src="<?php echo BASE_URL;?>/assets/js/vendor/jquery-ui.min.js" type="text/javascript"></script>
       <script src="<?php echo BASE_URL;?>/assets/js/vendor/popper.min.js" type="text/javascript"></script>
       <script src="<?php echo BASE_URL;?>/assets/js/vendor/bootstrap.min.js" type="text/javascript"></script>
+      <script src="<?php echo BASE_URL;?>/assets/js/validacao_form_bootstrap.js" type="text/javascript"></script>
+      <script src="<?php echo BASE_URL;?>/assets/js/main.js" type="text/javascript"></script>
    </head>
 <body class="d-flex flex-column h-100 bg-light">
    <nav class="navbar bg-white shadow-sm fixed-top">
       <ul class="nav">
          <li>
-            <a href="#menu-toggle" class="btn btn-link px-0 border-0" id="menu-toggle">
+            <button class="btn btn-link px-0 border-0" id="menu-toggle">
                <i class="fas fa-bars"></i>
-            </a>
+            </button>
          </li>
          <li>
             <a class="navbar-brand mx-3" href="<?php echo BASE_URL ?>/dashboard"><?php echo trim(NOME_EMPRESA);?></a>
@@ -178,10 +180,8 @@
       </div>
       <footer class="py-3 bg-white mt-auto shadow-sm">
          <div class="container-fluid">
-            <div class="text-muted text-center">Todos os direitos reservados <strong>SqualoAquile</strong><br/>Estamos à disposição: <a href="mailto:contato@squaloaquile.com.br" class="text-muted font-italic">contato@squaloaquile.com.br</a></div>
+            <div class="text-muted text-center small">Todos os direitos reservados <strong>SqualoAquile</strong><br/>Estamos à disposição: <a href="mailto:contato@squaloaquile.com.br" class="text-muted font-italic">contato@squaloaquile.com.br</a></div>
          </div>
       </footer>
    </body>
-   <script src="<?php echo BASE_URL;?>/assets/js/validacao_form_bootstrap.js" type="text/javascript"></script>
-   <script src="<?php echo BASE_URL;?>/assets/js/main.js" type="text/javascript"></script>
 </html>

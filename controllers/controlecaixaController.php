@@ -1,9 +1,15 @@
 <?php
 class controlecaixaController extends controller{
+
+    protected $table = "clientes";
+    
+    protected $shared;
+
     public function __construct() {
         parent::__construct();
     
        $func = new Funcionarios();
+       $this->shared = new Shared($this->table);
        
        //verifica se está logado
        if($func->isLogged() == false){
@@ -28,7 +34,7 @@ class controlecaixaController extends controller{
         $fp = new Formaspgto();
         $lc = new Lancamentos();
 
-        $dados["listaAdministradoras"]  = $a->pegarListaAdministradoras($_SESSION["idEmpresaFuncionario"]); 
+        $dados["listaAdministradoras"]  = $this->shared->pegarListas("administradoras");
         $dados["listaContasCorrentes"]  = $cc->pegarListaCC($_SESSION["idEmpresaFuncionario"]);
         $dados["listaFormasPgto"]  = $fp->pegarListaFormasPgto($_SESSION["idEmpresaFuncionario"]);
         $dados["listaColunas"] = $lc->nomeDasColunas();

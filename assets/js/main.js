@@ -348,10 +348,7 @@ $(function () {
         }
     );
 
-    $('#menu-toggle').click(function (e) {
-        e.preventDefault();
-        $('#wrapper').toggleClass('toggled');
-    });
+    $('#menu-toggle').click(() => $('#wrapper').toggleClass('toggled'));
 
     $('[name=searchDataTable]').keyup(function () {
         dataTable.search(this.value).draw();

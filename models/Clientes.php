@@ -1,14 +1,18 @@
 <?php
-
 class Clientes extends model {
 
     protected $table = "clientes";
-
     protected $permissoes;
 
-    public function __construct($id = "") {
+    public function __construct() {
         parent::__construct(); 
         $this->permissoes = new Permissoes();
+    }
+
+    private function formataDadosDb($array) {
+        return array_map(function($item) {
+            return trim(addslashes($item));
+        }, $array);
     }
     
     public function pegarListaClientes($empresa) {
@@ -58,7 +62,7 @@ class Clientes extends model {
         return $array;
     }
 
-    public function pegarInfoCliente($id) {
+    public function pegarInfo($id) {
         $array = array();
         $arrayAux = array();
 
@@ -81,7 +85,7 @@ class Clientes extends model {
         $request["alteracoes"] = $alteracoes;
 
         $keys = implode(",", array_keys($request));
-        $values = "'" . implode("','", array_values($request)) . "'";
+        $values = "'" . implode("','", array_values($this->formataDadosDb($request))) . "'";
 
         $sql = "INSERT INTO " . $this->table . " (" . $keys . ") VALUES (" . $values . ")";
         $this->db->query($sql);
@@ -128,7 +132,7 @@ class Clientes extends model {
         if(!empty($id)){
             
             //se não achar nenhum usuario associado ao grupo - pode deletar, ou seja, tornar o cadastro situacao=excluído
-            $sql = "SELECT alteracoes FROM clientes WHERE id = '$id' AND situacao = 'ativo'";
+            $sql = "SELECT alteracoes FROM " . $this->table . " WHERE id = '$id' AND situacao = 'ativo'";
             
             $sql = $this->db->query($sql);
             
@@ -139,7 +143,7 @@ class Clientes extends model {
 
                $palter = $palter . " | " . ucwords($_SESSION["nomeFuncionario"]) . " - $ipcliente - " . date('d/m/Y H:i:s') . " - EXCLUSAO";
                
-               $sqlA = "UPDATE clientes SET alteracoes = '$palter', situacao = 'excluido' WHERE id = '$id'";
+               $sqlA = "UPDATE " . $this->table . " SET alteracoes = '$palter', situacao = 'excluido' WHERE id = '$id'";
                $this->db->query($sqlA);
 
                 $_SESSION["returnMessage"] = [

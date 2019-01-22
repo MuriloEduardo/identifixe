@@ -1,9 +1,15 @@
 <?php
 class lancamentosController extends controller{
+
+    protected $table = "fluxo";
+
+    protected $shared;
+
     public function __construct() {
         parent::__construct();
     
        $func = new Funcionarios();
+       $this->shared = new Shared($this->table);
        
        //verifica se está logado
        if($func->isLogged() == false){
@@ -66,7 +72,7 @@ class lancamentosController extends controller{
             }
         }else{
             
-            $dados["listaAdministradoras"]  = $a->pegarListaAdministradoras($_SESSION["idEmpresaFuncionario"]); 
+            $dados["listaAdministradoras"]  = $this->shared->pegarListas("administradoras");
             $dados["listaContasCorrentes"]  = $cc->pegarListaCC($_SESSION["idEmpresaFuncionario"]);
             $dados["listaFormasPgto"]  = $fp->pegarListaFormasPgto($_SESSION["idEmpresaFuncionario"]);
             $this->loadTemplate("lancamentos",$dados);

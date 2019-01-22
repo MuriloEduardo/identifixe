@@ -2,9 +2,18 @@
 
 class Funcionarios extends model {
     
+    protected $table = "clientes";
+    protected $permissoes;
 
-    public function __construct($id = "") {
+    public function __construct() {
         parent::__construct(); 
+        $this->permissoes = new Permissoes();
+    }
+
+    private function formataDadosDb($array) {
+        return array_map(function($item) {
+            return trim(addslashes($item));
+        }, $array);
     }
      
     public function isLogged(){
@@ -96,137 +105,6 @@ class Funcionarios extends model {
         return $array;
     }
     
-    public function adicionar($txts,$empresa){
-        
-        if(count($txts) > 0 && !empty($empresa)){
-            
-            $p = new Permissoes();
-            $ipcliente = $p->pegaIPcliente();
-            $alteracoes = ucwords($_SESSION["nomeFuncionario"])." - $ipcliente - ".date('d/m/Y H:i:s')." - CADASTRO";
-                   
-            //tratamento das informações vindas do formulário
-            $txt1 =  addslashes($txts[1]); // nome
-            $txt2 =  addslashes($txts[2]); // email
-            $txt3 =  addslashes($txts[3]); // cpf
-            $txt4 =  addslashes($txts[4]); // cep
-            $txt5 =  addslashes($txts[5]); // endereco
-            $txt6 =  addslashes($txts[6]); // numero
-            $txt7 =  addslashes($txts[7]); // complemento
-            $txt8 =  addslashes($txts[8]); // bairro
-            $txt9 =  addslashes($txts[9]); // cidade
-            $txt10 = addslashes($txts[10]); // telefone
-            $txt11 = addslashes($txts[11]); // celular
-            $txt12 = addslashes($txts[12]);// inicio_relacao
-            $txt13 = addslashes($txts[13]); // grupo_permissao
-            $txt14 = addslashes($txts[14]); // id_gp
-            $txt15 = addslashes($txts[15]); // observacao
-            $txt16 = floatval(str_replace(",",".",str_replace(".","",addslashes($txts[16]))));// salario            
-            $txt17 = floatval(str_replace(",",".",str_replace(".","",addslashes($txts[17]))));// comissao            
-            $txt18 = floatval(str_replace(",",".",str_replace(".","",addslashes($txts[18]))));// fgts            
-            $txt19 = floatval(str_replace(",",".",str_replace(".","",addslashes($txts[19]))));// inss            
-            $txt20 = md5(addslashes($txts[20])); // senha
-            
-            //montagem da query
-            $sql = "INSERT INTO funcionarios(id, id_empresa, nome, email, cpf, cep, endereco, numero, complemento, bairro, cidade, telefone, celular, inicio_relacao,grupo_permissao, id_gp, observacao, salario, comissao, fgts, inss, senha, alteracoes, situacao) VALUES ".
-            
-            "(DEFAULT, ".
-            "'$empresa', ".
-            "'$txt1', ".
-            "'$txt2', ".
-            "'$txt3', ".
-            "'$txt4', ".
-            "'$txt5', ".
-            "'$txt6', ".
-            "'$txt7', ".
-            "'$txt8', ".
-            "'$txt9', ".
-            "'$txt10', ".
-            "'$txt11', ".
-            "'$txt12', ".
-            "'$txt13', ".
-            "'$txt14', ".
-            "'$txt15', ".
-            "'$txt16', ".
-            "'$txt17', ".
-            "'$txt18', ".
-            "'$txt19', ".
-            "'$txt20', ".
-            "'$alteracoes', ".
-            "'ativo')";
-            
-            $this->db->query($sql);
-
-        }
-    }    
-    
-     public function pegarInfoFunc($id) {
-       $array = array();
-       
-       $sql = "SELECT * FROM funcionarios WHERE id='$id' AND situacao = 'ativo'";      
-       $sql = $this->db->query($sql);
-       if($sql->rowCount()>0){
-         $array = $sql->fetchAll(); 
-       }
-       return $array; 
-    }
-    
-     public function editar($id, $txts){
-        if(!empty($id) && count($txts) >0 ){
-            
-            $p = new Permissoes();
-            $ipcliente = $p->pegaIPcliente();
-            $altera = addslashes($txts[21])." | ".ucwords($_SESSION["nomeFuncionario"])." - $ipcliente - ".date('d/m/Y H:i:s')." - ALTERACAO";
-            
-            //tratamento das informações vindas do formulário
-            $txt1 =  addslashes($txts[1]); // nome
-            $txt2 =  addslashes($txts[2]); // email
-            $txt3 =  addslashes($txts[3]); // cpf
-            $txt4 =  addslashes($txts[4]); // cep
-            $txt5 =  addslashes($txts[5]); // endereco
-            $txt6 =  addslashes($txts[6]); // numero
-            $txt7 =  addslashes($txts[7]); // complemento
-            $txt8 =  addslashes($txts[8]); // bairro
-            $txt9 =  addslashes($txts[9]); // cidade
-            $txt10 = addslashes($txts[10]); // telefone
-            $txt11 = addslashes($txts[11]); // celular
-            $txt12 = addslashes($txts[12]);// inicio_relacao
-            $txt13 = addslashes($txts[13]); // grupo_permissao
-            $txt14 = addslashes($txts[14]); // id_gp
-            $txt15 = addslashes($txts[15]); // observacao
-            $txt16 = floatval(str_replace(",",".",str_replace(".","",addslashes($txts[16]))));// salario            
-            $txt17 = floatval(str_replace(",",".",str_replace(".","",addslashes($txts[17]))));// comissao            
-            $txt18 = floatval(str_replace(",",".",str_replace(".","",addslashes($txts[18]))));// fgts            
-            $txt19 = floatval(str_replace(",",".",str_replace(".","",addslashes($txts[19]))));// inss            
-            
-            
-            //montagem da query
-            $sql = "UPDATE funcionarios SET ".
-                "nome =            '$txt1', ".
-                "email =           '$txt2', ".
-                "cpf=              '$txt3', ".
-                "cep =             '$txt4', ".
-                "endereco =        '$txt5', ".
-                "numero =          '$txt6', ".
-                "complemento =     '$txt7', ".
-                "bairro =          '$txt8', ".
-                "cidade =          '$txt9', ".
-                "telefone =        '$txt10', ".
-                "celular =         '$txt11', ".
-                "inicio_relacao =  '$txt12', ".
-                "grupo_permissao = '$txt13', ".
-                "id_gp =           '$txt14', ".
-                "observacao =      '$txt15', ".
-                "salario =         '$txt16', ".
-                "comissao =        '$txt17', ".
-                "fgts =            '$txt18', ".
-                "inss =            '$txt19', ".
-                "alteracoes = '$altera' WHERE id='$id'";
-            
-            $this->db->query($sql);
-
-        }
-    }
-    
     public function novaSenhaSalva($idselec,$senhavelha,$senhanova,$empresa){
         if(!empty($idselec) && !empty($senhavelha) && !empty($senhanova) && !empty($empresa)){
             $resp = array();
@@ -261,25 +139,94 @@ class Funcionarios extends model {
         }    
     }
 
-    public function excluir($id,$empresa){
-        if(!empty($id) && !empty($empresa)){
+    public function pegarInfo($id) {
+        $array = array();
+        $arrayAux = array();
+
+        $sql = "SELECT * FROM " . $this->table . " WHERE id='$id' AND situacao = 'ativo'";      
+        $sql = $this->db->query($sql);
+        if($sql->rowCount()>0){
+            $array = $sql->fetch();
+        }
+        foreach ($arrayAux as $chave => $valor){
+            $array[$chave] = array(utf8_encode($valor));        
+        }
+        return $array; 
+    }
+
+    public function adicionar($request) {
+
+        $alteracoes = ucwords($_SESSION["nomeFuncionario"]) . " - " . $this->permissoes->pegaIPcliente() . " - " . date('d/m/Y H:i:s') . " - CADASTRO";
+        
+        $request["situacao"] = "ativo";
+        $request["alteracoes"] = $alteracoes;
+
+        $keys = implode(",", array_keys($request));
+        $values = "'" . implode("','", array_values($this->formataDadosDb($request))) . "'";
+
+        $sql = "INSERT INTO " . $this->table . " (" . $keys . ") VALUES (" . $values . ")";
+        $this->db->query($sql);
+
+        if ($this->db->lastInsertId()) {
+            $_SESSION["returnMessage"] = [
+                "mensagem" => "Registro inserido com sucesso!",
+                "class" => "alert-success"
+            ];
+        } else {
+            $_SESSION["returnMessage"] = [
+                "mensagem" => "Houve uma falha, entre em contato conosco!",
+                "class" => "alert-danger"
+            ];
+        }
+    }
+
+    public function editar($id, $request) {
+
+        $output = implode(', ', array_map(
+            function ($v, $k) { return sprintf("%s='%s'", $k, $v); },
+            $request,
+            array_keys($request)
+        ));
+
+        $sql = "UPDATE " . $this->table . " SET " . $output . " WHERE id='" . $id . "'";
+
+        $result = $this->db->query($sql);
+
+        if ($result) {
+            $_SESSION["returnMessage"] = [
+                "mensagem" => "Registro alterado com sucesso!",
+                "class" => "alert-success"
+            ];
+        } else {
+            $_SESSION["returnMessage"] = [
+                "mensagem" => "Houve uma falha, entre em contato conosco!",
+                "class" => "alert-danger"
+            ];
+        }
+    }
+    
+    public function excluir($id){
+        if(!empty($id)){
             
             //se não achar nenhum usuario associado ao grupo - pode deletar, ou seja, tornar o cadastro situacao=excluído
-            $sql = "SELECT alteracoes FROM funcionarios WHERE id = '$id' AND id_empresa = '$empresa' AND situacao = 'ativo'";
+            $sql = "SELECT alteracoes FROM " . $this->table . " WHERE id = '$id' AND situacao = 'ativo'";
             
             $sql = $this->db->query($sql);
             
             if($sql->rowCount() > 0){  
                $sql = $sql->fetch();
                $palter = $sql["alteracoes"];
-               $p = new Permissoes();
-               $ipcliente = $p->pegaIPcliente();
+               $ipcliente = $this->permissoes->pegaIPcliente();
 
-               $palter = $palter." | ".ucwords($_SESSION["nomeFuncionario"])." - $ipcliente - ".date('d/m/Y H:i:s')." - EXCLUSAO";
+               $palter = $palter . " | " . ucwords($_SESSION["nomeFuncionario"]) . " - $ipcliente - " . date('d/m/Y H:i:s') . " - EXCLUSAO";
                
-               $sqlA = "UPDATE funcionarios SET alteracoes = '$palter', situacao = 'excluido' WHERE id = '$id' AND id_empresa = '$empresa'";
+               $sqlA = "UPDATE " . $this->table . " SET alteracoes = '$palter', situacao = 'excluido' WHERE id = '$id'";
                $this->db->query($sqlA);
-               
+
+                $_SESSION["returnMessage"] = [
+                    "mensagem" => "Registro deletado com sucesso!",
+                    "class" => "alert-success"
+                ];
             }
         }
     }

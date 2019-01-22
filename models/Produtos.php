@@ -3,8 +3,17 @@
 class Produtos extends model {
 
     protected $table = "produtos";
-    public function __construct($id = "") {
+    protected $permissoes;
+
+    public function __construct() {
         parent::__construct(); 
+        $this->permissoes = new Permissoes();
+    }
+
+    private function formataDadosDb($array) {
+        return array_map(function($item) {
+            return trim(addslashes($item));
+        }, $array);
     }
     
     public function buscaServicoPeloNome($nome,$empresa){
@@ -19,6 +28,21 @@ class Produtos extends model {
         return $array;
     }
 
+    public function pegarInfo($id) {
+        $array = array();
+        $arrayAux = array();
+
+        $sql = "SELECT * FROM " . $this->table . " WHERE id='$id' AND situacao = 'ativo'";      
+        $sql = $this->db->query($sql);
+        if($sql->rowCount()>0){
+            $array = $sql->fetch();
+        }
+        foreach ($arrayAux as $chave => $valor){
+            $array[$chave] = array(utf8_encode($valor));        
+        }
+        return $array; 
+    }
+
     public function adicionar($request) {
 
         $alteracoes = ucwords($_SESSION["nomeFuncionario"]) . " - " . $this->permissoes->pegaIPcliente() . " - " . date('d/m/Y H:i:s') . " - CADASTRO";
@@ -27,7 +51,7 @@ class Produtos extends model {
         $request["alteracoes"] = $alteracoes;
 
         $keys = implode(",", array_keys($request));
-        $values = "'" . implode("','", array_values($request)) . "'";
+        $values = "'" . implode("','", array_values($this->formataDadosDb($request))) . "'";
 
         $sql = "INSERT INTO " . $this->table . " (" . $keys . ") VALUES (" . $values . ")";
         $this->db->query($sql);
@@ -44,74 +68,29 @@ class Produtos extends model {
             ];
         }
     }
-    
-     public function pegarInfo($id) {
-        $array = array();
-        $arrayAux = array();
 
-        $sql = "SELECT * FROM produtos WHERE id='$id' AND situacao = 'ativo'";      
-        $sql = $this->db->query($sql);
-        if($sql->rowCount()>0){
-            $array = $sql->fetchAll(); 
-        }
-        foreach ($arrayAux as $chave => $valor){
-            $array[$chave] = array(utf8_encode($valor));        
-        }
-        return $array; 
-    }
-    
-     public function editar($camposAdd,$dadosTabela, $id){
-        if(!empty($id) && !empty($camposAdd) && count($dadosTabela) > 0 ){
-            
-            $p = new Permissoes();
-            $ipcliente = $p->pegaIPcliente();
-            $hist =  explode("##", addslashes($camposAdd[count($camposAdd)]));
-            
-            if(!empty($hist[1])){
-                $alteracoes = $hist[0]." | ".ucwords($_SESSION["nomeFuncionario"])." - $ipcliente - ".date('d/m/Y H:i:s')." - ALTERACAO >> ".$hist[1];     
-            }else{
-                $alteracoes = '';
-            }
-            
-            //tratamento das informações vindas do formulário e montagem da query
-            $campos = Array();
-            $sql = "UPDATE produtos SET ";
-            $sqlA = "( DEFAULT, ";
+    public function editar($id, $request) {
 
-            for($i = 1; $i <= count($camposAdd); $i++){
-                $nomecoluna = lcfirst($dadosTabela[$i]['nomecol']);
+        $output = implode(', ', array_map(
+            function ($v, $k) { return sprintf("%s='%s'", $k, $v); },
+            $request,
+            array_keys($request)
+        ));
 
-                if(strpos($dadosTabela[$i]['tipo'], "varchar") !== false){
-                    
-                    $campos[$i] = trim(addslashes($camposAdd[$i]));
+        $sql = "UPDATE " . $this->table . " SET " . $output . " WHERE id='" . $id . "'";
 
-                }elseif(strpos($dadosTabela[$i]['tipo'], "float") !== false){
-                    
-                    $campos[$i] = floatval(str_replace(",",".",str_replace(".","",addslashes($camposAdd[$i]))));    
+        $result = $this->db->query($sql);
 
-                }elseif(strpos($dadosTabela[$i]['tipo'], "date") !== false){
-
-                    //tratamento da variavel se for data
-                    $dtaux = explode("/",addslashes($camposAdd[$i]));
-                    $campos[$i] = $dtaux[2]."-".$dtaux[1]."-".$dtaux[0];
-                }else{
-
-                    $campos[$i] = trim(addslashes($camposAdd[$i]));
-                }
-                
-                if(!empty($alteracoes)){
-                    if($i < count($camposAdd)){
-                        $sql = $sql."$nomecoluna = '$campos[$i]', ";
-                    }else{
-                        $sql = $sql."$nomecoluna = '$alteracoes' ";
-                    }
-                }    
-            }   
-
-            if(!empty($alteracoes)){
-                $sql = $sql." WHERE id = '$id'";
-                $this->db->query($sql);   
-            }    
+        if ($result) {
+            $_SESSION["returnMessage"] = [
+                "mensagem" => "Registro alterado com sucesso!",
+                "class" => "alert-success"
+            ];
+        } else {
+            $_SESSION["returnMessage"] = [
+                "mensagem" => "Houve uma falha, entre em contato conosco!",
+                "class" => "alert-danger"
+            ];
         }
     }
     
@@ -119,21 +98,24 @@ class Produtos extends model {
         if(!empty($id)){
             
             //se não achar nenhum usuario associado ao grupo - pode deletar, ou seja, tornar o cadastro situacao=excluído
-            $sql = "SELECT alteracoes FROM produtos WHERE id = '$id' AND situacao = 'ativo'";
+            $sql = "SELECT alteracoes FROM " . $this->table . " WHERE id = '$id' AND situacao = 'ativo'";
             
             $sql = $this->db->query($sql);
             
             if($sql->rowCount() > 0){  
                $sql = $sql->fetch();
                $palter = $sql["alteracoes"];
-               $p = new Permissoes();
-               $ipcliente = $p->pegaIPcliente();
+               $ipcliente = $this->permissoes->pegaIPcliente();
 
-               $palter = $palter." | ".ucwords($_SESSION["nomeFuncionario"])." - $ipcliente - ".date('d/m/Y H:i:s')." - EXCLUSAO";
+               $palter = $palter . " | " . ucwords($_SESSION["nomeFuncionario"]) . " - $ipcliente - " . date('d/m/Y H:i:s') . " - EXCLUSAO";
                
-               $sqlA = "UPDATE produtos SET alteracoes = '$palter', situacao = 'excluido' WHERE id = '$id' ";
+               $sqlA = "UPDATE " . $this->table . " SET alteracoes = '$palter', situacao = 'excluido' WHERE id = '$id'";
                $this->db->query($sqlA);
-               
+
+                $_SESSION["returnMessage"] = [
+                    "mensagem" => "Registro deletado com sucesso!",
+                    "class" => "alert-success"
+                ];
             }
         }
     }

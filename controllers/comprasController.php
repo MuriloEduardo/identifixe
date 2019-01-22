@@ -1,9 +1,19 @@
 <?php
 class comprasController extends controller{
+
+    protected $table = "produtos";
+    protected $colunas;
+
+    protected $shared;
+
     public function __construct() {
+
         parent::__construct();
     
        $func = new Funcionarios();
+       $this->shared = new Shared($this->table);
+
+       $this->colunas = $this->shared->nomeDasColunas();
        
        //verifica se está logado
        if($func->isLogged() == false){
@@ -21,8 +31,8 @@ class comprasController extends controller{
         
         $cp = new Compras();
         
-        $dados["listaColunas"] = $cp->nomeDasColunas();
-        $dados["listaClientes"]  = $cp->pegarListaCompras($_SESSION["idEmpresaFuncionario"]);
+        $dados["listaColunas"] = $this->colunas;
+        $dados["listaClientes"]  = $this->shared->pegarListas($this->table);
         $this->loadTemplate("compras",$dados);      
     } 
     
@@ -48,7 +58,7 @@ class comprasController extends controller{
         }else{
             
             $dados["listaItens"] = $cp->nomeColunasItens();
-            $dados["listaColunas"] = $cp->nomeDasColunas();
+            $dados["listaColunas"] = $this->colunas;
             
             $dados["listaColunasE"] = $est->nomeDasColunas();
             $dados["listaEstoque"]  = $est->pegarListaEstoque($_SESSION["idEmpresaFuncionario"]);
