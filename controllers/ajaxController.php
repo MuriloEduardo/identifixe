@@ -317,6 +317,22 @@ class ajaxController extends controller{
             $shared->montaDataTable()
         );
     }
+
+    public function chart() {
+        if(isset($_POST['get_chart'])) {
+            $values = array(
+                array('Task', 'Hours Per Day'),
+                array('Work', 11),
+                array('Eat', 2),
+                array('Commute', 2),
+                array('Watch TV', 2),
+                array('Sleep', 7),
+            );
+        
+            echo json_encode($values);
+            exit;
+        }
+    }
     
 }   
 ?>

@@ -1,8 +1,8 @@
 <?php
 
 class Produtos extends model {
-    
 
+    protected $table = "produtos";
     public function __construct($id = "") {
         parent::__construct(); 
     }
@@ -20,52 +20,30 @@ class Produtos extends model {
     }
 
     public function adicionar($request) {
-        var_dump($request);exit;
-    }
 
-    public function adicionarOld($camposAdd, $dadosTabela){
+        $alteracoes = ucwords($_SESSION["nomeFuncionario"]) . " - " . $this->permissoes->pegaIPcliente() . " - " . date('d/m/Y H:i:s') . " - CADASTRO";
+        
+        $request["situacao"] = "ativo";
+        $request["alteracoes"] = $alteracoes;
 
-        if(count($camposAdd) > 0 && !empty($dadosTabela)){
-            $p = new Permissoes();
-            $ipcliente = $p->pegaIPcliente();
-            $alteracoes = ucwords($_SESSION["nomeFuncionario"])." - $ipcliente - ".date('d/m/Y H:i:s')." - CADASTRO";
+        $keys = implode(",", array_keys($request));
+        $values = "'" . implode("','", array_values($request)) . "'";
 
-            //tratamento das informações vindas do formulário e montagem da query
-            $campos = Array();
-            $sql = "INSERT INTO produtos(id, ";
-            $sqlA = "( DEFAULT, ";
+        $sql = "INSERT INTO " . $this->table . " (" . $keys . ") VALUES (" . $values . ")";
+        $this->db->query($sql);
 
-            for($i = 1; $i <= count($camposAdd); $i++){
-                $nomecoluna = lcfirst($dadosTabela[$i]['nomecol']);
-
-                if(strpos($dadosTabela[$i]['tipo'], "varchar") !== false){
-                    
-                    $campos[$i] = trim(addslashes($camposAdd[$i]));
-
-                }elseif(strpos($dadosTabela[$i]['tipo'], "float") !== false){
-                    
-                    $campos[$i] = floatval(str_replace(",",".",str_replace(".","",addslashes($camposAdd[$i]))));    
-
-                }elseif(strpos($dadosTabela[$i]['tipo'], "date") !== false){
-
-                    //tratamento da variavel se for data
-                    $dtaux = explode("/",addslashes($camposAdd[$i]));
-                    $campos[$i] = $dtaux[2]."-".$dtaux[1]."-".$dtaux[0];
-                }else{
-
-                    $campos[$i] = trim(addslashes($camposAdd[$i]));
-                }
-
-                $sql = $sql."$nomecoluna, ";
-                $sqlA = $sqlA."'".$campos[$i]."', ";
-
-            }   
-            
-            $sql = $sql."alteracoes, situacao) VALUES ".$sqlA. "'$alteracoes', 'ativo')";
-            $this->db->query($sql);
-
+        if ($this->db->lastInsertId()) {
+            $_SESSION["returnMessage"] = [
+                "mensagem" => "Registro inserido com sucesso!",
+                "class" => "alert-success"
+            ];
+        } else {
+            $_SESSION["returnMessage"] = [
+                "mensagem" => "Houve uma falha, entre em contato conosco!",
+                "class" => "alert-danger"
+            ];
         }
-    }    
+    }
     
      public function pegarInfo($id) {
         $array = array();

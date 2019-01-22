@@ -102,11 +102,11 @@
       <script src="<?php echo BASE_URL;?>/assets/js/vendor/bootstrap.min.js" type="text/javascript"></script>
    </head>
 <body class="d-flex flex-column h-100 bg-light">
-   <nav class="navbar navbar-dark bg-primary shadow-sm fixed-top">
+   <nav class="navbar bg-white shadow-sm fixed-top">
       <ul class="nav">
          <li>
             <a href="#menu-toggle" class="btn btn-link px-0 border-0" id="menu-toggle">
-               <span class="navbar-toggler-icon"></span>
+               <i class="fas fa-bars"></i>
             </a>
          </li>
          <li>

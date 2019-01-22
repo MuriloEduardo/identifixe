@@ -3,81 +3,84 @@ class clientesController extends controller{
 
     protected $modulo = "clientes";
     protected $colunas;
+    
     protected $shared;
+    protected $clientes;
+    protected $funcionarios;
 
     public function __construct() {
-        parent::__construct();
-        
-       $func = new Funcionarios();
-       $this->shared = new Shared($this->modulo);
 
-       $this->colunas = $this->shared->nomeDasColunas();
-       
-       //verifica se está logado
-       if($func->isLogged() == false){
-           header("Location: ".BASE_URL."/login"); 
-       }
-       //verifica se tem permissão para ver esse módulo
-       if(in_array($this->modulo."_ver",$_SESSION["permissoesFuncionario"]) == FALSE){
-           header("Location: ".BASE_URL."/dashboard"); 
-       }
+        parent::__construct();
+
+        $this->shared = new Shared($this->modulo);
+        $this->clientes = new Clientes();
+        $this->funcionarios = new Funcionarios();
+        
+        if($this->funcionarios->isLogged() == false){
+            header("Location: " . BASE_URL . "/login"); 
+        }
+
+        $this->colunas = $this->shared->nomeDasColunas();
+
+        // verifica se tem permissão para ver esse módulo
+        if(in_array($this->modulo."_ver", $_SESSION["permissoesFuncionario"]) == false){
+            header("Location: " . BASE_URL . "/dashboard"); 
+        }
     }
      
     public function index() {
-        $dados = array();
         $dados['infoFunc'] = $_SESSION;
         $dados["colunas"] = $this->colunas;
-        $this->loadTemplate($this->modulo,$dados);      
+        $this->loadTemplate($this->modulo, $dados);      
     }
     
     public function adicionar() {
         
-        if(in_array($this->modulo. "_add", $_SESSION["permissoesFuncionario"]) == FALSE){
+        if(in_array($this->modulo. "_add", $_SESSION["permissoesFuncionario"]) == false){
             header("Location: " . BASE_URL . "/" . $this->modulo); 
         }
         
         $dados['infoFunc'] = $_SESSION;
-        $clientes = new Clientes();
         
         if(isset($_POST) && !empty($_POST)){
-            $clientes->adicionar($_POST);
+            $this->clientes->adicionar($_POST);
             header("Location: " . BASE_URL . "/" . $this->modulo);
         }else{
             $dados["colunas"] = $this->colunas;
-            $this->loadTemplate($this->modulo . "-add",$dados);
+            $dados["viewInfo"] = ["title" => "Adicionar"];
+            $this->loadTemplate($this->modulo . "-form",$dados);
         }
     }
     
     public function editar($id) {
 
-        if(in_array($this->modulo . "_edt",$_SESSION["permissoesFuncionario"]) == FALSE || empty($id) || !isset($id)){
+        if(in_array($this->modulo . "_edt", $_SESSION["permissoesFuncionario"]) == false || empty($id) || !isset($id)){
             header("Location: " . BASE_URL . "/" . $this->modulo); 
         }
 
         $dados['infoFunc'] = $_SESSION;
-        $clientes = new Clientes();
         
         if(isset($_POST) && !empty($_POST)){
-            $clientes->editar($id, $_POST);
+            $this->clientes->editar($id, $_POST);
             header("Location: " . BASE_URL . "/" . $this->modulo); 
         }else{
             $dados["dados"] = $clientes->pegarInfoCliente($id);
             $dados["colunas"] = $this->colunas;
-            $this->loadTemplate($this->modulo . "-edt", $dados);
+            $dados["viewInfo"] = ["title" => "Editar"];
+            $this->loadTemplate($this->modulo . "-form", $dados);
         }
     }
 
-    public function excluir($id) {       
-        if(in_array("clientes_exc",$_SESSION["permissoesFuncionario"]) == FALSE || empty($id) || !isset($id)){
-            header("Location: ".BASE_URL."/clientes"); 
+    public function excluir($id){
+
+        if(in_array($this->modulo . "_exc", $_SESSION["permissoesFuncionario"]) == false || empty($id) || !isset($id)){
+            header("Location: " . BASE_URL . "/" . $this->modulo); 
         }
-        
-        $cl = new Clientes();
-        $id = addslashes($id);
-        
-        $cl->excluir($id,$_SESSION["idEmpresaFuncionario"]);
-        header("Location: ".BASE_URL."/clientes");  
-      }
+
+        $this->clientes->excluir($id);
+
+        header("Location: " . BASE_URL . "/clientes");  
+    }
     
 }   
 ?>

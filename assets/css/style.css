@@ -11237,6 +11237,9 @@ readers do not read off random characters that represent icons */
   #page-content-wrapper {
     position: relative; } }
 
+#charts {
+  overflow-x: auto; }
+
 .dataTables_wrapper {
   margin-bottom: 2rem; }
   .dataTables_wrapper .dataTables_scrollHead .table {
