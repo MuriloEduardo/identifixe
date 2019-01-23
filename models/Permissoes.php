@@ -33,10 +33,10 @@ class Permissoes extends model {
         return $array;
     }
 
-    public function pegarListaPermissoes($empresa){
+    public function pegarListaPermissoes(){
        $array = array();
        
-       $sql = "SELECT id, nome FROM permissoes_parametros as pp WHERE id_empresa = '$empresa'";      
+       $sql = "SELECT id, nome FROM permissoes_parametros";
        $sql = $this->db->query($sql);
        if($sql->rowCount()>0){
          $array = $sql->fetchAll(); 
@@ -70,10 +70,10 @@ class Permissoes extends model {
         }           
     }
 
-    public function pegarPermissoesAtivas($id_grupo,$empresa){
+    public function pegarPermissoesAtivas($id_grupo){
        $array = array();
-       if(!empty($id_grupo) && !empty($empresa)){         
-            $sql = "SELECT * FROM permissoes WHERE id_empresa = '$empresa' AND id = '$id_grupo' AND situacao = 'ativo'";
+       if(!empty($id_grupo)){
+            $sql = "SELECT * FROM permissoes WHERE id = '$id_grupo' AND situacao = 'ativo'";
             $sql = $this->db->query($sql);
                 
             if($sql->rowCount() > 0){

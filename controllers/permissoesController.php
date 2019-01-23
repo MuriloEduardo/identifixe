@@ -1,9 +1,19 @@
 <?php
 class permissoesController extends controller{
+
+    protected $table = "permissoes";
+    protected $colunas;
+
+    protected $shared;
+
     public function __construct() {
+
         parent::__construct();
     
        $func = new Funcionarios();
+
+       $this->shared = new Shared($this->table);
+       $this->colunas = $this->shared->nomeDasColunas();
        
        //verifica se está logado
        if($func->isLogged() == false){
@@ -16,15 +26,12 @@ class permissoesController extends controller{
     }
      
     public function index() {
-        $dados = array();
-        $dados['infoFunc'] = $_SESSION;
-        
-        $p = new Permissoes();
-        $dados["listaGrupoPermissoes"]  = $p->pegarListaGrupos();
-        $this->loadTemplate("permissoes",$dados);      
+        $dados["infoFunc"] = $_SESSION;
+        $dados["colunas"] = $this->colunas;
+        $this->loadTemplate($this->table, $dados);
     } 
     
-    public function adicionar_grupo() {
+    public function adicionar() {
         
         if(in_array("permissoes_add",$_SESSION["permissoesFuncionario"]) == FALSE){
             header("Location: ".BASE_URL."/permissoes"); 
@@ -42,12 +49,13 @@ class permissoesController extends controller{
              header("Location: ".BASE_URL."/permissoes");
         }else{
 
-             $dados["listaPermissoes"] = $p->pegarListaPermissoes($_SESSION["idEmpresaFuncionario"]);
-             $this->loadTemplate("permissoes-addGrupo",$dados);
+             $dados["listaPermissoes"] = $p->pegarListaPermissoes();
+             $dados["viewInfo"] = ["title" => "Adicionar"];
+             $this->loadTemplate("permissoes-form",$dados);
         }  
     }
     
-    public function editarGrupo($id) {
+    public function editar($id) {
         if(in_array("permissoes_edt",$_SESSION["permissoesFuncionario"]) == FALSE || empty($id) || !isset($id)){
             header("Location: ".BASE_URL."/permissoes"); 
         }
@@ -65,9 +73,10 @@ class permissoesController extends controller{
             header("Location: ".BASE_URL."/permissoes");
         }else{
             
-            $dados["listaPermissoes"] = $p->pegarListaPermissoes($_SESSION["idEmpresaFuncionario"]);
-            $dados["permAtivas"] = $p->pegarPermissoesAtivas($id,$_SESSION["idEmpresaFuncionario"]);
-            $this->loadTemplate("permissoes-editGrupo",$dados);
+            $dados["listaPermissoes"] = $p->pegarListaPermissoes();
+            $dados["permAtivas"] = $p->pegarPermissoesAtivas($id);
+            $dados["viewInfo"] = ["title" => "Editar"];
+            $this->loadTemplate("permissoes-form",$dados);
         } 
 
     }

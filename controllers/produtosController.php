@@ -29,9 +29,9 @@ class produtosController extends controller{
     }
      
     public function index() {
-        $dados['infoFunc'] = $_SESSION;
+        $dados["infoFunc"] = $_SESSION;
         $dados["colunas"] = $this->colunas;
-        $this->loadTemplate($this->table, $dados);      
+        $this->loadTemplate($this->table, $dados);
     }
     
     public function adicionar() {

@@ -17,7 +17,7 @@ $(function () {
                 Popula(dadosContato);
             }
         }
-    }
+    };
 
     function Popula(values) {
         var tds = '';
@@ -38,7 +38,7 @@ $(function () {
 
         $('.editar-contato').bind('click', Edit);
         $('.excluir-contato').bind('click', Delete);
-    }
+    };
 
     function SetInput() {
         var content = '';
@@ -53,7 +53,7 @@ $(function () {
         });
 
         $('[name=contatos]').val(content);
-    }
+    };
 
     function Delete() {
         var par = $(this).closest('tr');
@@ -90,5 +90,5 @@ $(function () {
         $('input[name=contato_nome]').focus();
 
         SetInput();
-    }
+    };
 });

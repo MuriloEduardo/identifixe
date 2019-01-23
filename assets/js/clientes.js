@@ -1,8 +1,6 @@
 $(function () {
-
     //
-    // Escuta o clique dos radios CPF/CPNJ pra mostra e esconder
-    // os inputs de CPF/CNPJ
+    // Escuta o clique dos radios CPF/CPNJ pra mostra e esconder os inputs de CPF/CNPJ
     //
     $('[name=tipo_pessoa]').on('change ready', function () {
         if ($(this).is(':checked')) {

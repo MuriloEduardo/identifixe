@@ -15,106 +15,126 @@
     <h1 class="display-4 m-0">Adicionar Administradora</h1>
 </header>
 
-<form method="POST">
-    <div class="form-group">
-        <label for="inome">Nome da Administradora</label>
-        <input type="text" name="nome" id="inome" class="form-control" autofocus required/>
-    </div>
-    <div class="form-group">
-        <label for="iband">Bandeira</label>
-        <select id="iband" name="band" class="form-control">
-            <option value="" selected >Selecione</option>
-            <?php foreach ($listaBandeiras as $p):?>
-            <option value="<?php echo $p["id"];?>"><?php echo ucfirst($p["nome"]);?></option>
-            <?php endforeach;?>
-        </select>
-    </div>
-    <div class="row">
-        <div class="col">
+<section class="mb-5">
+
+    <form method="POST">
+        <div class="form-group pb-3">
+            <label for="inome" class="font-weight-bold">Nome da Administradora</label>
+            <input type="text" name="nome" id="inome" class="form-control" autofocus required/>
+        </div>
+        <input id="form-send" type="submit" class="d-none">
+    </form>
+
+    <form id="form-bandeiras" class="needs-validation" novalidate>
+        <div class="card card-body">
+
             <div class="form-group">
-                <label for="itxdebito">Taxa de Recebimento no Débito</label>
-                <input type="text" name="txdebito" id="itxdebito" class="form-control" />
-            </div>
-        </div>
-        <div class="col">
-            <label for="idiasdebito">Dias de Recebimento no Débito</label>
-            <input type="text" name="diasdebito" id="idiasdebito" class="form-control" />
-        </div>
-    </div>
-    <div class="row">
-        <div class="col">
-            <div class="form-group">
-                <label for="itxcredcom">Taxa Recebimento Crédito c/ Juros</label>
-                <input type="text" name="txcredcom" id="itxcredcom" class="form-control" />
-            </div>
-        </div>
-        <div class="col">
-            <label for="idiascredcom">Dias Recebimento Crédito c/ Juros</label>
-            <input type="text" name="diascredcom" id="idiascredcom" class="form-control" />
-        </div>
-    </div>
-    <div class="row mb-4">
-        <div class="col">
-            <div class="form-group">
-                <label for="idiasantecip">Dias Recebimento Antecipação</label>
-                <input type="text" name="diasantecip" id="idiasantecip" class="form-control" />
-            </div>
-        </div>
-        <div class="col">
-            <div class="form-group">
-                <label for="inroparc">Número Máximo Parcelas</label>
-                <select id="inroparc" name="nroparc"  class="form-control">
-                    <option value="" selected >Selecione</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
+                <label for="iband" class="font-weight-bold">Bandeira</label>
+                <select id="iband" name="band" class="form-control" required>
+                    <option disabled selected value>Selecione</option>
+                    <?php foreach ($listaBandeiras as $p):?>
+                    <option value="<?php echo $p["id"];?>"><?php echo ucfirst($p["nome"]);?></option>
+                    <?php endforeach;?>
                 </select>
             </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="itxdebito">Taxa de Recebimento no Débito</label>
+                        <input type="text" name="txdebito" id="itxdebito" class="form-control percent-mask" />
+                    </div>
+                </div>
+                <div class="col">
+                    <label for="idiasdebito">Dias de Recebimento no Débito</label>
+                    <input type="text" name="diasdebito" id="idiasdebito" class="form-control number-mask" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="itxcredcom">Taxa Recebimento Crédito c/ Juros</label>
+                        <input type="text" name="txcredcom" id="itxcredcom" class="form-control percent-mask" />
+                    </div>
+                </div>
+                <div class="col">
+                    <label for="idiascredcom">Dias Recebimento Crédito c/ Juros</label>
+                    <input type="text" name="diascredcom" id="idiascredcom" class="form-control number-mask" />
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="idiasantecip">Dias Recebimento Antecipação</label>
+                        <input type="text" name="diasantecip" id="idiasantecip" class="form-control number-mask" />
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-group">
+                        <label for="inroparc">Número Máximo Parcelas</label>
+                        <select id="inroparc" name="nroparc"  class="form-control" required>
+                            <option disabled selected value>Selecione</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <table id="tabela-taxas" class="table table-hover table-striped my-5">
+                <thead>
+                    <tr>
+                        <th class="border-bottom-0">Taxa de Antecipação</th>
+                        <th class="border-bottom-0">Taxa de Crédito Sem Juros</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php for($i=1;$i<=12;$i++):?>
+                    <tr>
+                        <td>
+                            <input type="text" id="itxantecip_<?php echo $i ?>" placeholder="Taxa de recebimento com antecipação <?php echo $i ?>x" class="form-control percent-mask" required />
+                        </td>
+                        <td>
+                            <input type="text" id="itxcredsemjuros_<?php echo 12 + $i ?>" placeholder="Taxa de recebimento no crédito sem juros <?php echo $i ?>x" class="form-control percent-mask" required />
+                        </td>
+                    </tr>
+                <?php endfor;?>
+                </tbody>
+            </table>
+            
+            <div class="row">
+                <div class="col-lg-2">
+                    <button type="submit" class="btn btn-block btn-primary">Incluir</button>
+                </div>
+            </div>
+        
+            <h3 class="mb-4 mt-5">Bandeiras Selecionadas</h3>
+            <table id="table-inclusoes" class="table table-striped table-hover">
+                <thead>
+                    <th>Bandeira</th>
+                    <th>Info Déb. e Créd. com Juros</th>
+                    <th>Info Tx. Antecip.</th>
+                    <th>Info Tx. Créd. sem Juros</th>
+                    <th>Ações</th>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </form>
+
+    <div class="row">
+        <div class="col-lg-2">
+            <label for="form-send" class="btn btn-block btn-primary mt-5">Salvar</label>
         </div>
     </div>
-    <table class="table table-borderless">
-        <thead>
-            <tr>
-                <th>Tx. Antecipação</th>
-                <th>Tx. Créd. Sem Juros</th>
-            </tr>
-        </thead>
-        <tbody>
-        <?php for($i=1;$i<=12;$i++):?>
-            <tr>
-                <td>
-                    <input type="text" id="itxantecip_<?php echo $i;?>" placeholder="Taxa Recebimento Antecipação <?php echo $i;?>X" class="form-control" required />
-                </td>
-                <td>
-                    <input type="text" id="itxcredsemjuros_<?php echo 12+$i;?>" placeholder="Taxa Recebimento Crédito sem Juros <?php echo $i;?>X" class="form-control" required />
-                </td>
-            </tr>
-        <?php endfor;?>
-        </tbody>
-    </table>
-    <input type="button" value="Incluir" class="btn btn-primary" onclick="confirmaPreenchimento()"/><br/><br/>
    
-    <h4 class="pb-4 pt-5">Bandeiras Selecionadas</h4>
-    <table class="table table-striped table-hover">
-        <thead>
-            <th>Ações</th>
-            <th>Bandeira</th>
-            <th class="colTabela">Info Déb. e Créd. com Juros</th>
-            <th class="colTabela">Info Tx. Antecip.</th>
-            <th class="colTabela">Info Tx. Créd. sem Juros</th>
-        </thead>
-        <tbody></tbody>
-    </table>
-        
-    <input type="submit" value="Adicionar" class="btn btn-success" onclick="testeEnvio()"/>
-   
-</form>
+</section>
