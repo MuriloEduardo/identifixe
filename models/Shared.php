@@ -58,7 +58,7 @@ class Shared extends model {
         return array_map(function ($item) {
             $item["Comment"] = json_decode(utf8_encode($item["Comment"]), true);
             return $item;
-        }, $sql->fetchAll());
+        }, $sql->fetchAll(PDO::FETCH_ASSOC));
     }
 
     public function pegarListas($table) {
