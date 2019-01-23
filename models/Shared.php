@@ -56,7 +56,7 @@ class Shared extends model {
     public function nomeDasColunas(){
         $sql = $this->db->query("SHOW FULL COLUMNS FROM " . $this->table);
         return array_map(function ($item) {
-            $item["Comment"] = json_decode($item["Comment"], true);
+            $item["Comment"] = json_decode(utf8_encode($item["Comment"]), true);
             return $item;
         }, $sql->fetchAll());
     }
