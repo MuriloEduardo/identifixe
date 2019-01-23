@@ -1,7 +1,10 @@
 <div class="alert <?php echo $_SESSION["returnMessage"]["class"] ?>">
     <?php 
-    echo $_SESSION["returnMessage"]["mensagem"];
-    $_SESSION["returnMessage"]["show"] = true;
+    
+    if(isset($_SESSION["returnMessage"])) {
+        $_SESSION["returnMessage"]["show"] = true;
+    };
+
     ?>
 </div>
 <table class="table table-striped table-hover dataTable bg-white">

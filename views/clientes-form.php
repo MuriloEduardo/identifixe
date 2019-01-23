@@ -17,8 +17,10 @@
     <form method="POST">
         <div class="row">
             <?php foreach ($colunas as $key => $value): ?>
-                <?php if($value["Comment"]["add"] != "false"): ?>
+            <?php print_r($value["Comment"]["add"]) ?>
+                <?php if(isset($value["Comment"]["add"]) && $value["Comment"]["add"] != "false"): ?>
                     <?php if($value["Comment"]["type"] == "table"): ?>
+                   
                         <?php $table = true ?>
                         <input 
                             type="hidden" 
@@ -74,7 +76,7 @@
                                         type="text" 
                                         class="form-control" 
                                         name="<?php echo $value['Field'] ?>" 
-                                        value="<?php echo $dados[$value["Field"]] ?>"
+                                        value="<?php echo isset($dados) ? $dados[$value["Field"]] : "" ?>"
                                         id="<?php echo $value['Field'] ?>"
                                         <?php echo $value['Null'] == "NO" ? "required" : "" ?>
                                     />

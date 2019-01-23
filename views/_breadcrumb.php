@@ -8,15 +8,17 @@
             
             $path = array_filter(explode('/', $url));
         
-            $base = ($_SERVER['HTTPS'] ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/';
+            $base = (array_key_exists("HTTPS",$_SERVER) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/';
         
             $breadcrumbs = Array('<li class="breadcrumb-item"><a href="' . BASE_URL . '">Dashboard</a></li>');
         
-            $last = end(array_keys($path));
+            // Apenas variáveis podem ser passadas como referências
+            $lastlast = array_keys($path);
+            $last = end($lastlast);
         
             foreach ($path AS $x => $crumb) {
 
-                $title = ucwords(str_replace(Array('.php', '_'), Array('', ' '), $crumb));
+              $title = ucwords(str_replace(Array('.php', '_'), Array('', ' '), $crumb));
 
                 if ($x != $last)
                     $breadcrumbs[] = '<li class="breadcrumb-item"><a href="' . BASE_URL . '/' . $crumb . '">' . $title . '</a></li>';

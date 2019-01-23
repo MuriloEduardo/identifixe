@@ -93,12 +93,14 @@ class Clientes extends model {
         if ($this->db->lastInsertId()) {
             $_SESSION["returnMessage"] = [
                 "mensagem" => "Registro inserido com sucesso!",
-                "class" => "alert-success"
+                "class" => "alert-success",
+                "show" =>   false
             ];
         } else {
             $_SESSION["returnMessage"] = [
                 "mensagem" => "Houve uma falha, entre em contato conosco!",
-                "class" => "alert-danger"
+                "class" => "alert-danger",
+                "show" => false
             ];
         }
     }
@@ -118,12 +120,14 @@ class Clientes extends model {
         if ($result) {
             $_SESSION["returnMessage"] = [
                 "mensagem" => "Registro alterado com sucesso!",
-                "class" => "alert-success"
+                "class" => "alert-success",
+                "show" =>   false
             ];
         } else {
             $_SESSION["returnMessage"] = [
                 "mensagem" => "Houve uma falha, entre em contato conosco!",
-                "class" => "alert-danger"
+                "class" => "alert-danger",
+                "show" =>   false
             ];
         }
     }
@@ -148,7 +152,8 @@ class Clientes extends model {
 
                 $_SESSION["returnMessage"] = [
                     "mensagem" => "Registro deletado com sucesso!",
-                    "class" => "alert-success"
+                    "class" => "alert-success",
+                    "show" =>   false
                 ];
             }
         }

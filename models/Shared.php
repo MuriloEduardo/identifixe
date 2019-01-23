@@ -17,7 +17,7 @@ class Shared extends model {
         $index = 0;
         foreach ($this->nomeDasColunas() as $key => $value) {
             if($value["Comment"]["ver"] != "false") {
-                if($value["Comment"]["label"] == "Ações") {
+                if(isset($value["Comment"]["label"]) && $value["Comment"]["label"] == "Ações") {
                     $columns[] = [
                         "db" => $value["Field"],
                         "dt" => $index,
