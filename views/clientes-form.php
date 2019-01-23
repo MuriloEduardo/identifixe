@@ -17,15 +17,8 @@
     <form method="POST">
         <div class="row">
             <?php foreach ($colunas as $key => $value): ?>
-<<<<<<< HEAD
-            <?php print_r($value["Comment"]["add"]) ?>
-                <?php if(isset($value["Comment"]["add"]) && $value["Comment"]["add"] != "false"): ?>
-                    <?php if($value["Comment"]["type"] == "table"): ?>
-                   
-=======
                 <?php if(!array_key_exists("form", $value["Comment"]) || (array_key_exists("form", $value["Comment"]) && $value["Comment"]["form"] != "false")) : ?>
                     <?php if(array_key_exists("type", $value["Comment"]) && $value["Comment"]["type"] == "table"): ?>
->>>>>>> 4c14db782a637ed79c185ebcc12524570893b14c
                         <?php $table = true ?>
                         <input 
                             type="hidden" 

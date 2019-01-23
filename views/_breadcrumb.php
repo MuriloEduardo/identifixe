@@ -18,7 +18,7 @@
         
             foreach ($path AS $x => $crumb) {
 
-              $title = ucwords(str_replace(Array('.php', '_'), Array('', ' '), $crumb));
+                $title = ucwords(str_replace(Array('.php', '_'), Array('', ' '), $crumb));
 
                 if ($x != $last)
                     $breadcrumbs[] = '<li class="breadcrumb-item"><a href="' . BASE_URL . '/' . $crumb . '">' . $title . '</a></li>';
