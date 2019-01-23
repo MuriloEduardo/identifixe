@@ -15,7 +15,7 @@
     <form method="POST">
         <div class="row">
             <?php foreach ($colunas as $key => $value): ?>
-                <?php if($value["Comment"]["add"] != "false"): ?>
+                <?php if($value["Comment"]["form"] != "false"): ?>
                     <div class="col-<?php echo isset($value["Comment"]["column"]) ? $value["Comment"]["column"] : "12" ?>">
                         <div class="form-group">
                             <label class="<?php echo $value["Null"] == "NO" ? "font-weight-bold" : "" ?>" for="<?php echo $value['Field'] ?>"><?php echo !is_null($value["Comment"]["label"]) ? $value["Comment"]["label"] : ucwords(str_replace("_", " ", $value['Field'])) ?></label>
@@ -34,7 +34,7 @@
                                 <textarea
                                     class="form-control" 
                                     name="<?php echo lcfirst($value['Field']);?>" 
-                                    value="<?php echo $dados[$value["Field"]] ?>"
+                                    value="<?php echo isset($dados) ? $dados[$value["Field"]] : "" ?>"
                                     id="<?php echo $value['Field'] ?>"
                                     <?php echo $value['Null'] == "NO" ? "required" : "" ?>
                                 ></textarea>
@@ -63,7 +63,7 @@
                                     type="text" 
                                     class="form-control" 
                                     name="<?php echo $value['Field'] ?>" 
-                                    value="<?php echo $dados[$value["Field"]] ?>"
+                                    value="<?php echo isset($dados) ? $dados[$value["Field"]] : "" ?>"
                                     id="<?php echo $value['Field'] ?>"
                                     <?php echo $value['Null'] == "NO" ? "required" : "" ?>
                                 />

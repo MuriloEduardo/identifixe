@@ -8,11 +8,13 @@
             
             $path = array_filter(explode('/', $url));
         
-            $base = ($_SERVER['HTTPS'] ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/';
+            $base = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/';
         
             $breadcrumbs = Array('<li class="breadcrumb-item"><a href="' . BASE_URL . '">Dashboard</a></li>');
+
+            $keys = array_keys($path);
         
-            $last = end(array_keys($path));
+            $last = end($keys);
         
             foreach ($path AS $x => $crumb) {
 

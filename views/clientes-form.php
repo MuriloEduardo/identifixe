@@ -17,20 +17,20 @@
     <form method="POST">
         <div class="row">
             <?php foreach ($colunas as $key => $value): ?>
-                <?php if($value["Comment"]["add"] != "false"): ?>
-                    <?php if($value["Comment"]["type"] == "table"): ?>
+                <?php if(!array_key_exists("form", $value["Comment"]) || (array_key_exists("form", $value["Comment"]) && $value["Comment"]["form"] != "false")) : ?>
+                    <?php if(array_key_exists("type", $value["Comment"]) && $value["Comment"]["type"] == "table"): ?>
                         <?php $table = true ?>
                         <input 
                             type="hidden" 
                             name="<?php echo $value['Field'] ?>" 
-                            value="<?php echo $dados[$value["Field"]] ?>" 
+                            value="<?php echo isset($dados) ? $dados[$value["Field"]] : "" ?>"
                             <?php echo $value['Null'] == "NO" ? "required" : "" ?>
                         />
                     <?php else: ?>
                         <div class="col-<?php echo isset($value["Comment"]["column"]) ? $value["Comment"]["column"] : "12" ?>">
                             <div class="form-group">
-                                <label class="<?php echo $value["Null"] == "NO" ? "font-weight-bold" : "" ?>" for="<?php echo $value['Field'] ?>"><?php echo !is_null($value["Comment"]["label"]) ? $value["Comment"]["label"] : ucwords(str_replace("_", " ", $value['Field'])) ?></label>
-                                <?php if($value["Comment"]["type"] == "relacional"): ?>
+                                <label class="<?php echo $value["Null"] == "NO" ? "font-weight-bold" : "" ?>" for="<?php echo $value['Field'] ?>"><?php echo array_key_exists("label", $value["Comment"]) ? $value["Comment"]["label"] : ucwords(str_replace("_", " ", $value['Field'])) ?></label>
+                                <?php if(array_key_exists("type", $value["Comment"]) && $value["Comment"]["type"] == "relacional"): ?>
                                     <select id="<?php echo 'itxt'.($i);?>" 
                                             name="<?php echo lcfirst($value['nomecol']);?>"
                                             class="form-control"
@@ -41,7 +41,7 @@
                                             <option value="<?php echo $value['relacional'][$j]['nome'];?>" ><?php echo $value['relacional'][$j]['nome'];?></option>
                                         <?php endfor;?>     
                                     </select>
-                                <?php elseif($value["Comment"]["type"] == "textarea"): ?>
+                                <?php elseif(array_key_exists("type", $value["Comment"]) && $value["Comment"]["type"] == "textarea"): ?>
                                     <textarea
                                         class="form-control" 
                                         name="<?php echo lcfirst($value['Field']);?>" 
@@ -49,7 +49,7 @@
                                         id="<?php echo $value['Field'] ?>"
                                         <?php echo $value['Null'] == "NO" ? "required" : "" ?>
                                     ></textarea>
-                                <?php elseif($value["Comment"]["type"] == "radio"): ?>
+                                <?php elseif(array_key_exists("type", $value["Comment"]) && $value["Comment"]["type"] == "radio"): ?>
                                     <div>
                                         <?php $indexRadio = 0 ?>
                                         <?php foreach ($value["Comment"]["options"] as $valueRadio => $label): ?>
@@ -74,7 +74,7 @@
                                         type="text" 
                                         class="form-control" 
                                         name="<?php echo $value['Field'] ?>" 
-                                        value="<?php echo $dados[$value["Field"]] ?>"
+                                        value="<?php echo isset($dados) ? $dados[$value["Field"]] : "" ?>"
                                         id="<?php echo $value['Field'] ?>"
                                         <?php echo $value['Null'] == "NO" ? "required" : "" ?>
                                     />

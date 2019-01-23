@@ -106,7 +106,9 @@ class Clientes extends model {
     public function editar($id, $request) {
 
         $output = implode(', ', array_map(
-            function ($v, $k) { return sprintf("%s='%s'", $k, $v); },
+            function ($v, $k) {
+                return sprintf("%s='%s'", $k, addslashes($v));
+            },
             $request,
             array_keys($request)
         ));
