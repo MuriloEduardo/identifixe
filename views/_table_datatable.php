@@ -6,7 +6,7 @@
     }
     ?>
 </div>
-<table class="table table-striped table-hover dataTable bg-white">
+<table class="table table-striped table-hover dataTable bg-white table-nowrap first-column-fixed">
     <thead>
         <tr>
             <?php foreach ($colunas as $key => $value): ?> 

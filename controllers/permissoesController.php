@@ -4,16 +4,13 @@ class permissoesController extends controller{
     protected $table = "permissoes";
     protected $colunas;
 
-    protected $shared;
-
     public function __construct() {
 
         parent::__construct();
     
        $func = new Funcionarios();
 
-       $this->shared = new Shared($this->table);
-       $this->colunas = $this->shared->nomeDasColunas();
+       $this->colunas = $this->nomeDasColunas($this->table);
        
        //verifica se está logado
        if($func->isLogged() == false){
@@ -21,7 +18,7 @@ class permissoesController extends controller{
        }
        //verifica se tem permissão para ver esse módulo
        if(in_array("permissoes_ver",$_SESSION["permissoesFuncionario"]) == FALSE){
-           header("Location: ".BASE_URL."/dashboard"); 
+           header("Location: ".BASE_URL."/home"); 
        }
     }
      

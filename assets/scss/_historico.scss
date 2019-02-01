@@ -1,0 +1,37 @@
+$spacer_historico: 2rem;
+#historico {
+    .historico {
+        position: relative;
+        margin-left: $spacer_historico;
+        &:before {
+            content: "";
+            width: 1px;
+            position: absolute;
+            left: -$spacer_historico;
+            top: 0;
+            bottom: 0;
+            background: $gray-400;
+        }
+        &:after {
+            content: "\f126";
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            display: inline-block;
+            position: absolute;
+            left: -$spacer_historico;
+            margin-left: -0.15rem;
+            top: 0.3rem;
+            background-color: $light;
+            color: $gray-400;
+        }
+        .list-group-item {
+            border-left: solid $spacer / 4;
+            &.cadastro {
+                border-left-color: $success;
+            }
+            &.alteracao {
+                border-left-color: $gray-400;
+            }
+        }
+    }
+}

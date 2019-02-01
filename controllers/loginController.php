@@ -19,7 +19,7 @@ class loginController extends controller{
             $funcionario = new Funcionarios();
             
             if($funcionario->fazerLogin($email,$senha)){
-               header("Location: ".BASE_URL."/dashboard");
+               header("Location: ".BASE_URL."/home");
                exit;
             }else{
                 $dados["aviso"] = "E-mail e/ou senha incorretos.";

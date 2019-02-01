@@ -10,12 +10,6 @@ class Fornecedores extends model {
         $this->permissoes = new Permissoes();
     }
 
-    private function formataDadosDb($array) {
-        return array_map(function($item) {
-            return trim(addslashes($item));
-        }, $array);
-    }
-
     public function pegarInfo($id) {
         $array = array();
         $arrayAux = array();

@@ -3,9 +3,10 @@ class clientesController extends controller{
 
     protected $table = "clientes";
     protected $colunas;
-    
-    protected $shared;
+
     protected $model;
+    protected $shared;
+    protected $logs;
     protected $funcionarios;
 
     public function __construct() {
@@ -13,6 +14,7 @@ class clientesController extends controller{
         parent::__construct();
 
         $this->shared = new Shared($this->table);
+        $this->logs = new Logs($this->table);
         $this->model = new Clientes();
         $this->funcionarios = new Funcionarios();
         
@@ -24,7 +26,7 @@ class clientesController extends controller{
 
         // verifica se tem permissão para ver esse módulo
         if(in_array($this->table . "_ver", $_SESSION["permissoesFuncionario"]) == false){
-            header("Location: " . BASE_URL . "/dashboard"); 
+            header("Location: " . BASE_URL . "/home"); 
         }
     }
      
@@ -67,6 +69,7 @@ class clientesController extends controller{
             $dados["dados"] = $this->model->pegarInfo($id);
             $dados["colunas"] = $this->colunas;
             $dados["viewInfo"] = ["title" => "Editar"];
+            $dados["logs"] = $this->logs->logs($id);
             $this->loadTemplate($this->table . "-form", $dados);
         }
     }

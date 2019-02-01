@@ -56,14 +56,14 @@ class Shared extends model {
     public function nomeDasColunas(){
         $sql = $this->db->query("SHOW FULL COLUMNS FROM " . $this->table);
         return array_map(function ($item) {
-            $item["Comment"] = json_decode(utf8_encode($item["Comment"]), true);
+            $item["Comment"] = json_decode($item["Comment"], true);
             return $item;
         }, $sql->fetchAll(PDO::FETCH_ASSOC));
     }
 
     public function pegarListas($table) {
         $array = array();
-        $sql = "SELECT * FROM " . $table . " WHERE situacao = 'ativo' ORDER BY id DESC";      
+        $sql = "SELECT * FROM " . $table . " WHERE situacao = 'ativo' ORDER BY id DESC";
         $sql = $this->db->query($sql);
         if($sql->rowCount()>0){
             $array = $sql->fetchAll(); 

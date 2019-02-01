@@ -20,6 +20,7 @@
                         <div class="form-group">
                             <label class="<?php echo $value["Null"] == "NO" ? "font-weight-bold" : "" ?>" for="<?php echo $value['Field'] ?>"><?php echo !is_null($value["Comment"]["label"]) ? $value["Comment"]["label"] : ucwords(str_replace("_", " ", $value['Field'])) ?></label>
                             <?php if($value["Comment"]["type"] == "relacional"): ?>
+                                <!-- Tipo: Relacional -->
                                 <select id="<?php echo 'itxt'.($i);?>" 
                                         name="<?php echo lcfirst($value['nomecol']);?>"
                                         class="form-control"

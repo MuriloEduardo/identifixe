@@ -17,21 +17,17 @@
                     <td>
                         <input type="text" class="form-control" name="contato_nome" required>
                         <div class="invalid-feedback">Por favor, preencha o nome.</div>
-                        <div class="valid-feedback">Ok!</div>
                     </td>
                     <td>
                         <input type="text" class="form-control" name="contato_setor">
-                        <div class="valid-feedback">Ok!</div>
                     </td>
                     <td>
                         <input type="text" class="form-control" name="contato_celular" required>
                         <div class="invalid-feedback">Por favor, preencha o celular.</div>
-                        <div class="valid-feedback">Ok!</div>
                     </td>
                     <td>
                         <input type="text" class="form-control" name="contato_email" required>
                         <div class="invalid-feedback">Por favor, preencha o email.</div>
-                        <div class="valid-feedback">Ok!</div>
                     </td>
                     <td>
                         <button type="submit" class="btn btn-primary">Incluir</a>

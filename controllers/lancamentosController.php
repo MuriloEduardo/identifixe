@@ -17,14 +17,14 @@ class lancamentosController extends controller{
        }
        //verifica se tem permissão para ver esse módulo
        if(in_array("lancamentos_ver",$_SESSION["permissoesFuncionario"]) == FALSE){
-           header("Location: ".BASE_URL."/dashboard"); 
+           header("Location: ".BASE_URL."/home"); 
        }
     }
          
     public function index() {
         
         if(in_array("lancamentos_ver",$_SESSION["permissoesFuncionario"]) == FALSE || in_array("lancamentos_add",$_SESSION["permissoesFuncionario"]) == FALSE){
-            header("Location: ".BASE_URL."/dashboard"); 
+            header("Location: ".BASE_URL."/home"); 
         }
         
         $array = array();

@@ -1,5 +1,5 @@
 <?php
-class dashboardController extends controller{
+class homeController extends controller{
     public function __construct() {
         parent::__construct();
     
@@ -15,7 +15,7 @@ class dashboardController extends controller{
       $dados = array();
       
       $dados['infoFunc'] = $_SESSION;
-      $this->loadTemplate("dashboard",$dados); 
+      $this->loadTemplate("home", $dados); 
     }
   
 }

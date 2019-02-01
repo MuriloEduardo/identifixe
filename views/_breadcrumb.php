@@ -9,22 +9,25 @@
             $path = array_filter(explode('/', $url));
         
             $base = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/';
-        
-            $breadcrumbs = Array('<li class="breadcrumb-item"><a href="' . BASE_URL . '">Dashboard</a></li>');
 
             $keys = array_keys($path);
         
             $last = end($keys);
-        
-            foreach ($path AS $x => $crumb) {
 
-                $title = ucwords(str_replace(Array('.php', '_'), Array('', ' '), $crumb));
-
-                if ($x != $last)
-                    $breadcrumbs[] = '<li class="breadcrumb-item"><a href="' . BASE_URL . '/' . $crumb . '">' . $title . '</a></li>';
-                else
-                    $breadcrumbs[] = "<li class=\"breadcrumb-item active\" aria-current=\"page\">$title</li>";
+            if($path) {
+                foreach ($path AS $x => $crumb) {
+    
+                    $title = ucwords(str_replace(Array('.php', '_'), Array('', ' '), $crumb));
+    
+                    if ($x != $last)
+                        $breadcrumbs[] = '<li class="breadcrumb-item"><a href="' . BASE_URL . '/' . $crumb . '">' . $title . '</a></li>';
+                    else
+                        $breadcrumbs[] = "<li class=\"breadcrumb-item active\" aria-current=\"page\">$title</li>";
+                }
+            } else {
+                $breadcrumbs[] = "<li class=\"breadcrumb-item active\" aria-current=\"page\">Home</li>";
             }
+        
         
             return implode($breadcrumbs);
         }

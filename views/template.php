@@ -1,10 +1,10 @@
 <?php
    $menus = [
       [
-         "text" => "Dashboard",
+         "text" => "Home",
          "icon" => "fas fa-tachometer-alt",
          "permissao" => "",
-         "link" => "/dashboard"
+         "link" => "/home"
       ],
       [
          "text" => "Cadastros",
@@ -92,6 +92,8 @@
       <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
       <link href="<?php echo BASE_URL;?>/assets/css/vendor/jquery-ui.min.css" rel="stylesheet" type="text/css"/>
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+      
       <link href="<?php echo BASE_URL;?>/assets/css/style.css" rel="stylesheet" type="text/css"/>
 
       <script src="<?php echo BASE_URL;?>/assets/js/vendor/jquery-3.3.1.min.js" type="text/javascript"></script>
@@ -100,8 +102,7 @@
       <script src="<?php echo BASE_URL;?>/assets/js/vendor/jquery-ui.min.js" type="text/javascript"></script>
       <script src="<?php echo BASE_URL;?>/assets/js/vendor/popper.min.js" type="text/javascript"></script>
       <script src="<?php echo BASE_URL;?>/assets/js/vendor/bootstrap.min.js" type="text/javascript"></script>
-      <script src="<?php echo BASE_URL;?>/assets/js/validacao_form_bootstrap.js" type="text/javascript"></script>
-      <script src="<?php echo BASE_URL;?>/assets/js/main.js" type="text/javascript"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
    </head>
 <body class="d-flex flex-column h-100 bg-light">
    <nav class="navbar bg-white shadow-sm fixed-top">
@@ -112,13 +113,14 @@
             </button>
          </li>
          <li>
-            <a class="navbar-brand mx-3" href="<?php echo BASE_URL ?>/dashboard"><?php echo trim(NOME_EMPRESA);?></a>
+            <a class="navbar-brand mx-3" href="<?php echo BASE_URL ?>/home"><?php echo trim(NOME_EMPRESA);?></a>
          </li>
       </ul>
       <ul class="navbar-nav">
          <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-               <?php echo ucfirst($infoFunc["nomeFuncionario"]);?>
+               <span>Olá, </span>
+               <span><?php echo ucfirst($infoFunc["nomeFuncionario"]);?></span>
             </a>
             <div class="dropdown-menu dropdown-menu-right position-absolute" aria-labelledby="navbarDropdown">
                <a class="dropdown-item" onclick="return confirm('Confirmar sua saída?')" href="<?php echo BASE_URL;?>/login/sair">Sair</a>
@@ -184,4 +186,7 @@
          </div>
       </footer>
    </body>
+   <script src="<?php echo BASE_URL;?>/assets/js/validacao_form_bootstrap.js" type="text/javascript"></script>
+   <script src="<?php echo BASE_URL;?>/assets/js/main.js" type="text/javascript"></script>
+   <script src="<?php echo BASE_URL;?>/assets/js/unico.js" type="text/javascript"></script>
 </html>

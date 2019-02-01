@@ -27,32 +27,6 @@ $(function () {
     }
 
     //
-    // Campos Únicos
-    //
-    $.fn.unico = function (params) {
-
-        var $self = $(this),
-            campo = $self.attr('name');
-
-        $.ajax({
-            url: baselink + '/ajax/buscaUnico',
-            type: 'POST',
-            data: {
-                module: currentModule,
-                campo: campo,
-                valor: $self.val()
-            },
-            dataType: 'json',
-            success: function (json) {
-                if (json.length > 0) {
-                    $self.val('');
-                    alert(params.mensagem);
-                }
-            }
-        });
-    };
-
-    //
     // Validação Padrão de Email
     //
     $.fn.validaEmail = function () {
@@ -76,29 +50,19 @@ $(function () {
                         return;
                     }
                 }
-
-                if ($(this).val() != '') {
-                    $(this).unico({
-                        mensagem: 'O email já existe. Tente outro.'
-                    });
-                }
             }
         });
     };
 
     //
-    // Validação se é Unico com limite minimo de caracteres
+    // Validação com limite minimo de caracteres
     //
-    $.fn.validationUniqueMinLength = function (lenght, unico) {
-        if ($(this).val() != '') {
-            if ($(this).val().length < lenght.min) {
-                alert(lenght.mensagem);
-                $(this).val('');
-            } else {
-                $(this).unico({
-                    mensagem: unico.mensagem
-                });
-            }
+    $.fn.validationMinLength = function (params) {
+        if ($(this).val().length < params.min && $(this).val() != '') {
+            $(this)
+                .removeClass('is-valid')
+                .addClass('is-invalid')
+                .after('<div class="invalid-feedback">' + params.mensagem + '</div>');
         }
     };
 
@@ -108,12 +72,10 @@ $(function () {
     $('[name=rg]')
         .mask('0000000000')
         .blur(function () {
-            $(this).validationUniqueMinLength({
+            $(this).validationMinLength({
                 min: 10,
                 mensagem: 'Preencha o campo no formato: 0000000000'
-            }, {
-                    mensagem: 'O RG já existe. Tente outro.'
-                });
+            });
         });
 
     //
@@ -122,12 +84,10 @@ $(function () {
     $('[name=cpf]')
         .mask('000.000.000-00')
         .blur(function () {
-            $(this).validationUniqueMinLength({
+            $(this).validationMinLength({
                 min: 13,
                 mensagem: 'Preencha o campo no formato: 000.000.000-00'
-            }, {
-                    mensagem: 'O CPF já existe. Tente outro.'
-                });
+            });
         });
 
 
@@ -137,12 +97,10 @@ $(function () {
     $('[name=cnpj]')
         .mask('00.000.000/0000-00')
         .blur(function () {
-            $(this).validationUniqueMinLength({
+            $(this).validationMinLength({
                 min: 18,
                 mensagem: 'Preencha o campo no formato: 00.000.000/0000-00'
-            }, {
-                    mensagem: 'O CNPJ já existe. Tente outro.'
-                });
+            });
         });
 
     //
@@ -151,12 +109,10 @@ $(function () {
     $('[name=telefone]')
         .mask('(00)0000-0000')
         .blur(function () {
-            if ($(this).val() != '') {
-                if ($(this).val().length < 13) {
-                    alert('Preencha o campo no formato: (00)0000-0000');
-                    $(this).val('');
-                }
-            }
+            $(this).validationMinLength({
+                min: 13,
+                mensagem: 'Preencha o campo no formato: (00)0000-0000'
+            });
         });
 
     //
@@ -165,12 +121,10 @@ $(function () {
     $('[name=celular]')
         .mask('(00)00000-0000')
         .blur(function () {
-            if ($(this).val() != '') {
-                if ($(this).val().length < 14) {
-                    alert('Preencha o campo no formato: (00)00000-0000');
-                    $(this).val('');
-                }
-            }
+            $(this).validationMinLength({
+                min: 14,
+                mensagem: 'Preencha o campo no formato: (00)00000-0000'
+            });
         });
 
     //
@@ -207,16 +161,6 @@ $(function () {
         });
 
     //
-    // Nome, Nome Fantasia, Razao Social, Fornecedor, Sigla
-    //
-    $('[name=nome], [name=nome_fantasia], [name=razao_social], [name=fornecedor], [name=sigla]')
-        .blur(function () {
-            $(this).unico({
-                mensagem: 'Esse nome já existe. Tente outro.'
-            });
-        });
-
-    //
     // Sigla
     //
     $('[name=sigla]')
@@ -226,12 +170,7 @@ $(function () {
                     pattern: /[A-Za-z]/
                 }
             }
-        })
-        .blur(function () {
-            $(this).unico({
-                mensagem: 'A sigla já existe. Tente outra.'
-            });
-        });;
+        });
 
     //
     // Email
@@ -296,7 +235,6 @@ $(function () {
         .blur(function () {
             var value = $(this).val().replace('%', '');
             if (value != '') {
-                console.log('blur comissao', value)
                 if (value == 0) {
                     alert('Comissão precisa ser maior que 0.');
                     $(this).val('');
@@ -354,4 +292,6 @@ $(function () {
         dataTable.search(this.value).draw();
     });
 
+    $('[data-toggle="tooltip"]').tooltip();
+    
 });

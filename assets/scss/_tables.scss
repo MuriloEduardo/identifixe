@@ -1,0 +1,62 @@
+.table {
+    &.table-nowrap {
+        white-space: nowrap;
+        &.first-column-fixed {
+            tr {
+                th:first-child,
+                td:first-child {
+                    position: sticky;
+                    left: 0;
+                }
+                th:first-child {
+                    background: $white;
+                }
+                &:nth-of-type(odd) {
+                    td:first-child {
+                        background: #f2f2f2;
+                    }
+                }
+                &:nth-of-type(even) {
+                    td:first-child {
+                        background: $white;
+                    }
+                }
+                &:hover {
+                    td:first-child {
+                        background: #ececec;
+                    }
+                }
+            }
+        }
+        &.last-column-fixed {
+            > thead,
+            > tbody {
+                tr {
+                    th:last-child,
+                    td:last-child {
+                        position: sticky;
+                        right: 0;
+                    }
+                    th:last-child {
+                        background: $white;
+                    }
+                    &:nth-of-type(odd) {
+                        td:last-child {
+                            background: #f2f2f2;
+                        }
+                    }
+                    &:nth-of-type(even) {
+                        td:last-child {
+                            background: $white;
+                        }
+                    }
+                    &:hover {
+                        td:last-child {
+                            background: #ececec;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

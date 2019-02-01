@@ -4,16 +4,13 @@ class comprasController extends controller{
     protected $table = "produtos";
     protected $colunas;
 
-    protected $shared;
-
     public function __construct() {
 
         parent::__construct();
     
        $func = new Funcionarios();
-       $this->shared = new Shared($this->table);
 
-       $this->colunas = $this->shared->nomeDasColunas();
+       $this->colunas = $this->nomeDasColunas($this->table);
        
        //verifica se está logado
        if($func->isLogged() == false){
@@ -21,7 +18,7 @@ class comprasController extends controller{
        }
        //verifica se tem permissão para ver esse módulo
        if(in_array("compras_ver",$_SESSION["permissoesFuncionario"]) == FALSE){
-           header("Location: ".BASE_URL."/dashboard"); 
+           header("Location: ".BASE_URL."/home"); 
        }
     }
      

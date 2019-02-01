@@ -11,13 +11,9 @@
         }
     }
     .dataTable {
-        white-space: nowrap;
         thead {
             tr {
                 th {
-                    &:not(.actions) {
-                        cursor: pointer;
-                    }
                     &.sorting_asc {
                         .fas {
                             &::before {
@@ -32,34 +28,6 @@
                             }
                         }
                     }
-                }
-            }
-        }
-        tr {
-            th:first-child,
-            td:first-child {
-                position: sticky;
-                left: 0;
-            }
-            td {
-                text-transform: capitalize;
-            }
-            th:first-child {
-                background: $white;
-            }
-            &:nth-of-type(odd) {
-                td:first-child {
-                    background: #f2f2f2;
-                }
-            }
-            &:nth-of-type(even) {
-                td:first-child {
-                    background: $white;
-                }
-            }
-            &:hover {
-                td:first-child {
-                    background: #ececec;
                 }
             }
         }

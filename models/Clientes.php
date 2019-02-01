@@ -2,17 +2,11 @@
 class Clientes extends model {
 
     protected $table = "clientes";
-    protected $permissoes;
+    protected $logs;
 
     public function __construct() {
         parent::__construct(); 
-        $this->permissoes = new Permissoes();
-    }
-
-    private function formataDadosDb($array) {
-        return array_map(function($item) {
-            return trim(addslashes($item));
-        }, $array);
+        $this->logs = new Logs($this->table);
     }
     
     public function pegarListaClientes($empresa) {
@@ -21,7 +15,7 @@ class Clientes extends model {
        $sql = "SELECT * FROM clientes WHERE id_empresa = '$empresa' AND situacao = 'ativo' ORDER BY id DESC";      
        $sql = $this->db->query($sql);
        if($sql->rowCount()>0){
-         $array = $sql->fetchAll(); 
+         $array = $sql->fetchAll();
        }
        return $array; 
     }
@@ -78,11 +72,8 @@ class Clientes extends model {
     }
 
     public function adicionar($request) {
-
-        $alteracoes = ucwords($_SESSION["nomeFuncionario"]) . " - " . $this->permissoes->pegaIPcliente() . " - " . date('d/m/Y H:i:s') . " - CADASTRO";
         
         $request["situacao"] = "ativo";
-        $request["alteracoes"] = $alteracoes;
 
         $keys = implode(",", array_keys($request));
         $values = "'" . implode("','", array_values($this->formataDadosDb($request))) . "'";
@@ -91,6 +82,9 @@ class Clientes extends model {
         $this->db->query($sql);
 
         if ($this->db->lastInsertId()) {
+
+            $this->logs->add("cadastro", $this->db->lastInsertId(), $request);
+
             $_SESSION["returnMessage"] = [
                 "mensagem" => "Registro inserido com sucesso!",
                 "class" => "alert-success"
@@ -105,54 +99,48 @@ class Clientes extends model {
 
     public function editar($id, $request) {
 
-        $output = implode(', ', array_map(
-            function ($v, $k) {
-                return sprintf("%s='%s'", $k, addslashes($v));
-            },
-            $request,
-            array_keys($request)
-        ));
+        if(!empty($id)){
 
-        $sql = "UPDATE " . $this->table . " SET " . $output . " WHERE id='" . $id . "'";
+            $this->logs->add("alteracao", $id, $request);
 
-        $result = $this->db->query($sql);
+            $output = implode(', ', array_map(
+                function ($v, $k) {
+                    return sprintf("%s='%s'", $k, addslashes($v));
+                },
+                $request,
+                array_keys($request)
+            ));
 
-        if ($result) {
-            $_SESSION["returnMessage"] = [
-                "mensagem" => "Registro alterado com sucesso!",
-                "class" => "alert-success"
-            ];
-        } else {
-            $_SESSION["returnMessage"] = [
-                "mensagem" => "Houve uma falha, entre em contato conosco!",
-                "class" => "alert-danger"
-            ];
+            $sql = "UPDATE " . $this->table . " SET " . $output . " WHERE id='" . $id . "'";
+
+            $result = $this->db->query($sql);
+
+            if ($result) {
+                $_SESSION["returnMessage"] = [
+                    "mensagem" => "Registro alterado com sucesso!",
+                    "class" => "alert-success"
+                ];
+            } else {
+                $_SESSION["returnMessage"] = [
+                    "mensagem" => "Houve uma falha, entre em contato conosco!",
+                    "class" => "alert-danger"
+                ];
+            }
         }
     }
     
     public function excluir($id){
-        if(!empty($id)){
-            
-            //se não achar nenhum usuario associado ao grupo - pode deletar, ou seja, tornar o cadastro situacao=excluído
-            $sql = "SELECT alteracoes FROM " . $this->table . " WHERE id = '$id' AND situacao = 'ativo'";
-            
-            $sql = $this->db->query($sql);
-            
-            if($sql->rowCount() > 0){  
-               $sql = $sql->fetch();
-               $palter = $sql["alteracoes"];
-               $ipcliente = $this->permissoes->pegaIPcliente();
+        if(!empty($id)) {
 
-               $palter = $palter . " | " . ucwords($_SESSION["nomeFuncionario"]) . " - $ipcliente - " . date('d/m/Y H:i:s') . " - EXCLUSAO";
+            $this->logs->add("exclusao", $id);
                
-               $sqlA = "UPDATE " . $this->table . " SET alteracoes = '$palter', situacao = 'excluido' WHERE id = '$id'";
-               $this->db->query($sqlA);
+            $sqlA = "UPDATE " . $this->table . " SET situacao = 'excluido' WHERE id = '$id'";
+            $this->db->query($sqlA);
 
-                $_SESSION["returnMessage"] = [
-                    "mensagem" => "Registro deletado com sucesso!",
-                    "class" => "alert-success"
-                ];
-            }
+            $_SESSION["returnMessage"] = [
+                "mensagem" => "Registro deletado com sucesso!",
+                "class" => "alert-success"
+            ];
         }
     }
 

@@ -11191,21 +11191,21 @@ readers do not read off random characters that represent icons */
   padding-left: 0;
   transition: all 0.5s ease; }
   #wrapper.toggled {
-    padding-left: 350px; }
+    padding-left: 300px; }
     #wrapper.toggled #sidebar-wrapper {
-      width: 350px; }
+      width: 300px; }
     #wrapper.toggled #page-content-wrapper {
       position: absolute;
-      margin-right: -350px; }
+      margin-right: -300px; }
 
 #sidebar-wrapper {
   z-index: 1000;
   position: fixed;
-  left: 350px;
+  left: 300px;
   width: 0;
   top: 56px;
   bottom: 0;
-  margin-left: -350px;
+  margin-left: -300px;
   overflow-y: auto;
   transition: all 0.5s ease; }
 
@@ -11216,7 +11216,7 @@ readers do not read off random characters that represent icons */
 .sidebar-nav {
   position: absolute;
   top: 0;
-  width: 350px;
+  width: 300px;
   margin: 0;
   padding: 0; }
   .sidebar-nav .dropdown-menu {
@@ -11226,9 +11226,9 @@ readers do not read off random characters that represent icons */
   #wrapper {
     padding-left: 0; }
     #wrapper.toggled {
-      padding-left: 350px; }
+      padding-left: 300px; }
       #wrapper.toggled #sidebar-wrapper {
-        width: 350px; }
+        width: 300px; }
       #wrapper.toggled #page-content-wrapper {
         position: relative;
         margin-right: 0; }
@@ -11246,28 +11246,10 @@ readers do not read off random characters that represent icons */
     margin-bottom: 0; }
     .dataTables_wrapper .dataTables_scrollHead .table thead th {
       border-bottom: none; }
-  .dataTables_wrapper .dataTable {
-    white-space: nowrap; }
-    .dataTables_wrapper .dataTable thead tr th:not(.actions) {
-      cursor: pointer; }
-    .dataTables_wrapper .dataTable thead tr th.sorting_asc .fas::before {
-      content: "\f0de"; }
-    .dataTables_wrapper .dataTable thead tr th.sorting_desc .fas::before {
-      content: "\f0dd"; }
-    .dataTables_wrapper .dataTable tr th:first-child,
-    .dataTables_wrapper .dataTable tr td:first-child {
-      position: sticky;
-      left: 0; }
-    .dataTables_wrapper .dataTable tr td {
-      text-transform: capitalize; }
-    .dataTables_wrapper .dataTable tr th:first-child {
-      background: #fff; }
-    .dataTables_wrapper .dataTable tr:nth-of-type(odd) td:first-child {
-      background: #f2f2f2; }
-    .dataTables_wrapper .dataTable tr:nth-of-type(even) td:first-child {
-      background: #fff; }
-    .dataTables_wrapper .dataTable tr:hover td:first-child {
-      background: #ececec; }
+  .dataTables_wrapper .dataTable thead tr th.sorting_asc .fas::before {
+    content: "\f0de"; }
+  .dataTables_wrapper .dataTable thead tr th.sorting_desc .fas::before {
+    content: "\f0dd"; }
   .dataTables_wrapper .dataTables_paginate {
     display: flex;
     justify-content: center; }
@@ -11341,6 +11323,68 @@ readers do not read off random characters that represent icons */
           .dataTables_wrapper .dataTables_paginate .paginate_button.current:not(:disabled):not(.disabled):active:focus, .dataTables_wrapper .dataTables_paginate .paginate_button.current:not(:disabled):not(.disabled).active:focus,
           .show > .dataTables_wrapper .dataTables_paginate .paginate_button.current.dropdown-toggle:focus {
             box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.5); }
+
+.table.table-nowrap {
+  white-space: nowrap; }
+  .table.table-nowrap.first-column-fixed tr th:first-child,
+  .table.table-nowrap.first-column-fixed tr td:first-child {
+    position: sticky;
+    left: 0; }
+  .table.table-nowrap.first-column-fixed tr th:first-child {
+    background: #fff; }
+  .table.table-nowrap.first-column-fixed tr:nth-of-type(odd) td:first-child {
+    background: #f2f2f2; }
+  .table.table-nowrap.first-column-fixed tr:nth-of-type(even) td:first-child {
+    background: #fff; }
+  .table.table-nowrap.first-column-fixed tr:hover td:first-child {
+    background: #ececec; }
+  .table.table-nowrap.last-column-fixed > thead tr th:last-child,
+  .table.table-nowrap.last-column-fixed > thead tr td:last-child,
+  .table.table-nowrap.last-column-fixed > tbody tr th:last-child,
+  .table.table-nowrap.last-column-fixed > tbody tr td:last-child {
+    position: sticky;
+    right: 0; }
+  .table.table-nowrap.last-column-fixed > thead tr th:last-child,
+  .table.table-nowrap.last-column-fixed > tbody tr th:last-child {
+    background: #fff; }
+  .table.table-nowrap.last-column-fixed > thead tr:nth-of-type(odd) td:last-child,
+  .table.table-nowrap.last-column-fixed > tbody tr:nth-of-type(odd) td:last-child {
+    background: #f2f2f2; }
+  .table.table-nowrap.last-column-fixed > thead tr:nth-of-type(even) td:last-child,
+  .table.table-nowrap.last-column-fixed > tbody tr:nth-of-type(even) td:last-child {
+    background: #fff; }
+  .table.table-nowrap.last-column-fixed > thead tr:hover td:last-child,
+  .table.table-nowrap.last-column-fixed > tbody tr:hover td:last-child {
+    background: #ececec; }
+
+#historico .historico {
+  position: relative;
+  margin-left: 2rem; }
+  #historico .historico:before {
+    content: "";
+    width: 1px;
+    position: absolute;
+    left: -2rem;
+    top: 0;
+    bottom: 0;
+    background: #ced4da; }
+  #historico .historico:after {
+    content: "\f126";
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    display: inline-block;
+    position: absolute;
+    left: -2rem;
+    margin-left: -0.15rem;
+    top: 0.3rem;
+    background-color: #f8f9fa;
+    color: #ced4da; }
+  #historico .historico .list-group-item {
+    border-left: solid 0.25rem; }
+    #historico .historico .list-group-item.cadastro {
+      border-left-color: #28a745; }
+    #historico .historico .list-group-item.alteracao {
+      border-left-color: #ced4da; }
 
 body {
   padding-top: 56px; }

@@ -1,4 +1,3 @@
-<link href="<?php echo BASE_URL;?>/assets/css/administradoras.css" rel="stylesheet" type="text/css"/>
 <script src="<?php echo BASE_URL;?>/assets/js/administradoras.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -17,7 +16,7 @@
 
 <section class="mb-5">
 
-    <form method="POST">
+    <form id="main-form" method="POST">
         <div class="form-group pb-3">
             <label for="inome" class="font-weight-bold">Nome da Administradora</label>
             <input type="text" name="nome" id="inome" class="form-control" autofocus required/>
@@ -27,7 +26,6 @@
 
     <form id="form-bandeiras" class="needs-validation" novalidate>
         <div class="card card-body">
-
             <div class="form-group">
                 <label for="iband" class="font-weight-bold">Bandeira</label>
                 <select id="iband" name="band" class="form-control" required>
@@ -61,7 +59,7 @@
                     <input type="text" name="diascredcom" id="idiascredcom" class="form-control number-mask" />
                 </div>
             </div>
-            <div class="row mb-4">
+            <div class="row">
                 <div class="col">
                     <div class="form-group">
                         <label for="idiasantecip">Dias Recebimento Antecipação</label>
@@ -89,8 +87,7 @@
                     </div>
                 </div>
             </div>
-            
-            <table id="tabela-taxas" class="table table-hover table-striped my-5">
+            <table id="tabela-taxas" class="table table-hover table-striped mt-3">
                 <thead>
                     <tr>
                         <th class="border-bottom-0">Taxa de Antecipação</th>
@@ -101,40 +98,45 @@
                 <?php for($i=1;$i<=12;$i++):?>
                     <tr>
                         <td>
-                            <input type="text" id="itxantecip_<?php echo $i ?>" placeholder="Taxa de recebimento com antecipação <?php echo $i ?>x" class="form-control percent-mask" required />
+                            <input type="text" id="itxantecip_<?php echo $i ?>" placeholder="Taxa de recebimento com antecipação <?php echo $i ?>x" class="form-control percent-mask taxas taxas-antecipacao" required />
                         </td>
                         <td>
-                            <input type="text" id="itxcredsemjuros_<?php echo 12 + $i ?>" placeholder="Taxa de recebimento no crédito sem juros <?php echo $i ?>x" class="form-control percent-mask" required />
+                            <input type="text" id="itxcredsemjuros_<?php echo 12 + $i ?>" placeholder="Taxa de recebimento no crédito sem juros <?php echo $i ?>x" class="form-control percent-mask taxas taxas-credito" required />
                         </td>
                     </tr>
                 <?php endfor;?>
                 </tbody>
             </table>
-            
+        </div>
+        <div class="row">
+            <div class="col-lg-2">
+                <button type="submit" class="btn btn-block btn-primary mt-5">Incluir</button>
+            </div>
+        </div>
+        <div id="inclusoes">
+            <h3 class="mb-4 mt-5">Bandeiras Selecionadas</h3>
+            <div class="table-responsive">
+                <table id="table-inclusoes" class="table table-striped table-hover table-nowrap last-column-fixed bg-white">
+                    <thead>
+                        <th>Bandeira</th>
+                        <th>N. Máx. Parcelas</th>
+                        <th>Tx. de Antecipação</th>
+                        <th>Tx. de Créd. s/ Juros</th>
+                        <th>Tx. de Rcb. no Déb.</th>
+                        <th>Dias de Rcb. no Déb.</th>
+                        <th>Tx. Rcb. Créd. c/ Juros</th>
+                        <th>Dias Rcb. Créd. c/ Juros</th>
+                        <th>Dias Rcb. Antecipação</th>
+                        <th>Ações</th>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
             <div class="row">
                 <div class="col-lg-2">
-                    <button type="submit" class="btn btn-block btn-primary">Incluir</button>
+                    <label for="form-send" class="btn btn-block btn-primary mt-5">Salvar</label>
                 </div>
             </div>
-        
-            <h3 class="mb-4 mt-5">Bandeiras Selecionadas</h3>
-            <table id="table-inclusoes" class="table table-striped table-hover">
-                <thead>
-                    <th>Bandeira</th>
-                    <th>Info Déb. e Créd. com Juros</th>
-                    <th>Info Tx. Antecip.</th>
-                    <th>Info Tx. Créd. sem Juros</th>
-                    <th>Ações</th>
-                </thead>
-                <tbody></tbody>
-            </table>
         </div>
     </form>
-
-    <div class="row">
-        <div class="col-lg-2">
-            <label for="form-send" class="btn btn-block btn-primary mt-5">Salvar</label>
-        </div>
-    </div>
-   
 </section>

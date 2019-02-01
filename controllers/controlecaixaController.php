@@ -17,14 +17,14 @@ class controlecaixaController extends controller{
        }
        //verifica se tem permissão para ver esse módulo
        if(in_array("controlecaixa_ver",$_SESSION["permissoesFuncionario"]) == FALSE){
-           header("Location: ".BASE_URL."/dashboard"); 
+           header("Location: ".BASE_URL."/home"); 
        }
     }
          
     public function index() {
         
         if(in_array("controlecaixa_ver",$_SESSION["permissoesFuncionario"]) == FALSE || in_array("controlecaixa_edt",$_SESSION["permissoesFuncionario"]) == FALSE){
-            header("Location: ".BASE_URL."/dashboard"); 
+            header("Location: ".BASE_URL."/home"); 
         }
         
         $array = array();

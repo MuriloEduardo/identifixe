@@ -41,7 +41,7 @@ class core {
            }
             
         }else{
-            $currentController = "dashboardController";
+            $currentController = "homeController";
             $currentAction = "index";
         }
         
@@ -57,7 +57,7 @@ class core {
         }else{
             //echo 'A classe não existe!';exit;
             echo $this->redirectMessage();
-            $currentController = "dashboardController";
+            $currentController = "homeController";
             $currentAction = "index";
         }
         ////////////////////////////////////////       

@@ -4,7 +4,6 @@ class funcionariosController extends controller{
     protected $table = "funcionarios";
     protected $colunas;
     
-    protected $shared;
     protected $model;
     protected $funcionarios;
 
@@ -12,7 +11,6 @@ class funcionariosController extends controller{
 
         parent::__construct();
 
-        $this->shared = new Shared($this->table);
         $this->funcionarios = new Funcionarios();
         $this->model = $this->funcionarios;
         
@@ -20,11 +18,11 @@ class funcionariosController extends controller{
             header("Location: " . BASE_URL . "/login"); 
         }
 
-        $this->colunas = $this->shared->nomeDasColunas();
+        $this->colunas = $this->nomeDasColunas($this->table);
 
         // verifica se tem permissão para ver esse módulo
         if(in_array($this->table . "_ver", $_SESSION["permissoesFuncionario"]) == false){
-            header("Location: " . BASE_URL . "/dashboard"); 
+            header("Location: " . BASE_URL . "/home"); 
         }
     }
      

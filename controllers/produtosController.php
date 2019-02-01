@@ -4,7 +4,6 @@ class produtosController extends controller{
     protected $table = "produtos";
     protected $colunas;
     
-    protected $shared;
     protected $model;
     protected $funcionarios;
 
@@ -24,7 +23,7 @@ class produtosController extends controller{
 
         // verifica se tem permissão para ver esse módulo
         if(in_array($this->table . "_ver", $_SESSION["permissoesFuncionario"]) == false){
-            header("Location: " . BASE_URL . "/dashboard"); 
+            header("Location: " . BASE_URL . "/home"); 
         }
     }
      

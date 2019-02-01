@@ -14,7 +14,7 @@
 </header>
 <?php $table = false ?>
 <section class="mb-5">
-    <form method="POST">
+    <form method="POST" class="needs-validation" novalidate>
         <div class="row">
             <?php foreach ($colunas as $key => $value): ?>
                 <?php if(!array_key_exists("form", $value["Comment"]) || (array_key_exists("form", $value["Comment"]) && $value["Comment"]["form"] != "false")) : ?>
@@ -22,18 +22,27 @@
                         <?php $table = true ?>
                         <input 
                             type="hidden" 
-                            name="<?php echo $value['Field'] ?>" 
-                            value="<?php echo isset($dados) ? $dados[$value["Field"]] : "" ?>"
-                            <?php echo $value['Null'] == "NO" ? "required" : "" ?>
+                            name="<?php echo $value["Field"] ?>" 
+                            value="<?php echo isset($dados) && !empty($dados) ? $dados[$value["Field"]] : "" ?>"
+                            <?php echo $value["Null"] == "NO" ? "required" : "" ?>
                         />
                     <?php else: ?>
-                        <div class="col-<?php echo isset($value["Comment"]["column"]) ? $value["Comment"]["column"] : "12" ?>">
+                        <div class="col-lg-<?php echo isset($value["Comment"]["column"]) ? $value["Comment"]["column"] : "12" ?>">
                             <div class="form-group">
-                                <label class="<?php echo $value["Null"] == "NO" ? "font-weight-bold" : "" ?>" for="<?php echo $value['Field'] ?>"><?php echo array_key_exists("label", $value["Comment"]) ? $value["Comment"]["label"] : ucwords(str_replace("_", " ", $value['Field'])) ?></label>
+                                <!-- Label Geral -->
+                                <label class="<?php echo $value["Null"] == "NO" ? "font-weight-bold" : "" ?>" for="<?php echo $value['Field'] ?>">
+                                    <!-- Asterisco de campo obrigatorio -->
+                                    <?php if ($value["Null"] == "NO"): ?>
+                                        <span class="font-weight-bold" data-toggle="tooltip" data-placement="top" title="Campo Obrigatório">*</span>
+                                    <?php endif ?>
+                                    <span><?php echo array_key_exists("label", $value["Comment"]) ? $value["Comment"]["label"] : ucwords(str_replace("_", " ", $value['Field'])) ?></span>
+                                </label>
                                 <?php if(array_key_exists("type", $value["Comment"]) && $value["Comment"]["type"] == "relacional"): ?>
+                                    <!-- Campos relacionais -->
                                     <select id="<?php echo 'itxt'.($i);?>" 
                                             name="<?php echo lcfirst($value['nomecol']);?>"
                                             class="form-control"
+                                            data-anterior="<?php echo isset($dados) ? $dados[$value["Field"]] : "" ?>"
                                             <?php echo $value['Null'] == "NO" ? "required" : "" ?>
                                             >
                                             <option value="" selected >Selecione</option>
@@ -42,14 +51,16 @@
                                         <?php endfor;?>     
                                     </select>
                                 <?php elseif(array_key_exists("type", $value["Comment"]) && $value["Comment"]["type"] == "textarea"): ?>
+                                    <!-- Campo para textos -->
                                     <textarea
                                         class="form-control" 
                                         name="<?php echo lcfirst($value['Field']);?>" 
-                                        value="<?php echo $dados[$value["Field"]] ?>"
+                                        data-anterior="<?php echo isset($dados) ? $dados[$value["Field"]] : "" ?>"
                                         id="<?php echo $value['Field'] ?>"
                                         <?php echo $value['Null'] == "NO" ? "required" : "" ?>
-                                    ></textarea>
+                                    ><?php echo isset($dados) && !empty($dados) ? $dados[$value["Field"]] : "" ?></textarea>
                                 <?php elseif(array_key_exists("type", $value["Comment"]) && $value["Comment"]["type"] == "radio"): ?>
+                                    <!-- Campo tipo radio -->
                                     <div>
                                         <?php $indexRadio = 0 ?>
                                         <?php foreach ($value["Comment"]["options"] as $valueRadio => $label): ?>
@@ -70,11 +81,13 @@
                                         <?php endforeach ?>
                                     </div>
                                 <?php else: ?>
+                                    <!-- Campos de texto normal -->
                                     <input 
                                         type="text" 
                                         class="form-control" 
                                         name="<?php echo $value['Field'] ?>" 
-                                        value="<?php echo isset($dados) ? $dados[$value["Field"]] : "" ?>"
+                                        value="<?php echo isset($dados) && !empty($dados) ? $dados[$value["Field"]] : "" ?>"
+                                        data-unico="<?php echo array_key_exists("Key", $value) && $value["Key"] == "UNI" ? "unico" : "" ?>"
                                         id="<?php echo $value['Field'] ?>"
                                         <?php echo $value['Null'] == "NO" ? "required" : "" ?>
                                     />
@@ -87,14 +100,11 @@
         </div>
         <button type="submit" id="main-form" class="d-none"></button>
     </form>
-    <?php
-    if($table) {
-        include "_table_form.php";
-    }
-    ?>
+    <?php if($table) include "_table_form.php" ?>
     <div class="row">
         <div class="col-lg-2">
             <label for="main-form" class="btn btn-primary btn-block" tabindex="0">Salvar</label>
         </div>
     </div>
+    <?php include "_historico.php" ?>
 </section>

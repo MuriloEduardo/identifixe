@@ -9,12 +9,6 @@ class Produtos extends model {
         parent::__construct(); 
         $this->permissoes = new Permissoes();
     }
-
-    private function formataDadosDb($array) {
-        return array_map(function($item) {
-            return trim(addslashes($item));
-        }, $array);
-    }
     
     public function buscaServicoPeloNome($nome,$empresa){
         $array = array();
