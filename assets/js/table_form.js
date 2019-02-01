@@ -24,7 +24,7 @@ $(function () {
         values.forEach(value => tds += `<td>` + value + `</td>`);
 
         $('#contatos tbody')
-            .prepend(`
+            .append(`
                 <tr>` +
                 tds
                 + `<td>

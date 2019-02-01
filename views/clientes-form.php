@@ -17,8 +17,8 @@
     <form method="POST" class="needs-validation" novalidate>
         <div class="row">
             <?php foreach ($colunas as $key => $value): ?>
-                <?php if(!array_key_exists("form", $value["Comment"]) || (array_key_exists("form", $value["Comment"]) && $value["Comment"]["form"] != "false")) : ?>
-                    <?php if(array_key_exists("type", $value["Comment"]) && $value["Comment"]["type"] == "table"): ?>
+                <?php if(is_array($value["Comment"]) && (!array_key_exists("form", $value["Comment"]) || (array_key_exists("form", $value["Comment"]) && $value["Comment"]["form"] != "false"))) : ?>
+                    <?php if(is_array($value["Comment"]) && (array_key_exists("type", $value["Comment"]) && $value["Comment"]["type"] == "table")): ?>
                         <?php $table = true ?>
                         <input 
                             type="hidden" 
@@ -33,7 +33,7 @@
                                 <label class="<?php echo $value["Null"] == "NO" ? "font-weight-bold" : "" ?>" for="<?php echo $value['Field'] ?>">
                                     <!-- Asterisco de campo obrigatorio -->
                                     <?php if ($value["Null"] == "NO"): ?>
-                                        <span class="font-weight-bold" data-toggle="tooltip" data-placement="top" title="Campo Obrigatório">*</span>
+                                        <i class="font-weight-bold" data-toggle="tooltip" data-placement="top" title="Campo Obrigatório">*</i>
                                     <?php endif ?>
                                     <span><?php echo array_key_exists("label", $value["Comment"]) ? $value["Comment"]["label"] : ucwords(str_replace("_", " ", $value['Field'])) ?></span>
                                 </label>

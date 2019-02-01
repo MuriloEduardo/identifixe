@@ -12,27 +12,35 @@ $(function () {
                 $input
                     .mask('00.000.000/0000-00')
                     .siblings('label')
+                    .find('span')
                     .text('Cnpj');
+
+                $('#contatos-form').show();
             } else {
                 $input
                     .mask('000.000.000-00')
                     .siblings('label')
+                    .find('span')
                     .text('Cpf');
+
+                $('#contatos-form').hide();
             }
         }
     }).change();
 
-    $('[name=cpf_cnpj]').blur(function() {
-        if ($('[name=tipo_pessoa]:checked').val() == 'pj') {
-            $(this).validationMinLength({
-                min: 18,
-                mensagem: 'Preencha o campo no formato: 00.000.000/0000-00'
-            });
-        } else {
-            $(this).validationMinLength({
-                min: 13,
-                mensagem: 'Preencha o campo no formato: 000.000.000-00'
-            });
+    $('[name=cpf_cnpj]').on('blur', function() {
+        if ($(this).val() && $(this).val() != $(this).attr('value')) {
+            if ($('[name=tipo_pessoa]:checked').val() == 'pj') {
+                $(this).validationMinLength({
+                    min: 18,
+                    mensagem: 'Preencha o campo no formato: 00.000.000/0000-00'
+                });
+            } else {
+                $(this).validationMinLength({
+                    min: 14,
+                    mensagem: 'Preencha o campo no formato: 000.000.000-00'
+                });
+            }
         }
     });
 });

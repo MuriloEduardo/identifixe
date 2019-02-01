@@ -58,11 +58,23 @@ $(function () {
     // Validação com limite minimo de caracteres
     //
     $.fn.validationMinLength = function (params) {
-        if ($(this).val().length < params.min && $(this).val() != '') {
+        if ($(this).val() != '') {
             $(this)
-                .removeClass('is-valid')
-                .addClass('is-invalid')
-                .after('<div class="invalid-feedback">' + params.mensagem + '</div>');
+                .siblings('.invalid-feedback')
+                .remove();
+            if ($(this).val().length < params.min) {
+                $(this)
+                    .removeClass('is-valid')
+                    .addClass('is-invalid')
+                    .after('<div class="invalid-feedback">' + params.mensagem + '</div>');
+            } else {
+                $(this)
+                    .removeClass('is-invalid')
+                    .addClass('is-valid');
+            }
+        } else {
+            $(this)
+                .removeClass('is-valid is-invalid');
         }
     };
 
@@ -85,7 +97,7 @@ $(function () {
         .mask('000.000.000-00')
         .blur(function () {
             $(this).validationMinLength({
-                min: 13,
+                min: 14,
                 mensagem: 'Preencha o campo no formato: 000.000.000-00'
             });
         });
@@ -293,5 +305,4 @@ $(function () {
     });
 
     $('[data-toggle="tooltip"]').tooltip();
-    
 });
