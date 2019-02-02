@@ -7,17 +7,16 @@ class Shared extends model {
 
     public function __construct($table) {
         global $config;
-        $this->config = &$config;
+        $this->config = $config; //talvez tenha a necessidade de colocar o & comercial antes do $config
         $this->table = $table;
         parent::__construct(); 
     }
 
     public function montaDataTable() {
-
         $index = 0;
         foreach ($this->nomeDasColunas() as $key => $value) {
-            if((!isset($value["Comment"]) || !array_key_exists("ver", $value["Comment"])) || (array_key_exists("ver", $value["Comment"]) && $value["Comment"]["ver"] != "false")) {
-                if((!isset($value["Comment"]) || array_key_exists("type", $value["Comment"])) && $value["Comment"]["type"] == "acoes") {
+            if(isset($value["Comment"]) && array_key_exists("ver", $value["Comment"]) && $value["Comment"]["ver"] != "false") {
+                if(array_key_exists("type", $value["Comment"]) && $value["Comment"]["type"] == "acoes") {
                     $columns[] = [
                         "db" => $value["Field"],
                         "dt" => $index,
@@ -55,10 +54,12 @@ class Shared extends model {
 
     public function nomeDasColunas(){
         $sql = $this->db->query("SHOW FULL COLUMNS FROM " . $this->table);
-        return array_map(function ($item) {
-            $item["Comment"] = json_decode($item["Comment"], true);
-            return $item;
-        }, $sql->fetchAll(PDO::FETCH_ASSOC));
+        $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+        
+        foreach ($result as $key => $value) {
+            $result[$key]["Comment"] = json_decode(utf8_encode($result[$key]["Comment"]), true);
+        }
+        return $result;
     }
 
     public function pegarListas($table) {

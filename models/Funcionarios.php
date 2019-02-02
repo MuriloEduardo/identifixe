@@ -21,7 +21,9 @@ class Funcionarios extends model {
     public function fazerLogin($email,$senha){
         $array = array();
         if(!empty($senha) && !empty($email)){
-
+           $senha = addslashes($senha);
+           $email = addslashes($email);
+           
            $sql = "SELECT * FROM funcionarios WHERE email='$email' AND senha = '$senha' AND situacao = 'ativo'";
 
            $sql = $this->db->query($sql);
@@ -32,7 +34,8 @@ class Funcionarios extends model {
               $_SESSION["nomeFuncionario"] = $sql["nome"];
               $_SESSION["idFuncionario"] = $sql["id"];
               $_SESSION["emailFuncionario"] = $sql["email"];
-
+            
+              
               //buscar as permissoes que o usuario tem
               $p = new Permissoes();
               $_SESSION["permissoesFuncionario"] = $p->getPermissoes($sql["id_gp"]);

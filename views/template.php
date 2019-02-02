@@ -186,7 +186,7 @@
          </div>
       </footer>
    </body>
-   <script src="<?php echo BASE_URL;?>/assets/js/validacao_form_bootstrap.js" type="text/javascript"></script>
+   <!-- <script src="<?php echo BASE_URL;?>/assets/js/validacao_form_bootstrap.js" type="text/javascript"></script> -->
    <script src="<?php echo BASE_URL;?>/assets/js/main.js" type="text/javascript"></script>
-   <script src="<?php echo BASE_URL;?>/assets/js/unico.js" type="text/javascript"></script>
+   <!-- <script src="<?php echo BASE_URL;?>/assets/js/unico.js" type="text/javascript"></script> -->
 </html>
