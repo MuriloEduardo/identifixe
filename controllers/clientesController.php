@@ -15,7 +15,7 @@ class clientesController extends controller{
 
         $this->shared = new Shared($this->table);
         $this->logs = new Logs($this->table);
-        $this->model = new Clientes();
+        $this->model = new $this->table();
         $this->funcionarios = new Funcionarios();
         
         if($this->funcionarios->isLogged() == false){
@@ -23,7 +23,6 @@ class clientesController extends controller{
         }
 
         $this->colunas = $this->shared->nomeDasColunas();
-
         // verifica se tem permissão para ver esse módulo
         if(in_array($this->table . "_ver", $_SESSION["permissoesFuncionario"]) == false){
             header("Location: " . BASE_URL . "/home"); 

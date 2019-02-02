@@ -3,13 +3,13 @@
       [
          "text" => "Home",
          "icon" => "fas fa-tachometer-alt",
-         "permissao" => "",
+         "permissao" => "%",
          "link" => "/home"
       ],
       [
          "text" => "Cadastros",
          "icon" => "fas fa-save",
-         "permissao" => "",
+         "permissao" => "%",
          "link" => "/#",
          "filhos" => [
             [
@@ -59,7 +59,7 @@
       [
          "text" => "Financeiro",
          "icon" => "fas fa-money-bill-alt",
-         "permissao" => "",
+         "permissao" => "%",
          "link" => "/#",
          "filhos" => [
             [
@@ -130,21 +130,23 @@
       <aside id="sidebar-wrapper" class="shadow-lg bg-white">
          <ul class="nav flex-column sidebar-nav py-3">
             <?php foreach ($menus as $key => $value): ?>
-               <?php if($value["permissao"] == "" || in_array($value["permissao"], $infoFunc["permissoesFuncionario"])): ?>
+               <?php if($value["permissao"] == "%" || in_array($value["permissao"], $infoFunc["permissoesFuncionario"])): ?>
                   <?php
                      // Menu com Dropdown
                      if (isset($value["filhos"])) {
                         
                         $filhos = "";
                         foreach ($value["filhos"] as $keyFilho => $valueFilho) {
-                           $filhos .= '
-                              <li class="nav-item">
-                                 <a class="nav-link my-2" href="' . BASE_URL . $valueFilho["link"] . '">
-                                    <i class="' . $valueFilho["icon"] . ' mr-2"></i>
-                                    <span>' . $valueFilho["text"] . '</span>
-                                 </a>
-                              </li>
-                           ';
+                           if(in_array($valueFilho['permissao'],$infoFunc["permissoesFuncionario"])){
+                              $filhos .= '
+                                 <li class="nav-item">
+                                    <a class="nav-link my-2" href="' . BASE_URL . $valueFilho["link"] . '">
+                                       <i class="' . $valueFilho["icon"] . ' mr-2"></i>
+                                       <span>' . $valueFilho["text"] . '</span>
+                                    </a>
+                                 </li>
+                              ';
+                           }
                         }
 
                         $navItemDropdownClass = "dropdown position-static";
