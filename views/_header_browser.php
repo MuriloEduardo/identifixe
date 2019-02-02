@@ -9,7 +9,7 @@
 <header class="pt-4 pb-5"> <!-- Cabeçalho -->
     <div class="row align-items-center"> <!-- Alinhar as linhas -->
         <div class="col-lg"> <!--Colunas da esquerda -->
-            <h1 class="display-4 text-capitalize text-nowrap"><?php echo isset($headerData) && !is_null($headerData["titulo"]) ? $headerData["titulo"] : $modulo ?></h1>
+            <h1 class="display-4 text-capitalize font-weight-bold text-nowrap"><?php echo isset($headerData) && !is_null($headerData["titulo"]) ? $headerData["titulo"] : $modulo ?></h1>
         </div>
         <div class="col-lg"> 
             <div class="input-group mb-3 mb-lg-0">

@@ -13,16 +13,11 @@ class clientesController extends controller{
     public function __construct() {
 
         parent::__construct();
-
-        // Verificar se o funcionário está logado ou nao
-        if($this->funcionarios->isLogged() == false){
-            header("Location: " . BASE_URL . "/login"); 
-        }
-
+        
         // Instanciando as classes usadas no controller
         $this->shared = new Shared($this->table);
         $this->logs = new Logs($this->table);
-        $this->model = new Clientes();
+        $this->model = new $this->table();
         $this->funcionarios = new Funcionarios();
     
         $this->colunas = $this->shared->nomeDasColunas();
@@ -30,6 +25,10 @@ class clientesController extends controller{
         // verifica se tem permissão para ver esse módulo
         if(in_array($this->table . "_ver", $_SESSION["permissoesFuncionario"]) == false){
             header("Location: " . BASE_URL . "/home"); 
+        }
+        // Verificar se o funcionário está logado ou nao
+        if($this->funcionarios->isLogged() == false){
+            header("Location: " . BASE_URL . "/login"); 
         }
     }
      

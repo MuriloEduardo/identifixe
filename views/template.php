@@ -9,7 +9,7 @@
       [
          "text" => "Cadastros",
          "icon" => "fas fa-save",
-         "permissao" => "",
+         "permissao" => "%",
          "link" => "/#",
          "filhos" => [
             [
@@ -59,7 +59,7 @@
       [
          "text" => "Financeiro",
          "icon" => "fas fa-money-bill-alt",
-         "permissao" => "",
+         "permissao" => "%",
          "link" => "/#",
          "filhos" => [
             [
