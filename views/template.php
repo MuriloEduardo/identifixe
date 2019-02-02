@@ -3,7 +3,7 @@
       [
          "text" => "Home",
          "icon" => "fas fa-tachometer-alt",
-         "permissao" => "",
+         "permissao" => "%",
          "link" => "/home"
       ],
       [
@@ -110,7 +110,7 @@
                <i class="fas fa-bars"></i>
             </button>
          </li>
-         <li>
+         <li> <!--Nome da Empresa-->
             <a class="navbar-brand mx-3" href="<?php echo BASE_URL ?>/home"><?php echo trim(NOME_EMPRESA);?></a>
          </li>
       </ul>
@@ -129,22 +129,25 @@
    <div id="wrapper">
       <aside id="sidebar-wrapper" class="shadow-lg bg-white">
          <ul class="nav flex-column sidebar-nav py-3">
-            <?php foreach ($menus as $key => $value): ?>
-               <?php if($value["permissao"] == "" || in_array($value["permissao"], $infoFunc["permissoesFuncionario"])): ?>
+            <?php foreach ($menus as $key => $value): ?> <!--Verifica se o funcionario tem permissao, do contrário nem exibe os módulos-->
+               <?php if($value["permissao"] == "%" || in_array($value["permissao"], $infoFunc["permissoesFuncionario"])): ?>
                   <?php
                      // Menu com Dropdown
+                     // Monta o HTML através do PHP, exibindo os sub-itens (exemplo: Cadastros-> Clientes, Fornecedores, etc)
                      if (isset($value["filhos"])) {
                         
                         $filhos = "";
                         foreach ($value["filhos"] as $keyFilho => $valueFilho) {
-                           $filhos .= '
-                              <li class="nav-item">
-                                 <a class="nav-link my-2" href="' . BASE_URL . $valueFilho["link"] . '">
-                                    <i class="' . $valueFilho["icon"] . ' mr-2"></i>
-                                    <span>' . $valueFilho["text"] . '</span>
-                                 </a>
-                              </li>
-                           ';
+                           if(in_array($valueFilho['permissao'],$infoFunc["permissoesFuncionario"])){
+                              $filhos .= '
+                                 <li class="nav-item">
+                                    <a class="nav-link my-2" href="' . BASE_URL . $valueFilho["link"] . '">
+                                       <i class="' . $valueFilho["icon"] . ' mr-2"></i>
+                                       <span>' . $valueFilho["text"] . '</span>
+                                    </a>
+                                 </li>
+                              ';
+                           }
                         }
 
                         $navItemDropdownClass = "dropdown position-static";
