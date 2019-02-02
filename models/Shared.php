@@ -7,7 +7,7 @@ class Shared extends model {
 
     public function __construct($table) {
         global $config;
-        $this->config = &$config;
+        $this->config = $config;
         $this->table = $table;
         parent::__construct(); 
     }
@@ -55,11 +55,12 @@ class Shared extends model {
 
     public function nomeDasColunas(){
         $sql = $this->db->query("SHOW FULL COLUMNS FROM " . $this->table);
+
         // Cria o array de comments
         return array_map(function ($item) {
             // Transforma o vetor de comentários em JSON, rescrevendo-o
             $item["Comment"] = json_decode($item["Comment"], true);
-            //$item["Field"] = utf8_encode($item["Field"], true);
+            //$item["Comment"] = utf8_encode($item["Comment"]);
             return $item;
         }, $sql->fetchAll(PDO::FETCH_ASSOC)); //Trabalha o array, FETCH_ASSOC - para tirar indices numéricos
     } 
