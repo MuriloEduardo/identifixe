@@ -13,11 +13,10 @@ class Shared extends model {
     }
 
     public function montaDataTable() {
-
         $index = 0;
         foreach ($this->nomeDasColunas() as $key => $value) {
-            if((!isset($value["Comment"]) || !array_key_exists("ver", $value["Comment"])) || (array_key_exists("ver", $value["Comment"]) && $value["Comment"]["ver"] != "false")) {
-                if((!isset($value["Comment"]) || array_key_exists("type", $value["Comment"])) && $value["Comment"]["type"] == "acoes") {
+            if(isset($value["Comment"]) && array_key_exists("ver", $value["Comment"]) && $value["Comment"]["ver"] != "false") {
+                if(array_key_exists("type", $value["Comment"]) && $value["Comment"]["type"] == "acoes") {
                     $columns[] = [
                         "db" => $value["Field"],
                         "dt" => $index,

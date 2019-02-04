@@ -76,9 +76,12 @@ class Clientes extends model {
         $request["situacao"] = "ativo";
 
         $keys = implode(",", array_keys($request));
+        
         $values = "'" . implode("','", array_values($this->formataDadosDb($request))) . "'";
 
         $sql = "INSERT INTO " . $this->table . " (" . $keys . ") VALUES (" . $values . ")";
+
+
         $this->db->query($sql);
 
         if ($this->db->lastInsertId()) {

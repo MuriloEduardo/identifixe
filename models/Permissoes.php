@@ -11,7 +11,7 @@ class Permissoes extends model {
         $array = array();
         if(!empty($id_grupopermissao)){
            //busca os id dos parametros correspondentes do grupo de permissao pesquisado 
-           $sql = "SELECT parametros FROM permissoes as pg WHERE id = '$id_grupopermissao' AND situacao = 'ativo'";
+           $sql = "SELECT parametros FROM permissoes WHERE id = '$id_grupopermissao' AND situacao = 'ativo'";
            $sql = $this->db->query($sql);
            if($sql->rowCount() > 0){
                 $pr = $sql->fetch();
@@ -21,7 +21,7 @@ class Permissoes extends model {
                 }
                 
                 //busca os nomes dos parametros de permissão do grupo de permissao pesquisado
-                $sqlA = "SELECT nome FROM permissoes_parametros as pp WHERE id IN (".$pr["parametros"].")";
+                $sqlA = "SELECT nome FROM permissoes_parametros WHERE id IN (".$pr["parametros"].")";
                 $sqlA = $this->db->query($sqlA);
                 if($sqlA->rowCount()>0){
                     foreach ($sqlA->fetchAll() as $item){

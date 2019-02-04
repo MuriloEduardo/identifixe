@@ -16,6 +16,7 @@ class model{
         return array_map(function($item) {
             return trim(addslashes($item));
         }, $array);
+
     }
 }
 

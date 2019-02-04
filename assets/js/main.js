@@ -1,4 +1,68 @@
 $(function () {
+    //
+    // função que coloca as classes de validação do bootstrap nos campos dos formuários
+    //
+    window.addEventListener('load', function () {
+        var forms = document.getElementsByClassName('needs-validation');
+        Array.prototype.filter.call(forms, function (form) {
+            form.addEventListener('submit', function (event) {
+                if (form.checkValidity() === false) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    }, false);
+
+    //
+    // Campos Únicos
+    //
+    $.fn.unico = function () {
+
+        var $self = $(this),
+            campo = $self.attr('name');
+
+        $.ajax({
+            url: baselink + '/ajax/buscaUnico',
+            type: 'POST',
+            data: {
+                module: currentModule,
+                campo: campo,
+                valor: $self.val()
+            },
+            dataType: 'json',
+            success: function (json) {
+
+                if (!$self.hasClass('is-invalid')) {
+
+                    $self
+                        .siblings('.invalid-feedback')
+                        .remove();
+
+                    $self
+                        .removeClass('is-invalid')
+                        .addClass('is-valid');
+
+                    if (json.length > 0) {
+                        $self.removeClass('is-valid').addClass('is-invalid');
+                        text_label = $self.siblings('label').find('span').text();
+                        $self.after('<div class="invalid-feedback">Este ' + text_label.toLowerCase() + ' já está sendo usado</div>');
+                    }
+                }
+
+
+            }
+        });
+    };
+
+    $('[data-unico="unico"]').blur(function () {
+        if ($(this).val() && $(this).val() != $(this).attr('value')) {
+            $(this).unico();
+        } else {
+            $(this).removeClass('is-valid is-invalid');
+        }
+    });
 
     //
     // Validação de Datas
@@ -266,7 +330,7 @@ $(function () {
             scrollCollapse: true,
             conditionalPaging: true,
             autoWidth: false,
-            order: [1, 'asc'],
+            order: [0, 'desc'],
             ajax: {
                 url: baselink + '/ajax/dataTableAjax',
                 type: 'POST',

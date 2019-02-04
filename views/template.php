@@ -129,7 +129,11 @@
    <div id="wrapper">
       <aside id="sidebar-wrapper" class="shadow-lg bg-white">
          <ul class="nav flex-column sidebar-nav py-3">
+<<<<<<< HEAD
             <?php foreach ($menus as $key => $value): ?> <!--Verifica se o funcionario tem permissao, do contrário nem exibe os módulos-->
+=======
+            <?php foreach ($menus as $key => $value): ?>
+>>>>>>> 3f8c9fb1e93ec955b1f1b596f16c0394933109bb
                <?php if($value["permissao"] == "%" || in_array($value["permissao"], $infoFunc["permissoesFuncionario"])): ?>
                   <?php
                      // Menu com Dropdown
@@ -187,7 +191,7 @@
          </div>
       </footer>
    </body>
-   <script src="<?php echo BASE_URL;?>/assets/js/validacao_form_bootstrap.js" type="text/javascript"></script>
+   <!-- <script src="<?php echo BASE_URL;?>/assets/js/validacao_form_bootstrap.js" type="text/javascript"></script> -->
    <script src="<?php echo BASE_URL;?>/assets/js/main.js" type="text/javascript"></script>
-   <script src="<?php echo BASE_URL;?>/assets/js/unico.js" type="text/javascript"></script>
+   <!-- <script src="<?php echo BASE_URL;?>/assets/js/unico.js" type="text/javascript"></script> -->
 </html>
