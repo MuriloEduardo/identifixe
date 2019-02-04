@@ -42,7 +42,7 @@ $(function () {
 
     function SetInput() {
         var content = '';
-        $('#contatos tbody tr:not([role=form])').each(function () {
+        $('#contatos tbody tr').each(function () {
             var par = $(this).closest('tr');
             var tdNome = par.children("td:nth-child(1)");
             var tdSetor = par.children("td:nth-child(2)");
