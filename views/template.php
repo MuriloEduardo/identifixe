@@ -35,6 +35,12 @@
                "icon" => "fas fa-users",
                "permissao" => "funcionarios_ver",
                "link" => "/funcionarios"
+            ],
+            [
+               "text" => "Bananas",
+               "icon" => "far fa-smile",
+               "permissao" => "clientes_ver",
+               "link" => "/bananas"
             ]
          ]
       ],

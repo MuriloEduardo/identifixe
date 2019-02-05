@@ -4,9 +4,6 @@
         currentModule = '<?php echo $modulo ?>'
 </script>
 
-<!-- Este javaScript serve para fazer verificações inerentes à cada módulo, por exemplo o radio de Clientes -->
-<script src="<?php echo BASE_URL;?>/assets/js/clientes.js" type="text/javascript"></script>
-
 <header class="d-flex align-items-center my-5">
     <?php if(in_array($modulo . "_ver", $infoFunc["permissoesFuncionario"])): ?>
         <a href="<?php echo BASE_URL . '/' . $modulo ?>" class="btn btn-secondary mr-4" title="Voltar">
@@ -15,31 +12,22 @@
     <?php endif ?>
     <h1 class="display-4 m-0 text-capitalize font-weight-bold"><?php echo $viewInfo["title"]." ".ucfirst($modulo); ?></h1>
 </header>
-
 <?php $table = false ?>
-
 <section class="mb-5">
     <form method="POST" class="needs-validation" novalidate>
         <div class="row">
             <?php foreach ($colunas as $key => $value): ?>
                 <?php if(isset($value["Comment"]) && array_key_exists("form", $value["Comment"]) && $value["Comment"]["form"] != "false") : ?>
                     <?php if(array_key_exists("type", $value["Comment"]) && $value["Comment"]["type"] == "table"): ?> 
-                        <!-- TIPO TABELA AUXILIAR ex: contatos-->
+                        <!-- TIPO TABELA AUXILIAR -->
                         <?php $table = true ?>
                         <input 
                             type="hidden" 
                             name="<?php echo $value["Field"] ?>" 
-                            value="<?php echo isset($item) && !empty($item) ? $item[$value["Field"]] : "" ?>"
+                            value="<?php echo isset($dados) && !empty($dados) ? $dados[$value["Field"]] : "" ?>"
                             <?php echo $value["Null"] == "NO" ? "required" : "" ?>
                         />
-                    <?php elseif(array_key_exists("type", $value["Comment"]) && $value["Comment"]["type"] == "hidden"): ?>
-                        <!-- Campo tipo hidden setado no banco, ex: alterações -->
-                        <input 
-                            type="hidden" 
-                            name="<?php echo lcfirst($value["Field"]) ?>" 
-                            value="<?php echo isset($item) && !empty($item) ? $item[$value["Field"]] : "" ?>"
-                            <?php echo $value["Null"] == "NO" ? "required" : "" ?>
-                        />
+                    
                     <?php else: ?>
                         <div class="col-lg-<?php echo isset($value["Comment"]["column"]) ? $value["Comment"]["column"] : "12" ?>">
                             <div class="form-group">
@@ -57,7 +45,7 @@
                                     <select id="<?php echo lcfirst($value['Field']);?>" 
                                             name="<?php echo lcfirst($value['Field']);?>"
                                             class="form-control"
-                                            data-anterior="<?php echo isset($item) ? $item[$value["Field"]] : "" ?>"
+                                            data-anterior="<?php echo isset($dados) ? $dados[$value["Field"]] : "" ?>"
                                             <?php echo $value['Null'] == "NO" ? "required" : "" ?>
                                             >
                                             <option value="" selected >Selecione</option>
@@ -71,10 +59,10 @@
                                     <textarea
                                         class="form-control" 
                                         name="<?php echo lcfirst($value['Field']);?>" 
-                                        data-anterior="<?php echo isset($item) ? $item[$value["Field"]] : "" ?>"
+                                        data-anterior="<?php echo isset($dados) ? $dados[$value["Field"]] : "" ?>"
                                         id="<?php echo lcfirst($value['Field']);?>"
                                         <?php echo $value['Null'] == "NO" ? "required" : "" ?>
-                                    ><?php echo isset($item) && !empty($item) ? $item[$value["Field"]] : "" ?></textarea>
+                                    ><?php echo isset($dados) && !empty($dados) ? $dados[$value["Field"]] : "" ?></textarea>
 
                                 <?php elseif(array_key_exists("type", $value["Comment"]) && $value["Comment"]["type"] == "radio"): ?>
                                     <!-- Campo tipo radio -->
@@ -105,7 +93,7 @@
                                         type="text" 
                                         class="form-control" 
                                         name="<?php echo lcfirst($value["Field"]) ?>" 
-                                        value="<?php echo isset($item) && !empty($item) ? $item[$value["Field"]] : "" ?>"
+                                        value="<?php echo isset($dados) && !empty($dados) ? $dados[$value["Field"]] : "" ?>"
                                         data-unico="<?php echo array_key_exists("Key", $value) && $value["Key"] == "UNI" ? "unico" : "" ?>"
                                         id="<?php echo lcfirst($value["Field"]) ?>"
                                         <?php echo $value['Null'] == "NO" ? "required" : "" ?>
