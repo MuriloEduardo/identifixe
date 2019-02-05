@@ -8,9 +8,7 @@ $(function () {
     });
 
     if ($('[name=contatos]').val().length) {
-        //[ nome * setor * celular * email ]
         var contatos = $('[name=contatos]').val().split('[');
-        var contatos = shift(contatos);
         for (var i = 0; i < contatos.length; i++) {
             var contato = contatos[i];
             if (contato.length) {
@@ -87,13 +85,9 @@ $(function () {
             $('input[name=contato_email]').val()
         ]);
 
-        $('input[name=contato_nome]').val(""),
-        $('input[name=contato_setor]').val(""),
-        $('input[name=contato_celular]').val(""),
-        $('input[name=contato_email]').val("")
-        $('input[name=contato_nome]').focus("");
-
         $('#contatos-form').removeClass('was-validated');
+
+        $('input[name=contato_nome]').focus();
 
         SetInput();
     };
