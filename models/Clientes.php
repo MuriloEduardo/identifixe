@@ -2,11 +2,11 @@
 class Clientes extends model {
 
     protected $table = "clientes";
-    protected $logs;
+    protected $permissoes;
 
     public function __construct() {
         parent::__construct(); 
-        $this->logs = new Logs($this->table);
+        $this->permissoes = new Permissoes();
     }
     
     public function pegarListaClientes($empresa) {
@@ -56,7 +56,7 @@ class Clientes extends model {
         return $array;
     }
 
-    public function pegarInfo($id) {
+    public function infoItem($id) {
         $array = array();
         $arrayAux = array();
 
@@ -73,17 +73,20 @@ class Clientes extends model {
 
     public function adicionar($request) {
         
+        $ipcliente = $this->permissoes->pegaIPcliente();
+        $request["alteracoes"] = ucwords($_SESSION["nomeFuncionario"])." - $ipcliente - ".date('d/m/Y H:i:s')." - CADASTRO";
+        
         $request["situacao"] = "ativo";
 
         $keys = implode(",", array_keys($request));
         $values = "'" . implode("','", array_values($this->formataDadosDb($request))) . "'";
 
         $sql = "INSERT INTO " . $this->table . " (" . $keys . ") VALUES (" . $values . ")";
+      
         $this->db->query($sql);
+        $erro = $this->db->errorInfo();
 
-        if ($this->db->lastInsertId()) {
-
-            $this->logs->add("cadastro", $this->db->lastInsertId(), $request);
+        if (empty($erro[2])){
 
             $_SESSION["returnMessage"] = [
                 "mensagem" => "Registro inserido com sucesso!",
@@ -91,7 +94,7 @@ class Clientes extends model {
             ];
         } else {
             $_SESSION["returnMessage"] = [
-                "mensagem" => "Houve uma falha, entre em contato conosco!",
+                "mensagem" => "Houve uma falha, tente novamente! <br /> ".$erro[2],
                 "class" => "alert-danger"
             ];
         }
@@ -100,29 +103,42 @@ class Clientes extends model {
     public function editar($id, $request) {
 
         if(!empty($id)){
+            $ipcliente = $this->permissoes->pegaIPcliente();
+            $hist = explode("##", addslashes($request['alteracoes']));
 
-            $this->logs->add("alteracao", $id, $request);
+            if(!empty($hist[1])){
+                $request['alteracoes'] = $hist[0]." | ".ucwords($_SESSION["nomeFuncionario"])." - $ipcliente - ".date('d/m/Y H:i:s')." - ALTERACAO >> ".$hist[1];     
+            }else{
+                $_SESSION["returnMessage"] = [
+                    "mensagem" => "Houve uma falha, tente novamente! <br /> Registro sem histórico de alteração.",
+                    "class" => "alert-danger"
+                ];
+                return false;
+            }
 
+            // Cria a estrutura key = 'valor' para preparar a query do sql
             $output = implode(', ', array_map(
-                function ($v, $k) {
-                    return sprintf("%s='%s'", $k, addslashes($v));
+                function ($value, $key) {
+                    return sprintf("%s='%s'", $key, addslashes($value));
                 },
-                $request,
-                array_keys($request)
+                $request, //value
+                array_keys($request)  //key
             ));
 
             $sql = "UPDATE " . $this->table . " SET " . $output . " WHERE id='" . $id . "'";
 
-            $result = $this->db->query($sql);
+            $this->db->query($sql);
+            $erro = $this->db->errorInfo();
 
-            if ($result) {
+            if (empty($erro[2])){
+
                 $_SESSION["returnMessage"] = [
                     "mensagem" => "Registro alterado com sucesso!",
                     "class" => "alert-success"
                 ];
             } else {
                 $_SESSION["returnMessage"] = [
-                    "mensagem" => "Houve uma falha, entre em contato conosco!",
+                    "mensagem" => "Houve uma falha, tente novamente! <br /> ".$erro[2],
                     "class" => "alert-danger"
                 ];
             }
@@ -132,15 +148,35 @@ class Clientes extends model {
     public function excluir($id){
         if(!empty($id)) {
 
-            $this->logs->add("exclusao", $id);
-               
-            $sqlA = "UPDATE " . $this->table . " SET situacao = 'excluido' WHERE id = '$id'";
-            $this->db->query($sqlA);
+            //se não achar nenhum usuario associado ao grupo - pode deletar, ou seja, tornar o cadastro situacao=excluído
+            $sql = "SELECT alteracoes FROM ". $this->table ." WHERE id = '$id' AND situacao = 'ativo'";
+            $sql = $this->db->query($sql);
+            
+            if($sql->rowCount() > 0){  
 
-            $_SESSION["returnMessage"] = [
-                "mensagem" => "Registro deletado com sucesso!",
-                "class" => "alert-success"
-            ];
+                $sql = $sql->fetch();
+                $palter = $sql["alteracoes"];
+                $ipcliente = $this->permissoes->pegaIPcliente();
+                $palter = $palter." | ".ucwords($_SESSION["nomeFuncionario"])." - $ipcliente - ".date('d/m/Y H:i:s')." - EXCLUSÃO";
+
+                $sqlA = "UPDATE ". $this->table ." SET alteracoes = '$palter', situacao = 'excluido' WHERE id = '$id' ";
+                $this->db->query($sqlA);
+
+                $erro = $this->db->errorInfo();
+                                
+                if (empty($erro[2])){
+
+                    $_SESSION["returnMessage"] = [
+                        "mensagem" => "Registro deletado com sucesso!",
+                        "class" => "alert-success"
+                    ];
+                } else {
+                    $_SESSION["returnMessage"] = [
+                        "mensagem" => "Houve uma falha, tente novamente! <br /> ".$erro[2],
+                        "class" => "alert-danger"
+                    ];
+                }
+            }
         }
     }
 

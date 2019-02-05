@@ -54,14 +54,12 @@ class Shared extends model {
 
     public function nomeDasColunas(){
         $sql = $this->db->query("SHOW FULL COLUMNS FROM " . $this->table);
-
-        // Cria o array de comments
-        return array_map(function ($item) {
-            // Transforma o vetor de comentários em JSON, rescrevendo-o
-            $item["Comment"] = json_decode($item["Comment"], true);
-            //$item["Comment"] = utf8_encode($item["Comment"]);
-            return $item;
-        }, $sql->fetchAll(PDO::FETCH_ASSOC)); //Trabalha o array, FETCH_ASSOC - para tirar indices numéricos
+        $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+        
+        foreach ($result as $key => $value) {
+            $result[$key]["Comment"] = json_decode(utf8_encode($result[$key]["Comment"]), true);
+        }
+        return $result;
     } 
 
     public function pegarListas($table) {

@@ -9,6 +9,7 @@ $(function () {
 
     if ($('[name=contatos]').val().length) {
         var contatos = $('[name=contatos]').val().split('[');
+        //var contatos = shift(contatos);
         for (var i = 0; i < contatos.length; i++) {
             var contato = contatos[i];
             if (contato.length) {

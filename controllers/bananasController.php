@@ -1,5 +1,5 @@
 <?php
-class clientesController extends controller{
+class bananasController extends controller{
 
     // Protected - estas variaveis só podem ser usadas nesse arquivo
     protected $table = "clientes";
@@ -16,6 +16,7 @@ class clientesController extends controller{
         
         // Instanciando as classes usadas no controller
         $this->shared = new Shared($this->table);
+        $this->logs = new Logs($this->table);
         $this->model = new $this->table();
         $this->funcionarios = new Funcionarios();
     
@@ -34,7 +35,7 @@ class clientesController extends controller{
     public function index() {
         $dados['infoFunc'] = $_SESSION;
         $dados["colunas"] = $this->colunas;
-        $this->loadTemplate($this->table, $dados);      
+        $this->loadTemplate("bananas", $dados);      
     }
     
     public function adicionar() {
@@ -52,7 +53,7 @@ class clientesController extends controller{
         }else{ //exibe
             $dados["colunas"] = $this->colunas;
             $dados["viewInfo"] = ["title" => "Adicionar"];
-            $this->loadTemplate($this->table . "-form", $dados);
+            $this->loadTemplate("bananas"."-form", $dados);
         }
     }
     
@@ -66,12 +67,13 @@ class clientesController extends controller{
         
         if(isset($_POST) && !empty($_POST)){
             $this->model->editar($id, $_POST);
-            header("Location: " . BASE_URL . "/" . $this->table); 
+            header("Location: " . BASE_URL . "/" . "bananas"); 
         }else{
-            $dados["item"] = $this->model->infoItem($id);
+            $dados["dados"] = $this->model->pegarInfo($id);
             $dados["colunas"] = $this->colunas;
             $dados["viewInfo"] = ["title" => "Editar"];
-            $this->loadTemplate($this->table . "-form", $dados); // Chama a view com base no nome da tabela
+            $dados["logs"] = $this->logs->logs($id);
+            $this->loadTemplate("bananas" . "-form", $dados);
         }
     }
 

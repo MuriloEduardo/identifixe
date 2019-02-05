@@ -1,11 +1,17 @@
-<div class="alert <?php echo $_SESSION["returnMessage"]["class"] ?>">
-    <?php 
-    if (isset($_SESSION["returnMessage"])) {
-        echo $_SESSION["returnMessage"]["mensagem"];
-        $_SESSION["returnMessage"]["show"] = true;
-    }
-    ?>
-</div>
+<?php if (isset($_SESSION["returnMessage"])):?>
+    <div class="alert <?php echo $_SESSION["returnMessage"]["class"] ?> alert-dismissible">
+    
+        <?php 
+            echo $_SESSION["returnMessage"]["mensagem"]; 
+            $_SESSION["returnMessage"]["show"] = true;
+        ?>
+    
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+<?php endif?>    
+
 <table class="table table-striped table-hover dataTable bg-white table-nowrap first-column-fixed">
     <thead>
         <tr>
