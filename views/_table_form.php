@@ -5,14 +5,12 @@
         <table id="contatos" class="table table-striped table-hover bg-white mb-5">
             <thead>
                 <tr>
-                    <th class="border-bottom-0">Nome</th>
-                    <th class="border-bottom-0">Setor</th>
-                    <th class="border-bottom-0">Celular</th>
-                    <th class="border-bottom-0">Email</th>
-                    <th class="border-bottom-0">Ações</th>
+                    <th>Nome</th>
+                    <th>Setor</th>
+                    <th>Celular</th>
+                    <th>Email</th>
+                    <th>Ações</th>
                 </tr>
-            </thead>
-            <tbody>
                 <tr role="form">
                     <td>
                         <input type="text" class="form-control" name="contato_nome" required>
@@ -33,6 +31,8 @@
                         <button type="submit" class="btn btn-primary">Incluir</a>
                     </td>
                 </tr>
+            </thead>
+            <tbody>
             </tbody>
         </table>
     </div>

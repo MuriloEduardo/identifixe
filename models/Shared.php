@@ -7,7 +7,7 @@ class Shared extends model {
 
     public function __construct($table) {
         global $config;
-        $this->config = $config; //talvez tenha a necessidade de colocar o & comercial antes do $config
+        $this->config = $config;
         $this->table = $table;
         parent::__construct(); 
     }
@@ -60,7 +60,7 @@ class Shared extends model {
             $result[$key]["Comment"] = json_decode(utf8_encode($result[$key]["Comment"]), true);
         }
         return $result;
-    }
+    } 
 
     public function pegarListas($table) {
         $array = array();

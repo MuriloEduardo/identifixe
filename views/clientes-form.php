@@ -18,8 +18,8 @@
         <div class="row">
             <?php foreach ($colunas as $key => $value): ?>
                 <?php if(isset($value["Comment"]) && array_key_exists("form", $value["Comment"]) && $value["Comment"]["form"] != "false") : ?>
-                    <!-- TIPO TABELA AUXILIAR -->
                     <?php if(array_key_exists("type", $value["Comment"]) && $value["Comment"]["type"] == "table"): ?> 
+                        <!-- TIPO TABELA AUXILIAR -->
                         <?php $table = true ?>
                         <input 
                             type="hidden" 

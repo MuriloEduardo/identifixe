@@ -10,7 +10,7 @@ $(function () {
     if ($('[name=contatos]').val().length) {
         //[ nome * setor * celular * email ]
         var contatos = $('[name=contatos]').val().split('[');
-        var contatos = shift(contatos);
+        //var contatos = shift(contatos);
         for (var i = 0; i < contatos.length; i++) {
             var contato = contatos[i];
             if (contato.length) {
@@ -44,7 +44,7 @@ $(function () {
 
     function SetInput() {
         var content = '';
-        $('#contatos tbody tr:not([role=form])').each(function () {
+        $('#contatos tbody tr').each(function () {
             var par = $(this).closest('tr');
             var tdNome = par.children("td:nth-child(1)");
             var tdSetor = par.children("td:nth-child(2)");

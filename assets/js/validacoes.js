@@ -1,6 +1,7 @@
 $(function () {
+
     //
-    // função que coloca as classes de validação do bootstrap nos campos dos formuários
+    // Função que coloca as classes de validação do bootstrap nos campos dos formuários
     //
     window.addEventListener('load', function () {
         var forms = document.getElementsByClassName('needs-validation');
@@ -34,24 +35,30 @@ $(function () {
             dataType: 'json',
             success: function (json) {
 
-                if (!$self.hasClass('is-invalid')) {
+                // $self
+                //     .removeClass('is-invalid')
+                //     .addClass('is-valid');
+
+                // $self
+                //     .siblings('.invalid-feedback')
+                //     .remove();
+
+                // se trouxer algum dados na variavel json é porque achou ja existe um registro com esse valor neste campo
+                if (json.length) {
 
                     $self
-                        .siblings('.invalid-feedback')
-                        .remove();
+                        .removeClass('is-valid')
+                        .addClass('is-invalid');
+
+                    text_label = $self.siblings('label').find('span').text();
+
+                    $self.after('<div class="invalid-feedback invalid-feedback-unico">Este ' + text_label.toLowerCase() + ' já está sendo usado</div>');
+                } else {
 
                     $self
                         .removeClass('is-invalid')
                         .addClass('is-valid');
-
-                    if (json.length > 0) {
-                        $self.removeClass('is-valid').addClass('is-invalid');
-                        text_label = $self.siblings('label').find('span').text();
-                        $self.after('<div class="invalid-feedback">Este ' + text_label.toLowerCase() + ' já está sendo usado</div>');
-                    }
                 }
-
-
             }
         });
     };
@@ -60,7 +67,7 @@ $(function () {
         if ($(this).val() && $(this).val() != $(this).attr('value')) {
             $(this).unico();
         } else {
-            $(this).removeClass('is-valid is-invalid');
+            // $(this).removeClass('is-valid is-invalid');
         }
     });
 
@@ -127,18 +134,20 @@ $(function () {
                 .siblings('.invalid-feedback')
                 .remove();
             if ($(this).val().length < params.min) {
+                console.log('if minlenght');
                 $(this)
                     .removeClass('is-valid')
                     .addClass('is-invalid')
                     .after('<div class="invalid-feedback">' + params.mensagem + '</div>');
             } else {
+                console.log('else minlenght');
                 $(this)
                     .removeClass('is-invalid')
                     .addClass('is-valid');
             }
         } else {
-            $(this)
-                .removeClass('is-valid is-invalid');
+            // $(this)
+            //     .removeClass('is-valid is-invalid');
         }
     };
 

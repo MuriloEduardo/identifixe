@@ -19,7 +19,9 @@ class Logs extends model {
     }
 
     public function add($tipo, $id, $request = "") {
-
+        // $tipo - cadastro, alteração, exclusão
+        // $id - id do registro que está associado ao log
+        
         $content = [
             $_SESSION["idFuncionario"],
             $this->permissoes->pegaIPcliente(),

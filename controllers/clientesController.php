@@ -1,9 +1,10 @@
 <?php
 class clientesController extends controller{
 
+    // Protected - estas variaveis só podem ser usadas nesse arquivo
     protected $table = "clientes";
     protected $colunas;
-
+    
     protected $model;
     protected $shared;
     protected $logs;
@@ -12,23 +13,23 @@ class clientesController extends controller{
     public function __construct() {
 
         parent::__construct();
-
+        
+        // Instanciando as classes usadas no controller
         $this->shared = new Shared($this->table);
         $this->logs = new Logs($this->table);
         $this->model = new $this->table();
         $this->funcionarios = new Funcionarios();
-
+    
         $this->colunas = $this->shared->nomeDasColunas();
-
-        if($this->funcionarios->isLogged() == false){
-            header("Location: " . BASE_URL . "/login"); 
-        }
 
         // verifica se tem permissão para ver esse módulo
         if(in_array($this->table . "_ver", $_SESSION["permissoesFuncionario"]) == false){
             header("Location: " . BASE_URL . "/home"); 
         }
-
+        // Verificar se o funcionário está logado ou nao
+        if($this->funcionarios->isLogged() == false){
+            header("Location: " . BASE_URL . "/login"); 
+        }
     }
      
     public function index() {

@@ -110,7 +110,7 @@
                <i class="fas fa-bars"></i>
             </button>
          </li>
-         <li>
+         <li> <!--Nome da Empresa-->
             <a class="navbar-brand mx-3" href="<?php echo BASE_URL ?>/home"><?php echo trim(NOME_EMPRESA);?></a>
          </li>
       </ul>
@@ -129,10 +129,11 @@
    <div id="wrapper">
       <aside id="sidebar-wrapper" class="shadow-lg bg-white">
          <ul class="nav flex-column sidebar-nav py-3">
-            <?php foreach ($menus as $key => $value): ?>
+            <?php foreach ($menus as $key => $value): ?> <!--Verifica se o funcionario tem permissao, do contrário nem exibe os módulos-->
                <?php if($value["permissao"] == "%" || in_array($value["permissao"], $infoFunc["permissoesFuncionario"])): ?>
                   <?php
                      // Menu com Dropdown
+                     // Monta o HTML através do PHP, exibindo os sub-itens (exemplo: Cadastros-> Clientes, Fornecedores, etc)
                      if (isset($value["filhos"])) {
                         
                         $filhos = "";
@@ -186,7 +187,5 @@
          </div>
       </footer>
    </body>
-   <!-- <script src="<?php echo BASE_URL;?>/assets/js/validacao_form_bootstrap.js" type="text/javascript"></script> -->
-   <script src="<?php echo BASE_URL;?>/assets/js/main.js" type="text/javascript"></script>
-   <!-- <script src="<?php echo BASE_URL;?>/assets/js/unico.js" type="text/javascript"></script> -->
+   <script src="<?php echo BASE_URL;?>/assets/js/validacoes.js" type="text/javascript"></script>
 </html>

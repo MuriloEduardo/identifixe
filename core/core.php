@@ -50,8 +50,8 @@ class core {
             if(method_exists($a,$currentAction)){
                 //echo 'A classe existe e o método tbm!';exit;
             }else{
-                //echo 'A classe existe, mas o método NÂO!';exit;
-                echo $this->redirectMessage("Erro no endereço, você foi redirecionado para ".ucfirst(str_replace("Controller","",$currentController)));
+                //echo 'A classe existe, mas o método NÂO!';exit;  
+                echo $this->redirectMessage("Erro no endereço, você foi redirecionado para " .ucfirst(str_replace("Controller","",$currentController)));
                 $currentAction = "index";
             }
         }else{
